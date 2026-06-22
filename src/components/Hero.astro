@@ -1,0 +1,42 @@
+---
+// The hero video lives in /public/media/hero.mp4 — swap that file to change it.
+const creds = [
+  { label: 'Lecturer in Earth Observation · UCL' },
+  { label: 'Fellow · NCEO' },
+  { label: 'Chair · 3DForEcoTech' },
+  { label: '★ ARIA Creator', spark: true },
+];
+---
+<header class="hero">
+  <video src="/media/hero.mp4" poster="/media/hero-poster.jpg" autoplay muted loop playsinline></video>
+  <div class="hero-grad"></div>
+  <div class="hud" aria-hidden="true">
+    <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+    <div class="feed-label"><span class="rec"></span>FIELD FEED — <b>DJI · 3D STRUCTURE</b></div>
+    <div class="coords" id="coords">LAT 00.0000<br>LON 00.0000<br>ALT 000 m</div>
+  </div>
+  <div class="hero-content"><div class="wrap">
+    <div class="eyebrow">Earth Observation · 3D Forest Science</div>
+    <h1>Martin Mokros</h1>
+    <p class="lede">I turn forests into point clouds — and point clouds into things people can act on.</p>
+    <div class="creds">
+      {creds.map((c) => <span class={`cred ${c.spark ? 'spark' : ''}`}>{c.label}</span>)}
+    </div>
+    <a class="hero-cta" href="/collaborate">Work with me →</a>
+  </div></div>
+</header>
+
+<script>
+  // Diegetic survey coordinates ticking over the feed (cosmetic).
+  const co = document.getElementById('coords');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (co && !reduce) {
+    let lat = 51.7520, lon = -1.2577, alt = 96;
+    setInterval(() => {
+      lat += (Math.random() - 0.5) * 0.0006;
+      lon += (Math.random() - 0.5) * 0.0006;
+      alt += (Math.random() - 0.5) * 3;
+      co.innerHTML = `LAT ${lat.toFixed(4)}<br>LON ${lon.toFixed(4)}<br>ALT ${alt.toFixed(0)} m`;
+    }, 800);
+  }
+</script>

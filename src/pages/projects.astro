@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const entries = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const rendered = await Promise.all(entries.map(async (e) => ({ data: e.data, Content: (await e.render()).Content })));
+const featured = rendered.filter((e) => e.data.featured);
+const rest = rendered.filter((e) => !e.data.featured);
+---
+<Base title="Projects — Martin Mokros">
+  <div class="wrap page-head">
+    <div class="eyebrow">Projects</div>
+    <h1>What I'm building.</h1>
+    <p>Named, funded efforts with partners and a clock. Each links to the research it advances.</p>
+  </div>
+  <section><div class="wrap">
+    {featured.map((e) => {
+      const Content = e.Content;
+      return (
+        <div class="lead">
+          {e.data.eyebrow && <div class="eyebrow">{e.data.eyebrow}</div>}
+          <h3>{e.data.title}</h3>
+          {e.data.subtitle && <div class="subtitle">{e.data.subtitle}</div>}
+          <Content />
+          <div class="meta" set:html={e.data.meta.join('<br>')}></div>
+          {e.data.scan && (
+            <div class="scan-embed">
+              <b>◰ INTERACTIVE 3D SCAN</b>
+              <span>Potree viewer embeds here — explore the real point cloud (millions of points, streamed). See README → "Adding point clouds".</span>
+            </div>
+          )}
+        </div>
+      );
+    })}
+
+    <div style="height:8px"></div>
+
+    {rest.map((e) => {
+      const Content = e.Content;
+      return (
+        <div class="strand">
+          <div class="tag">{e.data.tag}</div>
+          <div>
+            <h3>{e.data.title}</h3>
+            <Content />
+            <div class="meta">
+              <span set:html={e.data.meta.join('<br>')}></span>
+              {e.data.externalUrl && (<><br /><a class="xlink" href={e.data.externalUrl} target="_blank" rel="noopener">{e.data.externalLabel || 'Visit →'}</a></>)}
+            </div>
+          </div>
+        </div>
+      );
+    })}
+  </div></section>
+</Base>

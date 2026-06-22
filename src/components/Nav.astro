@@ -1,0 +1,41 @@
+---
+const { home = false } = Astro.props;
+const path = Astro.url.pathname;
+const isActive = (href) => href === '/' ? path === '/' : path.startsWith(href);
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/research', label: 'Research' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/publications', label: 'Publications' },
+  { href: '/collaborate', label: 'Collaborate' },
+  { href: '/join', label: 'Join us' },
+  { href: '/about', label: 'About' },
+];
+---
+<nav class={`nav ${home ? 'over' : 'solid'}`} id="nav" data-home={home ? '1' : '0'}>
+  <div class="wrap">
+    <a class="brand" href="/"><span class="dot"></span>Martin Mokros</a>
+    <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="menu" id="menu">
+      {links.map((l) => (
+        <a class="link" href={l.href} aria-current={isActive(l.href) ? 'page' : undefined}>{l.label}</a>
+      ))}
+    </div>
+  </div>
+</nav>
+
+<script>
+  const nav = document.getElementById('nav');
+  const menu = document.getElementById('menu');
+  const burger = document.getElementById('burger');
+  burger?.addEventListener('click', () => { menu?.classList.toggle('open'); burger.classList.toggle('x'); });
+  // On the home page the bar is transparent over the hero, solid once you scroll.
+  if (nav?.dataset.home === '1') {
+    const onScroll = () => {
+      nav.classList.toggle('over', scrollY < 40);
+      nav.classList.toggle('solid', scrollY >= 40);
+    };
+    onScroll();
+    addEventListener('scroll', onScroll, { passive: true });
+  }
+</script>

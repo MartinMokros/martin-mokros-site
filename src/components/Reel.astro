@@ -1,0 +1,44 @@
+---
+// EDIT THIS LIST to change the home-page reel.
+// Add a fly-through clip of a real scan:  { type:'video', src:'/media/your-scan.mp4', tag:'SCAN', title:'...', sub:'...' }
+// Add a field photo:                      { type:'image', src:'/media/your-photo.jpg', tag:'FIELD', title:'...', sub:'...' }
+const items = [
+  { type: 'video', src: '/media/hero.mp4', poster: '/media/field-1.jpg', tag: 'AERIAL', title: 'Drone fly-over', sub: 'RGB capture — DJI' },
+  { type: 'image', src: '/media/field-1.jpg', tag: 'FIELD', title: 'Canopy from above', sub: 'Survey transect' },
+  { type: 'image', src: '/media/field-2.jpg', tag: 'FIELD', title: 'Forest structure', sub: 'Field campaign' },
+  { type: 'image', src: '/media/field-3.jpg', tag: 'FIELD', title: 'Site overview', sub: 'Pre-scan recon' },
+];
+---
+<div class="reel-stage" id="reel-stage"></div>
+<div class="reel-thumbs" id="reel-thumbs">
+  {items.map((it, i) => (
+    <button data-i={i} class={i === 0 ? 'on' : ''}>
+      {it.type === 'video' && <span class="vidtag">VIDEO</span>}
+      <img src={it.poster || it.src} alt="" />
+    </button>
+  ))}
+</div>
+<div class="reel-note">Swap these any time — edit <code>src/components/Reel.astro</code> and drop files in <code>public/media/</code>.</div>
+
+<script type="application/json" id="reel-data" set:html={JSON.stringify(items)}></script>
+<script>
+  const stage = document.getElementById('reel-stage');
+  const thumbs = document.getElementById('reel-thumbs');
+  const items = JSON.parse(document.getElementById('reel-data').textContent);
+  let cur = -1;
+  function media(it) {
+    return it.type === 'video'
+      ? `<video src="${it.src}" poster="${it.poster || ''}" autoplay muted loop playsinline></video>`
+      : `<img src="${it.src}" alt="">`;
+  }
+  function set(i) {
+    if (i === cur) return; cur = i; const it = items[i];
+    stage.innerHTML = media(it) +
+      `<div class="reel-cap"><span class="rtag">${it.tag}</span><h4>${it.title}</h4><span>${it.sub}</span></div>`;
+    [...thumbs.children].forEach((b, j) => b.classList.toggle('on', j === i));
+  }
+  thumbs.addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (b) set(+b.dataset.i);
+  });
+  set(0);
+</script>

@@ -1,0 +1,28 @@
+---
+import Base from '../layouts/Base.astro';
+
+const pubs = [
+  { t: 'Terrestrial and mobile laser scanning for national forest inventories: from theory to implementation', s: 'Review' },
+  { t: 'Novel low-cost mobile mapping systems for forest inventories as TLS alternatives', s: 'Int. J. Appl. EO · 2021' },
+  { t: 'Assessing ground-based LiDAR devices for tree diameter and height estimation', s: 'Method' },
+  { t: 'Efficient monitoring of urban green spaces with photogrammetry, LiDAR & RTK', s: 'Application' },
+];
+---
+<Base title="Publications — Martin Mokros">
+  <div class="wrap page-head">
+    <div class="eyebrow">Publications</div>
+    <h1>Peer-reviewed, and used.</h1>
+    <p>The always-current list lives on Google Scholar. A few that represent the work best are below.</p>
+  </div>
+  <section><div class="wrap">
+    <div class="pub-stats">
+      <div class="s"><b>2,600+</b><span>Citations · EDIT</span></div>
+      <div class="s"><b>40+</b><span>Publications</span></div>
+      <div class="s"><b>2025</b><span>Open Science Award</span></div>
+    </div>
+    {pubs.map((p) => (
+      <div class="pub"><h4>{p.t}</h4><span class="src">{p.s}</span></div>
+    ))}
+    <p style="margin-top:26px"><a class="xlink" href="https://scholar.google.com/citations?user=zXX2vTUAAAAJ&hl=en">Full list on Google Scholar →</a></p>
+  </div></section>
+</Base>

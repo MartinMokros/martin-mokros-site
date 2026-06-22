@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import Reel from '../components/Reel.astro';
+import { getCollection } from 'astro:content';
+
+const notes = (await getCollection('notes'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const latest = notes.slice(0, 3);
+const fmt = (d) => d.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
+---
+<Base home={true}>
+  <Hero />
+
+  <!-- SCAN & FIELD REEL -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">What we're scanning</div>
+        <h2>From the field.</h2>
+        <p>Recent campaigns and scans. New clips drop in as we collect them — and the full, explorable 3D point clouds live on each project page.</p>
+      </div>
+      <Reel />
+    </div>
+  </section>
+
+  <!-- FIELD NOTES -->
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-flex sec-head">
+        <div><div class="eyebrow">Field notes</div><h2>Latest.</h2></div>
+        <a class="more" href="/notes">All notes →</a>
+      </div>
+      <div class="notes">
+        {latest.map((n) => (
+          <a class="note" href={`/notes/${n.slug}`}>
+            <div><span class="date">{fmt(n.data.date)}</span><span class="tagN">{n.data.tag}</span></div>
+            <div><h4>{n.data.title}</h4><p>{n.data.summary}</p></div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- TEASERS -->
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="teasers">
+        <a class="tcard" href="/projects"><div class="k">FLAGSHIP</div><h3>3DTreePrint</h3><p>My ARIA project: low-cost 3D "structural fingerprints" for ecosystem resilience.</p><span class="go">Projects →</span></a>
+        <a class="tcard" href="/research"><div class="k">RESEARCH</div><h3>The why</h3><p>The threads beneath the projects — and why measuring forests in 3D matters.</p><span class="go">Research →</span></a>
+        <a class="tcard" href="/join"><div class="k">JOIN US</div><h3>PhD &amp; postdoc</h3><p>Funded, self-funded, or bringing your own. We're open — here's how.</p><span class="go">Join us →</span></a>
+      </div>
+    </div>
+  </section>
+</Base>

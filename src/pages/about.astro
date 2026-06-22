@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+
+const facts = [
+  ['Role', 'Lecturer in Earth Observation, UCL Geography'],
+  ['Fellow', 'National Centre for Earth Observation'],
+  ['Chair', '3DForEcoTech (COST Action)'],
+  ['ARIA', 'Creator, 3DTreePrint'],
+  ['Award', 'UCL Open Science & Scholarship, 2025'],
+];
+---
+<Base title="About — Martin Mokros">
+  <div class="wrap page-head">
+    <div class="eyebrow">About</div>
+    <h1>Martin Mokros</h1>
+  </div>
+  <section><div class="wrap"><div class="about-grid">
+    <div>
+      <!-- Replace the placeholder with a photo: drop e.g. portrait.jpg into public/media/
+           and swap the div below for: <img src="/media/portrait.jpg" alt="Martin Mokros" /> -->
+      <div class="portrait">[ EDIT: a field portrait —<br>you with kit, in a forest ]</div>
+      <ul class="factlist">
+        {facts.map(([k, v]) => <li><b>{k}</b> — {v}</li>)}
+      </ul>
+    </div>
+    <div>
+      <p class="big">I build the tools that let us see forests in three dimensions — and I care most about the part where someone who isn't a remote-sensing specialist can actually use them.</p>
+      <p>My work focuses on the standardisation and democratisation of proximal remote sensing: the 3D data captured by laser scanning and photogrammetry, across every step from prototype sensor to data collection to real-world implementation. I chair 3DForEcoTech, a network of 500+ scientists across 60+ countries, and lead the ARIA-funded 3DTreePrint project. I've authored 40+ papers across remote sensing, forestry, forest ecology, urban trees and AI for tree species classification.</p>
+      <p style="font-style:italic;color:var(--forest)">[ EDIT — the human paragraph: why you got into this, what you do it for, what still makes fieldwork fun. The one place to let your personality show. Two or three sentences, in your voice. ]</p>
+      <p style="margin-top:22px"><a class="xlink" href="#">Download full CV (PDF) → [EDIT: drop cv.pdf in public/ and link /cv.pdf]</a></p>
+    </div>
+  </div></div></section>
+</Base>

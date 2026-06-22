@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+
+const asks = [
+  { k: 'RESEARCH PARTNERS', h: 'Co-design a project', p: 'Academics and institutions wanting a partner across the full pipeline — proposal to fieldwork to open tools. I bring international networks and reproducible methods.' },
+  { k: 'HARDWARE', h: 'Sensor & device makers', p: 'Manufacturers wanting LiDAR or mobile-mapping kit benchmarked and validated against real forest and urban data.' },
+  { k: 'DATA / SITES', h: 'Field sites & agencies', p: 'Forest and city managers with sites, plots or inventory data open to co-designed 3D campaigns.' },
+  { k: 'INSTITUTIONS', h: 'Networks & standards', p: 'Bodies building monitoring standards or national inventories who want experience that\'s already done it across 60+ countries.' },
+];
+const consult = [
+  'Choosing and benchmarking LiDAR / mobile-mapping hardware for a use case',
+  'Designing field protocols and processing pipelines that non-specialists can run',
+  'Technical due diligence, expert review, advisory boards',
+  'Training teams to capture and process 3D forest / urban-tree data',
+];
+---
+<Base title="Collaborate — Martin Mokros">
+  <div class="wrap page-head">
+    <div class="eyebrow">Collaborate</div>
+    <h1>Partner, or hire me.</h1>
+    <p>For colleagues, institutions, agencies and companies. Specific asks below — and yes, I take on consultancy.</p>
+  </div>
+  <section><div class="wrap">
+    <div class="grid2">
+      {asks.map((a) => (
+        <div class="ask"><div class="k">{a.k}</div><h3>{a.h}</h3><p>{a.p}</p></div>
+      ))}
+    </div>
+
+    <div class="hire">
+      <div class="eyebrow">Consultancy</div>
+      <h3>Hire me</h3>
+      <p>I consult for companies, agencies and organisations on 3D vegetation sensing and turning point clouds into operational decisions. Typical engagements:</p>
+      <ul>{consult.map((c) => <li>{c}</li>)}</ul>
+      <p style="margin-top:18px"><a class="btn" href="mailto:m.mokros@ucl.ac.uk?subject=Consultancy%20enquiry">Discuss a consultancy →</a></p>
+    </div>
+  </div></section>
+</Base>

@@ -1,0 +1,22 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const notes = await getCollection('notes');
+  return notes.map((note) => ({ params: { slug: note.slug }, props: { note } }));
+}
+
+const { note } = Astro.props;
+const { Content } = await note.render();
+const fmt = (d) => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+<Base title={`${note.data.title} — Martin Mokros`} description={note.data.summary}>
+  <div class="wrap article">
+    <a class="back" href="/notes">← Field Notes</a>
+    <div class="date">{fmt(note.data.date)} · {note.data.tag}</div>
+    <h1>{note.data.title}</h1>
+    <Content />
+  </div>
+  <div style="height:60px"></div>
+</Base>

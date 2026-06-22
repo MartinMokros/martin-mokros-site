@@ -1,0 +1,21 @@
+---
+const links = [
+  { href: 'mailto:m.mokros@ucl.ac.uk', label: 'Email' },
+  { href: 'https://profiles.ucl.ac.uk/94679-martin-mokros', label: 'UCL' },
+  { href: 'https://scholar.google.com/citations?user=zXX2vTUAAAAJ&hl=en', label: 'Scholar' },
+  { href: 'https://www.linkedin.com/in/martinmokros', label: 'LinkedIn' },
+  { href: 'https://bsky.app/profile/mokros.bsky.social', label: 'Bluesky' },
+  { href: '/notes', label: 'Field Notes' },
+];
+---
+<footer>
+  <div class="wrap">
+    <div class="row">
+      <div class="eyebrow" style="color:var(--ochre-soft)">Martin Mokros · Earth Observation</div>
+      <div class="links">
+        {links.map((l) => <a class="flink" href={l.href}>{l.label}</a>)}
+      </div>
+    </div>
+    <div class="fine">© {new Date().getFullYear()} Martin Mokros · Lecturer in Earth Observation, UCL</div>
+  </div>
+</footer>

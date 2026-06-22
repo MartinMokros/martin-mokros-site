@@ -1,0 +1,25 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const notes = (await getCollection('notes'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const fmt = (d) => d.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
+---
+<Base title="Field Notes — Martin Mokros">
+  <div class="wrap page-head">
+    <div class="eyebrow">Field notes</div>
+    <h1>News &amp; notes.</h1>
+    <p>Project alerts, new papers, fieldwork, and the occasional thought. Each note is one short Markdown file in <code>src/content/notes/</code>.</p>
+  </div>
+  <section><div class="wrap">
+    <div class="notes">
+      {notes.map((n) => (
+        <a class="note" href={`/notes/${n.slug}`}>
+          <div><span class="date">{fmt(n.data.date)}</span><span class="tagN">{n.data.tag}</span></div>
+          <div><h4>{n.data.title}</h4><p>{n.data.summary}</p></div>
+        </a>
+      ))}
+    </div>
+  </div></section>
+</Base>

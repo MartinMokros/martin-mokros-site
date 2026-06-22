@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+
+const fellowships = [
+  'UKRI / NERC fellowships', 'Leverhulme Early Career', 'Marie Skłodowska-Curie (MSCA)',
+  'Newton International', 'National schemes [EDIT links]',
+];
+---
+<Base title="Join us — Martin Mokros">
+  <div class="wrap page-head">
+    <div class="eyebrow">Join us</div>
+    <h1>Want to do a PhD or postdoc with me?</h1>
+    <p>Short version: if your interests overlap with mine, get in touch early — before any deadline. Funded, self-funded, or bringing funding from your own country: all welcome. Here's the how.</p>
+  </div>
+  <section><div class="wrap">
+    <div class="join-block">
+      <h3>PhD students</h3>
+      <p>I supervise in 3D remote sensing of forests and urban trees — point clouds, low-cost sensing, AI for tree analysis, open reproducible workflows. Email me a short note on what you want to work on and your CV before you apply, so we can shape a project that fits both of us.</p>
+    </div>
+    <div class="join-block">
+      <h3>Postdocs</h3>
+      <p>When funded positions open, they're advertised on the UCL jobs site. Outside that, I actively help strong candidates win their own fellowships — get in touch well before the deadline and we'll build the proposal together.</p>
+      <div class="chips">
+        {fellowships.map((f) => <a class="chip" href="#">{f}</a>)}
+      </div>
+    </div>
+    <div class="join-block">
+      <h3>Self-funded &amp; bring-your-own-funding</h3>
+      <p>Have a scholarship from your home country, a national fellowship, or your own funding? We are genuinely open to hosting you. Many of the best collaborations start this way — send me your idea and what you bring.</p>
+    </div>
+    <div class="join-block" style="border-bottom:1px solid var(--line)">
+      <h3>Visiting researchers</h3>
+      <p>Short research visits are possible through UCL's visiting schemes. Get in touch before applying so we can plan something worthwhile.</p>
+    </div>
+    <div class="callout"><b>Before you email:</b> tell me (1) what you want to work on, (2) why with me specifically, and (3) your funding situation. A specific message gets a real reply; a generic one usually doesn't.</div>
+    <div class="cta-strip"><h3>Think you're a fit?</h3><a class="btn" href="mailto:m.mokros@ucl.ac.uk?subject=Joining%20the%20group">Email me →</a></div>
+  </div></section>
+</Base>

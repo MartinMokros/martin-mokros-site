@@ -1,0 +1,45 @@
+---
+import Base from '../layouts/Base.astro';
+
+const threads = [
+  {
+    n: 'Thread 01', title: '3D forest structure',
+    body: 'Terrestrial, mobile and drone laser scanning to capture the shape and arrangement of trees — the structure that drives biodiversity, carbon, water and resilience. From single-tree geometry to national forest inventory.',
+    feeds: '3DTreePrint · 3DForEcoTech · Scanning Together',
+  },
+  {
+    n: 'Thread 02', title: 'Low-cost & democratised sensing',
+    body: 'Can sub-€1,500 handheld scanners and smartphone-grade sensors replace equipment costing tens of thousands? I build, break and validate cheaper sensing so accurate 3D measurement isn\'t locked behind specialist budgets — or specialist labs.',
+    feeds: '3DTreePrint · Scanning Together · 3D Urban Tree Intelligence',
+  },
+  {
+    n: 'Thread 03', title: 'Urban & ecosystem EO',
+    body: 'Turning 3D structure into decisions — how urban canopy cools cities, how structural change flags ecosystem stress and recovery, and how ground data calibrates spaceborne missions like ESA Biomass.',
+    feeds: '3D Urban Tree Intelligence',
+  },
+  {
+    n: 'Thread 04', title: 'Open science & standardisation',
+    body: 'Methods only matter if others can reproduce them. I build harmonised protocols, open benchmarks and shared tools so the field stops reinventing and starts comparing. Recognised by a UCL Open Science & Scholarship Award (2025).',
+    feeds: '3DForEcoTech',
+  },
+];
+---
+<Base title="Research — Martin Mokros">
+  <div class="wrap page-head">
+    <div class="eyebrow">Research</div>
+    <h1>What I study, and why.</h1>
+    <p>Four threads, one aim: measuring the 3D structure of vegetation accurately, affordably, and often enough to change decisions. Each thread feeds — and is fed by — the projects.</p>
+  </div>
+  <section><div class="wrap">
+    {threads.map((t) => (
+      <div class="strand">
+        <div class="tag">{t.n}</div>
+        <div>
+          <h3>{t.title}</h3>
+          <p>{t.body}</p>
+          <div class="meta">FEEDS: <a class="xlink" href="/projects">{t.feeds}</a></div>
+        </div>
+      </div>
+    ))}
+  </div></section>
+</Base>
