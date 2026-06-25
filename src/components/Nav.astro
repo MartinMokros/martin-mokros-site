@@ -16,11 +16,6 @@ const links = [
   <div class="wrap">
     <a class="brand" href="/"><span class="dot"></span>Martin Mokros</a>
     <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
-    <div class="menu" id="menu">
-      {links.map((l) => (
-        <a class="link" href={l.href} aria-current={isActive(l.href) ? 'page' : undefined}>{l.label}</a>
-      ))}
-    </div>
   </div>
 </nav>
 
