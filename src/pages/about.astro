@@ -2,32 +2,40 @@
 import Base from '../layouts/Base.astro';
 
 const facts = [
-  ['Role', 'Lecturer in Earth Observation, UCL Geography'],
-  ['Fellow', 'National Centre for Earth Observation'],
-  ['Chair', '3DForEcoTech (COST Action)'],
-  ['ARIA', 'Creator, 3DTreePrint'],
-  ['Award', 'UCL Open Science & Scholarship, 2025'],
+  { role: 'Lecturer in Earth Observation', org: 'UCL Geography', href: 'https://profiles.ucl.ac.uk/94679-martin-mokros' },
+  { role: 'ARIA Creator', org: '3DTreePrint project', href: 'https://aria.org.uk/opportunity-spaces/engineering-ecosystem-resilience/opportunity-seeds?cardId=3dtreeprint' },
+  { role: 'Fellow', org: 'National Centre for Earth Observation', href: 'https://www.nceo.ac.uk/our-research/missions/biomass/' },
+  { role: 'Chair', org: '3DForEcoTech (COST Action)', href: 'https://3dforecotech.eu' },
+  { role: 'Award', org: 'UCL Open Science & Scholarship, 2025', href: 'https://www.ucl.ac.uk/social-historical-sciences/news/2025/oct/ucl-geography-lecturer-wins-open-science-award-global-collaboration-forest-research' },
 ];
 ---
-<Base title="About — Martin Mokros">
+<Base title="About — Martin Mokroš">
   <div class="wrap page-head">
     <div class="eyebrow">About</div>
-    <h1>Martin Mokros</h1>
+    <h1>Martin Mokroš</h1>
   </div>
   <section><div class="wrap"><div class="about-grid">
     <div>
-      <!-- Replace the placeholder with a photo: drop e.g. portrait.jpg into public/media/
-           and swap the div below for: <img src="/media/portrait.jpg" alt="Martin Mokros" /> -->
-      <div class="portrait">[ EDIT: a field portrait —<br>you with kit, in a forest ]</div>
+      <div class="portrait">
+        <img src="/media/portrait.jpg" alt="Martin Mokroš surveying with a backpack-mounted mobile LiDAR scanner" style="object-fit:cover;transform:scale(1.4);transform-origin:44% 26%;filter:saturate(.7) contrast(.96) brightness(1.04) sepia(.07)" />
+      </div>
       <ul class="factlist">
-        {facts.map(([k, v]) => <li><b>{k}</b> — {v}</li>)}
+        {facts.map((f) => (
+          <li>
+            <b>{f.role}</b>
+            <a href={f.href} target="_blank" rel="noopener">{f.org}</a>
+          </li>
+        ))}
       </ul>
     </div>
     <div>
-      <p class="big">I build the tools that let us see forests in three dimensions — and I care most about the part where someone who isn't a remote-sensing specialist can actually use them.</p>
-      <p>My work focuses on the standardisation and democratisation of proximal remote sensing: the 3D data captured by laser scanning and photogrammetry, across every step from prototype sensor to data collection to real-world implementation. I chair 3DForEcoTech, a network of 500+ scientists across 60+ countries, and lead the ARIA-funded 3DTreePrint project. I've authored 40+ papers across remote sensing, forestry, forest ecology, urban trees and AI for tree species classification.</p>
-      <p style="font-style:italic;color:var(--forest)">[ EDIT — the human paragraph: why you got into this, what you do it for, what still makes fieldwork fun. The one place to let your personality show. Two or three sentences, in your voice. ]</p>
-      <p style="margin-top:22px"><a class="xlink" href="#">Download full CV (PDF) → [EDIT: drop cv.pdf in public/ and link /cv.pdf]</a></p>
+      <p class="big">I build the tools that let us see forests in three dimensions and I care most about the moment someone who isn't a remote-sensing specialist can actually use them.</p>
+      <p>I'm a Lecturer in Earth Observation at UCL and a fellow of the National Centre for Earth Observation, and my work spans the whole 3D measurement pipeline: I design and build low-cost laser scanners, benchmark the sensors and software the field relies on, turn raw point clouds into forest structure, carbon and biodiversity, and use machine learning for problems like tree-species classification.</p>
+      <p>Right now I lead two projects and field works under <b>3DTreePrint</b> (ARIA) across UK woodlands and <b>Scanning Together</b> (NCEO) in the tropics. Translating and scaling methods from national inventory plots to city streets to community forests in Madagascar. Around the research I supervise postdocs and PhD students, convene three UCL modules and train scientists at international summer schools, with 40+ papers, 3,000+ citations, and a stubborn commitment to open data, shared standards and reproducible tools.</p>
+      <div class="about-cta">
+        <a class="btn" href="mailto:m.mokros@ucl.ac.uk">Email me →</a>
+        <a class="btn ghost" href="https://uk.linkedin.com/in/martinmokros" target="_blank" rel="noopener">Follow me on LinkedIn →</a>
+      </div>
     </div>
   </div></div></section>
 </Base>

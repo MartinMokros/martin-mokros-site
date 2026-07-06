@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="./build/potree/potree.css">
+  <link rel="stylesheet" href="./libs/jquery-ui/jquery-ui.min.css">
+  <link rel="stylesheet" href="./libs/openlayers3/ol.css">
+  <link rel="stylesheet" href="./libs/spectrum/spectrum.css">
+  <style>
+    html,body{margin:0;height:100%;overflow:hidden;background:#16241B}
+    #potree_render_area{position:absolute;inset:0}
+    /* clean embed: hide every Potree GUI chrome in case anything renders */
+    #potree_sidebar_container,.potree_menu_toggle{display:none!important}
+    /* small, quiet hint that fades */
+    #hint{position:absolute;left:12px;bottom:10px;z-index:5;
+      font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10px;
+      letter-spacing:.08em;color:rgba(216,154,82,.85);
+      text-transform:uppercase;pointer-events:none;
+      transition:opacity .6s ease;text-shadow:0 1px 2px rgba(0,0,0,.6)}
+  </style>
+</head>
+<body>
+  <div class="potree_container" style="position:absolute;width:100%;height:100%">
+    <div id="potree_render_area"></div>
+  </div>
+  <div id="hint">drag to orbit · scroll to zoom</div>
+
+  <script src="./libs/jquery/jquery-3.1.1.min.js"></script>
+  <script src="./libs/spectrum/spectrum.js"></script>
+  <script src="./libs/jquery-ui/jquery-ui.min.js"></script>
+  <script src="./libs/other/BinaryHeap.js"></script>
+  <script src="./libs/tween/tween.min.js"></script>
+  <script src="./libs/d3/d3.js"></script>
+  <script src="./libs/proj4/proj4.js"></script>
+  <script src="./libs/openlayers3/ol.js"></script>
+  <script src="./libs/i18next/i18next.js"></script>
+  <script src="./libs/jstree/jstree.js"></script>
+  <script src="./build/potree/potree.js"></script>
+  <script src="./libs/plasio/js/laslaz.js"></script>
+
+  <script>
+    // Clean embedded viewer — NO loadGUI(). Used inside the 3DTreePrint <iframe>.
+    // The full-GUI debug version lives in viewer.html.
+    window.viewer = new Potree.Viewer(document.getElementById("potree_render_area"));
+    viewer.setEDLEnabled(true);
+    viewer.setFOV(60);
+    viewer.setPointBudget(2_000_000);
+    viewer.setBackground("gradient");
+    viewer.setControls(viewer.orbitControls);
+
+    Potree.loadPointCloud("./clouds/treeprint/metadata.json", "treeprint", e => {
+      let pc = e.pointcloud;
+      viewer.scene.addPointCloud(pc);
+      let m = pc.material;
+      m.size = 1;
+      m.pointSizeType = Potree.PointSizeType.ADAPTIVE;
+      m.activeAttributeName = "elevation";
+      m.gradient = Potree.Gradients.YELLOW_GREEN;
+
+      viewer.fitToScreen();
+      // gentle 3/4 angle instead of a flat top-down framing
+      let view = viewer.scene.view;
+      view.pitch = -0.45;
+      view.yaw   = 0.6;
+
+      // fade the hint after a few seconds
+      setTimeout(() => { let h = document.getElementById("hint"); if (h) h.style.opacity = 0; }, 4000);
+    });
+  </script>
+</body>
+</html>

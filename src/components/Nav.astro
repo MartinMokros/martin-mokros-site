@@ -14,8 +14,13 @@ const links = [
 ---
 <nav class={`nav ${home ? 'over' : 'solid'}`} id="nav" data-home={home ? '1' : '0'}>
   <div class="wrap">
-    <a class="brand" href="/"><span class="dot"></span>Martin Mokros</a>
+    <a class="brand" href="/"><span class="dot"></span>Martin Mokroš</a>
     <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="menu" id="menu">
+      {links.map((l) => (
+        <a class="link" href={l.href} aria-current={isActive(l.href) ? 'page' : undefined}>{l.label}</a>
+      ))}
+    </div>
   </div>
 </nav>
 

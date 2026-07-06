@@ -11,7 +11,7 @@ const { note } = Astro.props;
 const { Content } = await note.render();
 const fmt = (d) => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 ---
-<Base title={`${note.data.title} — Martin Mokros`} description={note.data.summary}>
+<Base title={`${note.data.title} — Martin Mokroš`} description={note.data.summary}>
   <div class="wrap article">
     <a class="back" href="/notes">← Field Notes</a>
     <div class="date">{fmt(note.data.date)} · {note.data.tag}</div>

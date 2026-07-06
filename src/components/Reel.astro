@@ -2,23 +2,24 @@
 // EDIT THIS LIST to change the home-page reel.
 // Add a fly-through clip of a real scan:  { type:'video', src:'/media/your-scan.mp4', tag:'SCAN', title:'...', sub:'...' }
 // Add a field photo:                      { type:'image', src:'/media/your-photo.jpg', tag:'FIELD', title:'...', sub:'...' }
+// Add a YouTube video:                    { type:'youtube', id:'VIDEO_ID', tag:'VIDEO', title:'...', sub:'...' }
 const items = [
-  { type: 'video', src: '/media/hero.mp4', poster: '/media/field-1.jpg', tag: 'AERIAL', title: 'Drone fly-over', sub: 'RGB capture — DJI' },
-  { type: 'image', src: '/media/field-1.jpg', tag: 'FIELD', title: 'Canopy from above', sub: 'Survey transect' },
-  { type: 'image', src: '/media/field-2.jpg', tag: 'FIELD', title: 'Forest structure', sub: 'Field campaign' },
-  { type: 'image', src: '/media/field-3.jpg', tag: 'FIELD', title: 'Site overview', sub: 'Pre-scan recon' },
+  { type: 'video', src: '/media/hero.mp4', poster: '/media/field-1.jpg', tag: 'Below Canopy', title: '3D Urban Inteligence', sub: 'Captured by Ben Sanderson' },
+  { type: 'youtube', id: 'ltNN7quSp_g', tag: '3DForEcoTech', title: 'Interdisciplinary Summer School', sub: 'YouTube' },
+  { type: 'image', src: '/media/ScanningTogether.jpg', tag: 'Concept', title: 'Scanning Together', sub: 'projec concept' },
+  { type: 'potree', src: '/potree/embed.html', poster: '/media/scan-thumb.svg', tag: 'Interactive 3D', title: '3DTreePrint scan', sub: 'drag to orbit · scroll to zoom' },
 ];
 ---
 <div class="reel-stage" id="reel-stage"></div>
 <div class="reel-thumbs" id="reel-thumbs">
   {items.map((it, i) => (
     <button data-i={i} class={i === 0 ? 'on' : ''}>
-      {it.type === 'video' && <span class="vidtag">VIDEO</span>}
-      <img src={it.poster || it.src} alt="" />
+      {(it.type === 'video' || it.type === 'youtube') && <span class="vidtag">VIDEO</span>}
+      {it.type === 'potree' && <span class="vidtag scan3d">3D</span>}
+      <img src={it.poster || (it.type === 'youtube' ? `https://img.youtube.com/vi/${it.id}/hqdefault.jpg` : it.src)} alt="" />
     </button>
   ))}
 </div>
-<div class="reel-note">Swap these any time — edit <code>src/components/Reel.astro</code> and drop files in <code>public/media/</code>.</div>
 
 <script type="application/json" id="reel-data" set:html={JSON.stringify(items)}></script>
 <script>
@@ -27,9 +28,13 @@ const items = [
   const items = JSON.parse(document.getElementById('reel-data').textContent);
   let cur = -1;
   function media(it) {
-    return it.type === 'video'
-      ? `<video src="${it.src}" poster="${it.poster || ''}" autoplay muted loop playsinline></video>`
-      : `<img src="${it.src}" alt="">`;
+    if (it.type === 'youtube')
+      return `<iframe src="https://www.youtube.com/embed/${it.id}?autoplay=1&mute=1&loop=1&playlist=${it.id}&controls=1&modestbranding=1&playsinline=1&rel=0" frameborder="0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>`;
+    if (it.type === 'video')
+      return `<video src="${it.src}" poster="${it.poster || ''}" autoplay muted loop playsinline></video>`;
+    if (it.type === 'potree')
+      return `<iframe src="${it.src}" title="Interactive 3D point cloud — 3DTreePrint scan" loading="lazy" allowfullscreen></iframe>`;
+    return `<img src="${it.src}" alt="">`;
   }
   function set(i) {
     if (i === cur) return; cur = i; const it = items[i];

@@ -7,7 +7,7 @@ const rendered = await Promise.all(entries.map(async (e) => ({ data: e.data, Con
 const featured = rendered.filter((e) => e.data.featured);
 const rest = rendered.filter((e) => !e.data.featured);
 ---
-<Base title="Projects — Martin Mokros">
+<Base title="Projects — Martin Mokroš">
   <div class="wrap page-head">
     <div class="eyebrow">Projects</div>
     <h1>What I'm building.</h1>
@@ -24,10 +24,15 @@ const rest = rendered.filter((e) => !e.data.featured);
           <Content />
           <div class="meta" set:html={e.data.meta.join('<br>')}></div>
           {e.data.scan && (
-            <div class="scan-embed">
-              <b>◰ INTERACTIVE 3D SCAN</b>
-              <span>Potree viewer embeds here — explore the real point cloud (millions of points, streamed). See README → "Adding point clouds".</span>
-            </div>
+            <figure class="scan-embed">
+              <div class="scan-embed__label"><b>◰ INTERACTIVE 3D SCAN</b><span>drag to orbit · scroll to zoom · coloured by elevation</span></div>
+              <iframe
+                src="/potree/embed.html"
+                title="Interactive 3D point cloud — 3DTreePrint scan"
+                loading="lazy"
+                allowfullscreen
+              ></iframe>
+            </figure>
           )}
         </div>
       );

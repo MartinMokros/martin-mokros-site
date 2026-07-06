@@ -1,0 +1,42 @@
+<svg viewBox="0 0 236 136" xmlns="http://www.w3.org/2000/svg">
+  <rect width="236" height="136" fill="#16241B"/>
+  <!-- point-cloud tree: coloured by elevation (ochre high -> green low) -->
+  <g>
+    <circle cx="118" cy="24" r="2.4" fill="#D89A52"/>
+    <circle cx="108" cy="30" r="2.2" fill="#D89A52"/>
+    <circle cx="128" cy="30" r="2.2" fill="#D89A52"/>
+    <circle cx="118" cy="34" r="2.4" fill="#D89A52"/>
+    <circle cx="98" cy="40" r="2.2" fill="#C99553"/>
+    <circle cx="138" cy="40" r="2.2" fill="#C99553"/>
+    <circle cx="112" cy="42" r="2.4" fill="#C99553"/>
+    <circle cx="126" cy="42" r="2.4" fill="#C99553"/>
+    <circle cx="88" cy="52" r="2.2" fill="#A79A5E"/>
+    <circle cx="148" cy="52" r="2.2" fill="#A79A5E"/>
+    <circle cx="102" cy="52" r="2.6" fill="#A79A5E"/>
+    <circle cx="118" cy="52" r="2.6" fill="#A79A5E"/>
+    <circle cx="134" cy="52" r="2.6" fill="#A79A5E"/>
+    <circle cx="80" cy="64" r="2.2" fill="#8CA267"/>
+    <circle cx="156" cy="64" r="2.2" fill="#8CA267"/>
+    <circle cx="94" cy="64" r="2.6" fill="#8CA267"/>
+    <circle cx="110" cy="64" r="2.6" fill="#8CA267"/>
+    <circle cx="126" cy="64" r="2.6" fill="#8CA267"/>
+    <circle cx="142" cy="64" r="2.6" fill="#8CA267"/>
+    <circle cx="86" cy="76" r="2.4" fill="#7E9B6E"/>
+    <circle cx="150" cy="76" r="2.4" fill="#7E9B6E"/>
+    <circle cx="104" cy="76" r="2.6" fill="#7E9B6E"/>
+    <circle cx="118" cy="76" r="2.6" fill="#7E9B6E"/>
+    <circle cx="132" cy="76" r="2.6" fill="#7E9B6E"/>
+    <!-- trunk -->
+    <circle cx="116" cy="88" r="2.2" fill="#5E7E4F"/>
+    <circle cx="120" cy="88" r="2.2" fill="#5E7E4F"/>
+    <circle cx="116" cy="98" r="2.2" fill="#4F6E44"/>
+    <circle cx="120" cy="98" r="2.2" fill="#4F6E44"/>
+    <circle cx="116" cy="108" r="2.2" fill="#3F5D3A"/>
+    <circle cx="120" cy="108" r="2.2" fill="#3F5D3A"/>
+    <!-- ground scatter -->
+    <circle cx="96" cy="116" r="1.8" fill="#2F5D3A"/>
+    <circle cx="140" cy="116" r="1.8" fill="#2F5D3A"/>
+    <circle cx="118" cy="118" r="1.8" fill="#2F5D3A"/>
+  </g>
+  <text x="10" y="126" font-family="'IBM Plex Mono', monospace" font-size="11" letter-spacing="1.5" fill="#D89A52">◰ 3D</text>
+</svg>

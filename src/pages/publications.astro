@@ -2,26 +2,31 @@
 import Base from '../layouts/Base.astro';
 
 const pubs = [
-  { t: 'Terrestrial and mobile laser scanning for national forest inventories: from theory to implementation', s: 'Review' },
-  { t: 'Novel low-cost mobile mapping systems for forest inventories as TLS alternatives', s: 'Int. J. Appl. EO · 2021' },
-  { t: 'Assessing ground-based LiDAR devices for tree diameter and height estimation', s: 'Method' },
-  { t: 'Efficient monitoring of urban green spaces with photogrammetry, LiDAR & RTK', s: 'Application' },
+  { tag: 'Software', latest: true, t: 'MapsHD: a benchmark suite for LiDAR odometry frameworks', s: 'SoftwareX · 2026', u: 'https://doi.org/10.1016/j.softx.2026.102822' },
+  { tag: 'Prototypes', t: 'An open and novel low-cost terrestrial laser scanner prototype for forest monitoring', s: 'Sensors · 2026', u: 'https://www.mdpi.com/1424-8220/26/1/63' },
+  { tag: 'Barriers', t: 'Barriers and gaps in the implementation of close-range remote sensing technologies in forestry', s: 'J. Forestry Research · 2026', u: 'https://link.springer.com/article/10.1007/s11676-026-01995-3' },
+  { tag: 'Processing', t: 'A review of software solutions to process ground-based point clouds in forest applications', s: 'Current Forestry Reports · 2024', u: 'https://link.springer.com/article/10.1007/s40725-024-00228-2' },
+  { tag: 'Urban', t: 'Integrating forest inventory and LiDAR observations to uncover the role of plant traits on cooling and humidifying effects in urban areas', s: 'J. Applied Ecology · 2025', u: 'https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/1365-2664.70102' },
+  { tag: 'Inventory', t: 'Terrestrial and mobile laser scanning for national forest inventories: from theory to implementation', s: 'Remote Sensing of Environment · 2025', u: 'https://www.sciencedirect.com/science/article/pii/S0034425725003517' },
 ];
 ---
-<Base title="Publications — Martin Mokros">
+<Base title="Publications — Martin Mokroš">
   <div class="wrap page-head">
     <div class="eyebrow">Publications</div>
-    <h1>Peer-reviewed, and used.</h1>
-    <p>The always-current list lives on Google Scholar. A few that represent the work best are below.</p>
+    <h1>Peer-reviewed, and applied.</h1>
+    <p>The always-current list lives on Google Scholar. A selection of recent work — newest first, spanning software, prototypes, barriers, processing, urban and inventory — is below.</p>
   </div>
   <section><div class="wrap">
     <div class="pub-stats">
-      <div class="s"><b>2,600+</b><span>Citations · EDIT</span></div>
+      <div class="s"><b>3,000+</b><span>Citations · Google Scholar</span></div>
       <div class="s"><b>40+</b><span>Publications</span></div>
       <div class="s"><b>2025</b><span>Open Science Award</span></div>
     </div>
     {pubs.map((p) => (
-      <div class="pub"><h4>{p.t}</h4><span class="src">{p.s}</span></div>
+      <div class="pub">
+        <div><div class="plabels">{p.latest && <span class="platest">Latest</span>}<span class="ptag">{p.tag}</span></div><h4><a href={p.u} target="_blank" rel="noopener">{p.t}</a></h4></div>
+        <span class="src">{p.s}</span>
+      </div>
     ))}
     <p style="margin-top:26px"><a class="xlink" href="https://scholar.google.com/citations?user=zXX2vTUAAAAJ&hl=en">Full list on Google Scholar →</a></p>
   </div></section>
