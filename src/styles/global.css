@@ -159,6 +159,9 @@ section{padding:72px 0}
 .now-card.invite .now-when.alt{color:#1c1206;background:rgba(28,18,6,.14)}
 .now-card.invite .now-partner{color:#3c2a12}
 .now-card.invite .xlink{color:#1c1206;font-weight:600}
+.proj-photos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:18px 0 6px}
+.proj-photos img{width:100%;aspect-ratio:4/3;object-fit:cover;object-position:center 25%;border-radius:6px;border:1px solid var(--line)}
+@media(max-width:560px){.proj-photos{grid-template-columns:1fr 1fr}.proj-photos img:nth-child(3){display:none}}
 /* OPEN CALL (hiring card on Home + block on Join us) */
 @media(min-width:760px){.now-card.hiring.open{grid-column:span 2;grid-row:span 2;padding:30px 32px}}
 .now-card.hiring.open h3{font-size:clamp(22px,2.4vw,28px);margin-bottom:12px}

@@ -48,6 +48,11 @@ const rest = rendered.filter((e) => !e.data.featured);
           <div>
             <h3>{e.data.title}</h3>
             <Content />
+            {e.data.images.length > 0 && (
+              <div class="proj-photos">
+                {e.data.images.map((src) => <img src={src} alt={`${e.data.title} in the field`} loading="lazy" />)}
+              </div>
+            )}
             <div class="meta">
               <span set:html={e.data.meta.join('<br>')}></span>
               {e.data.externalUrl && (<><br /><a class="xlink" href={e.data.externalUrl} target="_blank" rel="noopener">{e.data.externalLabel || 'Visit →'}</a></>)}

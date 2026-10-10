@@ -14,6 +14,7 @@ const projects = defineCollection({
     meta: z.array(z.string()).default([]),// the mono lines under the text
     externalUrl: z.string().optional(),
     externalLabel: z.string().optional(),
+    images: z.array(z.string()).default([]), // optional photo strip under the text
   }),
 });
 
