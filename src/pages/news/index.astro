@@ -1,0 +1,184 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { existsSync } from 'node:fs';
+import path from 'node:path';
+
+const posts = (await getCollection('news'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const gallery = (await getCollection('gallery'))
+  .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+
+const fmt = (d) => d.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
+const fmtDay = (d) => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+
+// exifr is optional: if it's not installed the gallery still works, it just
+// won't auto-read date/GPS from the photo files.
+let exifr = null;
+try { exifr = (await import('exifr')).default; } catch { /* not installed — manual data only */ }
+
+const coordStr = (c) =>
+  `${Math.abs(c.lat).toFixed(4)}°${c.lat >= 0 ? 'N' : 'S'}, ${Math.abs(c.lon).toFixed(4)}°${c.lon >= 0 ? 'E' : 'W'}`;
+
+// Manual frontmatter always wins; EXIF only fills the gaps.
+async function enrich(entry) {
+  const d = entry.data;
+  let date = d.date ?? null;
+  let place = d.place ?? null;
+  let coords = null;
+
+  if (exifr && (!date || !place)) {
+    const file = path.join(process.cwd(), 'public', d.image.replace(/^\/+/, ''));
+    if (existsSync(file)) {
+      try {
+        const ex = await exifr.parse(file, { tiff: true, exif: true, gps: true });
+        if (ex) {
+          if (!date && (ex.DateTimeOriginal || ex.CreateDate)) date = ex.DateTimeOriginal || ex.CreateDate;
+          if (ex.latitude != null && ex.longitude != null) coords = { lat: ex.latitude, lon: ex.longitude };
+        }
+      } catch { /* unreadable / no EXIF — ignore */ }
+    }
+  }
+
+  const loc = place || (coords ? coordStr(coords) : null);
+  const meta = [date ? fmtDay(date) : null, loc].filter(Boolean).join(' · ');
+
+  return {
+    title: d.title,
+    meta,
+    images: [d.image, ...(d.images ?? [])],
+    caption: d.caption,
+    link: d.link ?? null,
+    linkLabel: d.linkLabel ?? null,
+  };
+}
+
+const items = await Promise.all(gallery.map(enrich));
+// Same shape drives both the grid and the lightbox.
+const lb = items;
+---
+<Base title="News — Martin Mokroš" description="News, photographs from the field and longer notes from Martin Mokroš.">
+  <div class="wrap page-head">
+    <div class="eyebrow">News</div>
+    <h1>News.</h1>
+    <p>Photographs from the field &mdash; meetings, fieldwork and milestones &mdash; with longer written notes below.</p>
+  </div>
+
+  <!-- GALLERY -->
+  <section style="padding-top:26px;padding-bottom:56px">
+    <div class="wrap">
+      <div class="eyebrow" style="margin-bottom:20px">From the field</div>
+      <div class="gallery">
+        {items.map((it, i) => (
+          <button class="gtile" data-idx={i} type="button" aria-label={`Open: ${it.title}`}>
+            <img src={it.images[0]} alt={it.title} loading="lazy" onerror="this.closest('.gtile').classList.add('noimg')" />
+            <span class="gmeta">
+              {it.meta && <span class="ghud">{it.meta}</span>}
+              <span class="gtitle">{it.title}</span>
+            </span>
+            {it.images.length > 1 && <span class="gcount">1 / {it.images.length}</span>}
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- POSTS -->
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head"><div class="eyebrow">Notes</div><h2>Longer reads.</h2></div>
+      <div class="notes">
+        {posts.map((n) => (
+          <a class="note" href={`/news/${n.slug}`}>
+            <div><span class="date">{fmt(n.data.date)}</span><span class="tagN">{n.data.tag}</span></div>
+            <div><h4>{n.data.title}</h4><p>{n.data.summary}</p></div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" hidden>
+    <button class="lb-close" id="lbClose" aria-label="Close">&times;</button>
+    {items.length > 1 && (
+      <Fragment>
+        <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">&lsaquo;</button>
+        <button class="lb-nav lb-next" id="lbNext" aria-label="Next">&rsaquo;</button>
+      </Fragment>
+    )}
+    <div class="lb-inner" id="lbInner"></div>
+    <div class="lb-scroll" id="lbScroll" hidden aria-hidden="true">
+      <span>More below</span>
+      <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+  </div>
+
+  <script type="application/json" id="gallery-data" set:html={JSON.stringify(lb)}></script>
+  <script>
+    const el = document.getElementById('gallery-data');
+    const data = el ? JSON.parse(el.textContent || '[]') : [];
+    const box = document.getElementById('lightbox');
+    const inner = document.getElementById('lbInner');
+    const closeBtn = document.getElementById('lbClose');
+    const scrollCue = document.getElementById('lbScroll');
+    const prevBtn = document.getElementById('lbPrev');
+    const nextBtn = document.getElementById('lbNext');
+    let cur = 0;
+    const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+
+    function render(idx) {
+      if (!box || !inner || !data.length) return;
+      cur = (idx + data.length) % data.length;
+      const g = data[cur];
+      const imgs = g.images.map((s) => `<img src="${esc(s)}" alt="${esc(g.title)}" onerror="this.style.display='none'">`).join('');
+      const link = g.link ? `<a class="lb-link" href="${esc(g.link)}" target="_blank" rel="noopener">${esc(g.linkLabel || 'Visit')} &rarr;</a>` : '';
+      inner.innerHTML = `<div class="lb-imgs">${imgs}</div><div class="lb-cap">${g.meta ? `<span class="lb-hud">${esc(g.meta)}</span>` : ''}<p>${esc(g.caption)}</p>${link}</div>`;
+      box.scrollTop = 0;
+      // Scroll cue only when this entry has more than one image to reveal.
+      if (scrollCue) {
+        scrollCue.classList.remove('hide');
+        scrollCue.hidden = g.images.length <= 1;
+      }
+    }
+    function openTile(idx) {
+      if (!box) return;
+      render(idx);
+      box.hidden = false;
+      document.body.style.overflow = 'hidden';
+    }
+    function closeTile() {
+      if (!box || !inner) return;
+      box.hidden = true;
+      inner.innerHTML = '';
+      document.body.style.overflow = '';
+      if (scrollCue) scrollCue.hidden = true;
+    }
+    const next = () => render(cur + 1);
+    const prev = () => render(cur - 1);
+
+    document.querySelectorAll('.gtile').forEach((t) => t.addEventListener('click', () => openTile(Number(t.dataset.idx))));
+    closeBtn?.addEventListener('click', closeTile);
+    prevBtn?.addEventListener('click', (e) => { e.stopPropagation(); prev(); });
+    nextBtn?.addEventListener('click', (e) => { e.stopPropagation(); next(); });
+    box?.addEventListener('click', (e) => { if (e.target === box) closeTile(); });
+    box?.addEventListener('scroll', () => { if (scrollCue && box.scrollTop > 24) scrollCue.classList.add('hide'); });
+    addEventListener('keydown', (e) => {
+      if (!box || box.hidden) return;
+      if (e.key === 'Escape') closeTile();
+      else if (e.key === 'ArrowRight') next();
+      else if (e.key === 'ArrowLeft') prev();
+    });
+
+    // Touch: horizontal swipe moves between entries; vertical is left for scrolling.
+    let sx = 0, sy = 0, tracking = false;
+    box?.addEventListener('touchstart', (e) => { const t = e.changedTouches[0]; sx = t.clientX; sy = t.clientY; tracking = true; }, { passive: true });
+    box?.addEventListener('touchend', (e) => {
+      if (!tracking) return;
+      tracking = false;
+      const t = e.changedTouches[0];
+      const dx = t.clientX - sx, dy = t.clientY - sy;
+      if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) { dx < 0 ? next() : prev(); }
+    }, { passive: true });
+  </script>
+</Base>

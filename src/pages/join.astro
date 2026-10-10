@@ -16,6 +16,16 @@ const fellowships = [
     <p>Short version: if your interests overlap with mine, get in touch early before any deadline. Funded, self-funded, or bringing funding from your own country: all welcome. Here's the how.</p>
   </div>
   <section><div class="wrap">
+    <div class="join-block open-call" id="postdoc" data-closes="2026-10-24T00:00:00+01:00">
+      <div class="eyebrow js-status">Open now · deadline 23 Oct 2026</div>
+      <h3>Research Fellow (postdoc): 3DTreePrint</h3>
+      <p>An 18-month postdoc at UCL Geography within 3DTreePrint, our ARIA-funded project on democratising and scaling mobile laser scanning for monitoring trees and forests, so that people with no scanning background can use it. It's applied research: our low-cost prototypes are already with foresters, farmers and researchers in the UK and Madagascar, together with our sister projects Scanning Together (UCL) and Scanning4Africa (University of Zurich). You'll work on the processing side.</p>
+      <p><b>You'll need</b> experience with forest point clouds (TLS/MLS), SLAM, and Python or C++. Starts 1 December 2026; funded for 18 months, to 31 May 2028.</p>
+      <div class="hire-cta">
+        <a class="btn js-apply" href="https://www.ucl.ac.uk/work-at-ucl/search-ucl-jobs/details?jobId=48546&amp;jobTitle=Research+Fellow%3A++3DTreePrint+Project" target="_blank" rel="noopener">Read the advert &amp; apply →</a>
+        <a class="xlink" href="mailto:m.mokros@ucl.ac.uk?subject=3DTreePrint%20postdoc">Questions? Email me →</a>
+      </div>
+    </div>
     <div class="join-block">
       <h3>PhD students</h3>
       <p>I supervise in 3D remote sensing of forests and urban trees — point clouds, low-cost sensing, AI for tree analysis, open reproducible workflows. Email me a short note on what you want to work on and your CV before you apply, so we can shape a project that fits both of us.</p>
@@ -38,4 +48,13 @@ const fellowships = [
     <div class="callout"><b>Include in your email:</b> tell me (1) what you want to work on, (2) why with me specifically, and (3) your funding situation. </div>
     <div class="cta-strip"><h3>Think you're a fit?</h3><a class="btn" href="mailto:m.mokros@ucl.ac.uk?subject=Joining%20the%20group">Email me →</a></div>
   </div></section>
+<script is:inline>
+  // Flip open calls to "closed" after their deadline, without a redeploy.
+  document.querySelectorAll('[data-closes]').forEach((el) => {
+    if (Date.now() > Date.parse(el.dataset.closes)) {
+      el.classList.add('closed');
+      el.querySelectorAll('.js-status').forEach((s) => (s.textContent = 'Applications closed'));
+    }
+  });
+</script>
 </Base>

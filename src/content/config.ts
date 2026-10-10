@@ -17,8 +17,8 @@ const projects = defineCollection({
   }),
 });
 
-// Each post = one Markdown file in src/content/notes/
-const notes = defineCollection({
+// Each post = one Markdown file in src/content/news/
+const news = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
@@ -28,4 +28,21 @@ const notes = defineCollection({
   }),
 });
 
-export const collections = { projects, notes };
+// Each gallery item = one Markdown file in src/content/gallery/
+// image is the lead photo; images[] are extra photos shown in the same lightbox entry.
+const gallery = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    date: z.date().optional(),       // omit if unknown; shows as a mono HUD tag
+    place: z.string().optional(),    // e.g. "London", "UCL"
+    image: z.string(),               // lead image, e.g. "/media/gallery/aria-hq.jpg"
+    images: z.array(z.string()).default([]), // additional images in the same entry
+    caption: z.string(),             // the website explanation
+    link: z.string().optional(),
+    linkLabel: z.string().optional(),
+    order: z.number().default(99),   // 1 = first
+  }),
+});
+
+export const collections = { projects, news, gallery };
