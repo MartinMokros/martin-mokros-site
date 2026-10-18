@@ -12,7 +12,7 @@
 /* asymmetric 12-column grid: children span full width on small screens;
    pages place them with grid-column at ≥960px */
 .v2 .g12{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--s-5)}
-.v2 .g12>*{grid-column:1/-1;min-width:0}
+:where(.v2 .g12)>*{grid-column:1/-1;min-width:0}
 
 /* reveal-on-scroll: visible by default; Reveal.astro adds the pending state below the fold only */
 .reveal{transition:opacity .7s var(--ease),transform .7s var(--ease)}
