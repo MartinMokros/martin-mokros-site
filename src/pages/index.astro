@@ -45,7 +45,7 @@ const hasCloud = existsSync(path.join(process.cwd(), 'public/posters/pointcloud-
         {stats.map((f) => (
           <div>
             <dt><span class="figures__label">{f.label}</span><span class="t-label figures__scope">{f.scope}</span></dt>
-            <dd>{f.value}{f.qualifier && <span class="figures__q">({f.qualifier})</span>}</dd>
+            <dd>{f.value}</dd>
           </div>
         ))}
       </dl>
@@ -187,11 +187,10 @@ const hasCloud = existsSync(path.join(process.cwd(), 'public/posters/pointcloud-
   .figures__label{font:500 15px/1.4 var(--font-sans);color:var(--inv-text);max-width:28ch}
   .figures__scope{color:var(--inv-muted);letter-spacing:.06em;line-height:1.45}
   .figures__list dd{margin:0;display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 10px;font:600 clamp(44px,10vw,64px)/.95 var(--font-sans);letter-spacing:-.035em;font-variant-numeric:tabular-nums;color:var(--inv-text);white-space:nowrap}
-  .figures__q{font:500 13px/1 var(--font-mono);letter-spacing:.04em;color:var(--inv-muted)}
   .figures__asof{margin-top:var(--s-6);color:var(--inv-muted)}
-  @media(min-width:640px){.figures__list{grid-template-columns:repeat(2,minmax(0,1fr))}}
-  @media(min-width:1100px){
-    .figures__list{grid-template-columns:repeat(4,minmax(0,1fr))}
+  @media(min-width:640px){.figures__list{grid-template-columns:repeat(3,minmax(0,1fr))}}
+  @media(min-width:960px){
+    .figures__list{grid-template-columns:repeat(3,minmax(0,1fr))}
     .figures__list dd{font-size:clamp(48px,4.4vw,72px)}
   }
   @media(min-width:960px){.figures__asof{text-align:right}}
