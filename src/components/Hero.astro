@@ -3,8 +3,8 @@
 // Its poster is the video's first frame (/public/posters/hero.webp); re-export it if the video changes.
 import Icon from './Icon.astro';
 
-// EDIT: survey position shown in the HUD — PLACEHOLDER until Martin supplies the real coordinates.
-const position = { lat: '00.0000° N', lon: '00.0000° E', alt: '000 m' };
+// Survey position of the clip (Bratislava, Urban Tree Intelligence). Static on purpose.
+const position = { lat: '48.1490° N', lon: '17.1083° E', alt: '149 m' };
 
 const creds = [
   { label: 'Lecturer in Earth Observation · UCL' },
@@ -15,12 +15,12 @@ const creds = [
 ---
 <header class="hero on-dark">
   <video class="hero__video" muted loop playsinline preload="none" poster="/posters/hero.webp" data-src="/media/hero.mp4" aria-hidden="true"></video>
-  <div class="hero__shade"></div>
+  <div class="hero__scrim"></div>
 
   <div class="hero__hud" aria-hidden="true">
     <span class="tick tl"></span><span class="tick tr"></span><span class="tick bl"></span><span class="tick br"></span>
     <div class="hud__feed">
-      <span class="hud__line">Urban Tree Intelligence — <b>DJI Osmo Pocket 4 · Captured by Ben Sanderson</b></span>
+      <span>Urban Tree Intelligence — <b>DJI Osmo Pocket 4 · Captured by Ben Sanderson</b></span>
       <span class="hud__pos hud__pos--inline">LAT {position.lat} · LON {position.lon} · ALT {position.alt}</span>
     </div>
     <dl class="hud__pos hud__pos--block">
@@ -30,15 +30,17 @@ const creds = [
     </dl>
   </div>
 
-  <button class="hero__pause" type="button" hidden data-playing="false">
-    <span class="when-playing"><Icon name="pause" /> Pause video</span>
-    <span class="when-paused"><Icon name="play" /> Play video</span>
+  <button class="hero__pause" type="button" hidden data-playing="false" aria-label="Pause background video">
+    <span class="when-playing"><Icon name="pause" /></span>
+    <span class="when-paused"><Icon name="play" /></span>
   </button>
 
-  <div class="hero__content"><div class="wrap">
+  <div class="hero__content"><div class="wrap g12">
     <div class="t-label hero__eyebrow">Earth Observation · 3D Forest Science</div>
-    <h1 class="t-display hero__name">Martin Mokroš</h1>
-    <p class="hero__lede">I turn forests into point clouds and point clouds into things people can act on.</p>
+    <h1 class="hero__title">
+      <span class="hero__name">Martin Mokroš</span>
+      <span class="hero__headline">I turn forests into point clouds and point clouds into things people can act on.</span>
+    </h1>
     <ul class="hero__creds">
       {creds.map((c) => <li>{c.label}</li>)}
     </ul>
@@ -50,24 +52,25 @@ const creds = [
 </header>
 
 <style>
-  .hero{position:relative;min-height:max(620px,100svh);display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;background:var(--inv-bg) url(/posters/hero.webp) center/cover no-repeat;color:var(--inv-text)}
+  .hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;background:var(--inv-bg) url(/posters/hero.webp) center/cover no-repeat;color:var(--inv-text)}
   .hero__video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-  .hero__shade{position:absolute;inset:0;pointer-events:none;background:
-    linear-gradient(180deg,rgba(15,26,18,.5) 0,rgba(15,26,18,0) 30%),
-    linear-gradient(0deg,rgba(15,26,18,.92) 0,rgba(15,26,18,.6) 38%,rgba(15,26,18,.1) 70%)}
+  /* Gradient scrim instead of boxes: dark where text sits (left and bottom, plus under the nav),
+     open over the canopy top-right. Text stays AA even over a white frame. */
+  .hero__scrim{position:absolute;inset:0;pointer-events:none;background:
+    linear-gradient(180deg,rgba(15,26,18,.88) 0,rgba(15,26,18,.76) 20%,rgba(15,26,18,0) 42%),
+    linear-gradient(0deg,rgba(15,26,18,.92) 0,rgba(15,26,18,.84) 45%,rgba(15,26,18,.7) 66%,rgba(15,26,18,.32) 86%,rgba(15,26,18,.1) 100%),
+    linear-gradient(90deg,rgba(15,26,18,.5) 0,rgba(15,26,18,.25) 55%,rgba(15,26,18,0) 80%)}
 
   /* HUD: static, instrument-grade */
-  .hero__hud{position:absolute;inset:calc(var(--nav-h) + 12px) 16px 16px;pointer-events:none;font:400 11px/1.6 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--inv-muted)}
-  .tick{position:absolute;width:14px;height:14px;border:1px solid rgba(239,234,217,.45)}
+  .hero__hud{position:absolute;inset:calc(var(--nav-h) + 12px) 16px 16px;pointer-events:none;font:400 11px/1.6 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--inv-text)}
+  .tick{position:absolute;width:14px;height:14px;border:1px solid var(--inv-accent)}
   .tl{top:0;left:0;border-right:0;border-bottom:0}.tr{top:0;right:0;border-left:0;border-bottom:0}
   .bl{bottom:0;left:0;border-right:0;border-top:0}.br{bottom:0;right:0;border-left:0;border-top:0}
-  .hud__feed{position:absolute;top:10px;left:24px;right:24px;display:grid;gap:2px}
-  .hud__line{max-width:100%}
-  .hud__line b{font-weight:500;color:var(--inv-accent)}
-  .hud__pos{font-variant-numeric:tabular-nums;color:var(--inv-text)}
+  .hud__feed{position:absolute;top:10px;left:24px;right:64px;display:grid;gap:2px}
+  .hud__feed b{font-weight:500}
+  .hud__pos{font-variant-numeric:tabular-nums}
   .hud__pos--block{display:none;position:absolute;right:24px;bottom:10px;margin:0;text-align:right}
   .hud__pos--block div{display:flex;gap:10px;justify-content:flex-end}
-  .hud__pos--block dt{color:var(--inv-muted)}
   .hud__pos--block dd{margin:0;min-width:11ch}
   @media(min-width:900px){
     .hero__hud{inset:calc(var(--nav-h) + 16px) 24px 24px}
@@ -76,23 +79,26 @@ const creds = [
     .hud__pos--block{display:block}
   }
 
-  .hero__pause{position:absolute;z-index:2;right:16px;bottom:16px;display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border:1px solid rgba(239,234,217,.3);border-radius:var(--r-2);background:rgba(15,26,18,.55);backdrop-filter:blur(6px);color:var(--inv-text);font:500 12px/1 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
+  /* icon-only pause, tucked into the top-right tick */
+  .hero__pause{position:absolute;z-index:2;top:calc(var(--nav-h) + 16px);right:16px;width:44px;height:44px;display:grid;place-items:center;padding:0;border:0;border-radius:var(--r-full);background:transparent;color:var(--inv-text);cursor:pointer;transition:background-color var(--dur-1)}
   .hero__pause[hidden]{display:none}
-  .hero__pause:hover{border-color:var(--inv-text)}
-  .hero__pause:focus-visible{outline:2px solid var(--inv-accent);outline-offset:3px}
-  .hero__pause span{display:inline-flex;align-items:center;gap:8px}
+  .hero__pause:hover{background:rgba(239,234,217,.12)}
+  .hero__pause:focus-visible{outline:2px solid var(--inv-accent);outline-offset:2px}
+  .hero__pause :global(.icon){width:16px;height:16px}
   .hero__pause[data-playing="true"] .when-paused,.hero__pause[data-playing="false"] .when-playing{display:none}
-  @media(min-width:900px){.hero__pause{right:auto;left:24px;bottom:24px}}
+  .hero__pause span{display:grid;place-items:center}
+  @media(min-width:900px){.hero__pause{top:calc(var(--nav-h) + 22px);right:28px}}
 
-  .hero__content{position:relative;z-index:1;padding:calc(var(--nav-h) + 96px) 0 calc(var(--s-8) + 28px)}
-  @media(min-width:900px){.hero__content{padding-bottom:var(--s-9)}}
-  /* subtle scrim so the eyebrow survives bright sky */
-  .hero__eyebrow{display:inline-block;color:var(--inv-accent);background:rgba(15,26,18,.55);backdrop-filter:blur(6px);padding:6px 10px;border-radius:var(--r-1);max-width:100%}
-  .hero__name{color:var(--inv-text);margin:var(--s-4) 0 var(--s-4)}
-  .hero__lede{font-size:var(--fs-lead);line-height:1.45;color:var(--inv-text);max-width:36ch}
-  .hero__creds{list-style:none;display:flex;flex-wrap:wrap;gap:var(--s-2);margin:var(--s-5) 0 0;padding:0}
-  .hero__creds li{font:400 12px/1.3 var(--font-mono);color:var(--inv-text);border:1px solid rgba(239,234,217,.28);border-radius:var(--r-1);padding:6px 10px;background:rgba(15,26,18,.4)}
-  .hero__ctas{margin-top:var(--s-6)}
+  .hero__content{position:relative;z-index:1;padding:calc(var(--nav-h) + 120px) 0 clamp(48px,7vh,96px)}
+  .hero__eyebrow{grid-column:1/-1;color:var(--inv-text);white-space:nowrap}
+  @media(max-width:400px){.hero__eyebrow{font-size:11px;letter-spacing:.06em}}
+  .hero__title{grid-column:1/-1;display:grid;gap:var(--s-4);margin:var(--s-4) 0 0}
+  .hero__name{font:600 clamp(18px,.8vw + 15px,24px)/1.2 var(--font-sans);letter-spacing:-.01em;color:var(--inv-text)}
+  .hero__headline{font-family:var(--font-heading);font-variation-settings:var(--heading-variation);font-weight:500;font-size:var(--fs-display);line-height:1.02;letter-spacing:-.012em;color:var(--inv-text);text-wrap:balance}
+  .hero__creds{grid-column:1/-1;list-style:none;display:flex;flex-wrap:wrap;gap:var(--s-2);margin:var(--s-6) 0 0;padding:0}
+  .hero__creds li{font:400 12px/1.3 var(--font-mono);color:var(--inv-text);border:1px solid rgba(239,234,217,.3);border-radius:var(--r-1);padding:6px 10px}
+  .hero__ctas{grid-column:1/-1;margin-top:var(--s-5)}
+  @media(min-width:960px){.hero__title{grid-column:1/11}}
 </style>
 
 <script>
@@ -101,12 +107,13 @@ const creds = [
   const toggle = document.querySelector<HTMLButtonElement>('.hero__pause');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const saveData = (navigator as any).connection?.saveData === true;
+  const sync = () => {
+    toggle!.dataset.playing = String(!video!.paused);
+    toggle!.setAttribute('aria-label', video!.paused ? 'Play background video' : 'Pause background video');
+  };
   if (video && toggle && !reduce && !saveData) {
     video.src = video.dataset.src!;
-    video.play().then(() => { toggle.hidden = false; toggle.dataset.playing = 'true'; }).catch(() => {});
-    toggle.addEventListener('click', () => {
-      if (video.paused) video.play(); else video.pause();
-      toggle.dataset.playing = String(!video.paused);
-    });
+    video.play().then(() => { toggle.hidden = false; sync(); }).catch(() => {});
+    toggle.addEventListener('click', () => { (video.paused ? video.play() : Promise.resolve(video.pause())).then(sync); });
   }
 </script>
