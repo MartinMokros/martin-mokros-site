@@ -1,0 +1,61 @@
+/* ============================================================
+   Redesign tokens (step 2 — awaiting approval).
+   Builds on the hypsometric palette in global.css (--shadow, --forest,
+   --moss, --ochre, --paper …); adds roles, type, space, radii, motion.
+   Not imported by the live site yet: only /styleguide (dev) uses it.
+   ============================================================ */
+:root{
+  /* ---- fonts ---- */
+  --font-sans:"Geist",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-serif:"Fraunces",Georgia,serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,monospace;
+  /* heading face is Martin's call: serif (Fraunces), sans (Geist) or hybrid */
+  --font-heading:var(--font-serif); --heading-weight:500; --heading-tracking:-.012em;
+  /* h4 + card titles can take the other face (the "hybrid" option) */
+  --font-title:var(--font-serif); --title-weight:500; --title-tracking:-.01em;
+
+  /* ---- colour roles (all text pairs ≥ 4.5:1, UI boundaries ≥ 3:1) ---- */
+  --paper-0:#F4F0E8;                 /* raised surface — a paper tint, not a new hue */
+  --bg:var(--paper); --bg-alt:var(--paper-2); --surface:var(--paper-0);
+  --text:var(--shadow); --text-muted:var(--ink-soft); --text-accent:var(--ochre-ink);
+  --data:var(--forest);              /* numerals, stats */
+  --accent:var(--ochre); --accent-hover:var(--ochre-soft); --on-accent:#1C1206;
+  --tag-bg:#EDE1D1;                  /* 12% ochre on paper-0, solid so it can be measured */
+  --line-strong:#75796D;             /* control outlines, ≥ 3:1 on every paper */
+  --focus:var(--ochre-ink);
+  /* inverse — hero, the one "Hire me" slab, footer */
+  --inv-bg:var(--shadow); --inv-text:#EFEAD9; --inv-muted:#CBD2C2;
+  --inv-accent:var(--ochre-soft); --inv-line:rgba(239,234,217,.18);
+
+  /* ---- type scale: 9 steps (was 34 sizes) ---- */
+  --fs-label:12px;                                   /* mono, uppercase */
+  --fs-sm:14px;                                      /* meta, captions */
+  --fs-base:17px;                                    /* body */
+  --fs-lead:clamp(18px, .5vw + 16px, 20px);          /* intro paragraphs */
+  --fs-h4:20px;                                      /* card titles */
+  --fs-h3:clamp(22px, 1.1vw + 18px, 28px);
+  --fs-h2:clamp(28px, 2.2vw + 20px, 42px);
+  --fs-h1:clamp(36px, 3.6vw + 22px, 60px);
+  --fs-display:clamp(44px, 6vw + 22px, 88px);        /* hero name only */
+  --lh-tight:1.06; --lh-snug:1.3; --lh-body:1.6;
+  --tracking-label:.12em;
+
+  /* ---- space: 4px base ---- */
+  --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-5:24px;
+  --s-6:32px; --s-7:48px; --s-8:64px; --s-9:96px;
+  --section:clamp(56px, 6vw + 32px, 112px);
+  --gutter:clamp(16px, 3vw, 32px);
+  --container:1200px; --measure:64ch;
+
+  /* ---- radii: 3 (was 8) ---- */
+  --r-1:4px;     /* tags, chips */
+  --r-2:8px;     /* buttons, cards, media */
+  --r-full:999px;
+
+  /* ---- motion ---- */
+  --dur-1:120ms; --dur-2:220ms; --ease:cubic-bezier(.2,.7,.2,1);
+}
+[data-heading="serif"]{--font-heading:var(--font-serif); --heading-weight:500; --heading-tracking:-.012em; --font-title:var(--font-serif); --title-weight:500; --title-tracking:-.01em}
+[data-heading="sans"]{--font-heading:var(--font-sans); --heading-weight:600; --heading-tracking:-.028em; --font-title:var(--font-sans); --title-weight:600; --title-tracking:-.015em}
+[data-heading="hybrid"]{--font-heading:var(--font-serif); --heading-weight:500; --heading-tracking:-.012em; --font-title:var(--font-sans); --title-weight:600; --title-tracking:-.015em}
+@media (prefers-reduced-motion:reduce){:root{--dur-1:0ms; --dur-2:0ms}}

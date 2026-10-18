@@ -1,0 +1,87 @@
+/* ============================================================
+   Proposed components (step 2 — awaiting approval).
+   Uses tokens.css. Shown on /styleguide; ported into the live
+   pages in step 3. Class names don't collide with global.css.
+   ============================================================ */
+
+/* ---- type ---- */
+.t-label{font-family:var(--font-mono);font-size:var(--fs-label);letter-spacing:var(--tracking-label);text-transform:uppercase;line-height:1.4;color:var(--text-accent)}
+.t-meta{font-family:var(--font-mono);font-size:var(--fs-sm);color:var(--text-muted);line-height:1.5}
+.t-display,.t-h1,.t-h2,.t-h3{font-family:var(--font-heading);font-weight:var(--heading-weight);letter-spacing:var(--heading-tracking);line-height:var(--lh-tight);color:var(--text);font-optical-sizing:auto}
+.t-display{font-size:var(--fs-display);line-height:1}
+.t-h1{font-size:var(--fs-h1)}
+.t-h2{font-size:var(--fs-h2)}
+.t-h3{font-size:var(--fs-h3);line-height:1.12}
+.t-h4{font-family:var(--font-title);font-weight:var(--title-weight);letter-spacing:var(--title-tracking);font-size:var(--fs-h4);line-height:1.2;color:var(--text)}
+.t-lead{font-size:var(--fs-lead);line-height:1.5;color:var(--text-muted);max-width:var(--measure)}
+.t-body{font-size:var(--fs-base);line-height:var(--lh-body);color:var(--text-muted);max-width:var(--measure)}
+.t-sm{font-size:var(--fs-sm);line-height:1.55;color:var(--text-muted)}
+.t-data{font-family:var(--font-heading);font-weight:var(--heading-weight);font-size:var(--fs-h2);line-height:1;color:var(--data);font-variant-numeric:tabular-nums}
+
+/* ---- inline link: always underlined, so it reads as a link without hover ---- */
+.link{color:var(--text-accent);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.2em;text-decoration-color:color-mix(in srgb,currentColor 45%,transparent);transition:text-decoration-color var(--dur-1)}
+.link:hover{text-decoration-color:currentColor}
+
+/* ---- focus: one ring everywhere ---- */
+:is(.button,.card--link,.link,.media__play):focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+.on-dark :is(.button,.card--link,.link,.media__play):focus-visible{outline-color:var(--inv-accent)}
+
+/* ---- icons (Lucide, inline SVG) ---- */
+.icon{width:1.1em;height:1.1em;flex:none;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---- buttons: primary · secondary · arrow link ---- */
+.button{display:inline-flex;align-items:center;gap:var(--s-2);min-height:44px;padding:0 var(--s-5);border-radius:var(--r-2);border:1px solid transparent;font:500 15px/1 var(--font-sans);letter-spacing:-.005em;text-decoration:none;cursor:pointer;transition:background-color var(--dur-1),border-color var(--dur-1),color var(--dur-1)}
+.button .icon{transition:transform var(--dur-2) var(--ease)}
+.button:hover .icon,.button.is-hover .icon{transform:translateX(2px)}
+.button--primary{background:var(--accent);color:var(--on-accent)}
+.button--primary:hover,.button--primary.is-hover{background:var(--accent-hover)}
+.button--secondary{background:transparent;color:var(--text);border-color:var(--line-strong)}
+.button--secondary:hover,.button--secondary.is-hover{border-color:var(--text);background:rgba(22,36,27,.04)}
+.on-dark .button--secondary{color:var(--inv-text);border-color:rgba(239,234,217,.5)}
+.on-dark .button--secondary:hover,.on-dark .button--secondary.is-hover{border-color:var(--inv-text);background:rgba(239,234,217,.06)}
+.button.is-focus{outline:2px solid var(--focus);outline-offset:3px}
+.on-dark .button.is-focus{outline-color:var(--inv-accent)}
+.arrow-link{display:inline-flex;align-items:center;gap:6px;font:500 var(--fs-sm)/1.3 var(--font-mono);color:var(--text-accent);text-decoration:none}
+.arrow-link .icon{transition:transform var(--dur-2) var(--ease)}
+.arrow-link:hover .icon,.arrow-link.is-hover .icon{transform:translateX(3px)}
+.on-dark .arrow-link{color:var(--inv-accent)}
+
+/* ---- tag ---- */
+.tag{display:inline-flex;align-items:center;gap:6px;font:500 var(--fs-label)/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--text-accent);background:var(--tag-bg);padding:5px 8px;border-radius:var(--r-1)}
+.tag--quiet{background:transparent;color:var(--text-muted);padding-inline:0}
+
+/* ---- cards: exactly two variants ----
+   .card          static: flat (no fill), no hover, no pointer, no arrow
+   .card--link    whole card is an <a>: raised surface, always-visible arrow row, hover/focus
+   .card--feature is a size modifier on the static card, not a third style */
+.card{display:flex;flex-direction:column;gap:var(--s-3);background:transparent;border:1px solid var(--line);border-radius:var(--r-2);padding:var(--s-5);color:inherit}
+.card__meta{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s-2) var(--s-3)}
+.card__title{font-family:var(--font-title);font-weight:var(--title-weight);letter-spacing:var(--title-tracking);font-size:var(--fs-h4);line-height:1.2;color:var(--text)}
+.card__body{font-size:15px;line-height:1.55;color:var(--text-muted)}
+.card__foot{margin-top:auto;padding-top:var(--s-2)}
+.card--link{background:var(--surface);text-decoration:none;transition:border-color var(--dur-1),background-color var(--dur-1)}
+.card--link .card__foot{display:flex;align-items:center;gap:6px;font:500 var(--fs-sm)/1.3 var(--font-mono);color:var(--text-accent);border-top:1px solid var(--line);padding-top:var(--s-3)}
+.card--link .card__foot .icon{transition:transform var(--dur-2) var(--ease)}
+.card--link:hover,.card--link.is-hover{border-color:var(--line-strong);background:#fff8}
+.card--link:hover .card__title,.card--link.is-hover .card__title{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.18em}
+.card--link:hover .card__foot .icon,.card--link.is-hover .card__foot .icon{transform:translateX(3px)}
+.card--feature{background:var(--surface);padding:clamp(24px,3vw,40px);border-top:3px solid var(--accent);gap:var(--s-4)}
+.card--feature .card__title{font-family:var(--font-heading);font-weight:var(--heading-weight);letter-spacing:var(--heading-tracking);font-size:var(--fs-h3);line-height:1.12}
+.card--feature .card__body{font-size:var(--fs-base);max-width:var(--measure)}
+.facts{display:grid;margin:var(--s-2) 0 0;border-top:1px solid var(--line)}
+.facts>div{display:grid;grid-template-columns:96px 1fr;gap:var(--s-3);padding:10px 0;border-bottom:1px solid var(--line);font:400 13px/1.5 var(--font-mono);color:var(--text)}
+.facts dt{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);padding-top:1px}
+.actions{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s-3) var(--s-5);margin-top:var(--s-2)}
+
+/* ---- media frame ---- */
+.media{margin:0;border:1px solid var(--line);border-radius:var(--r-2);overflow:hidden;background:var(--inv-bg)}
+.media__stage{position:relative;aspect-ratio:16/9;background:var(--inv-bg)}
+.media__stage>:is(img,video,iframe){position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0}
+.media__cap{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px var(--s-4);padding:10px var(--s-4);background:var(--surface);border-top:1px solid var(--line);font:400 12px/1.5 var(--font-mono);color:var(--text-muted)}
+.media__cap b{font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--text)}
+.media__overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--s-3);background:linear-gradient(0deg,rgba(15,26,18,.55),rgba(15,26,18,.15));text-align:center;padding:var(--s-4)}
+.media__play{display:inline-flex;align-items:center;gap:var(--s-2);min-height:44px;padding:0 var(--s-5);border-radius:var(--r-2);border:0;background:var(--accent);color:var(--on-accent);font:500 15px/1 var(--font-sans);cursor:pointer;transition:background-color var(--dur-1)}
+.media__play:hover{background:var(--accent-hover)}
+.media__note{font:400 12px/1.5 var(--font-mono);color:var(--inv-text);background:rgba(15,26,18,.7);padding:6px 10px;border-radius:var(--r-1)}
+.media.no-webgl .media__play{display:none}
+.media:not(.no-webgl) .media__note{display:none}
