@@ -82,5 +82,14 @@ mobile, small separate commits.
   dark reel; asymmetric 12-col grid (`.g12`); reveal-on-scroll (off under reduced
   motion); 404 page. Screenshots in `.design-review/bold/`.
   **Awaiting Martin's choice between `redesign` and `redesign-bold`.**
+- 2026-10-18: Martin chose the bold direction. Fixed on `redesign-bold`: reveal is
+  progressive enhancement (`Reveal.astro`); hero scrim is directional and measured
+  on 18 real frames of hero.mp4; numbers band labels carry scope (500+ marked EDIT);
+  point-cloud band renders only when `public/posters/pointcloud-band.webp` exists.
+  Rolled out to every page (one commit each); legacy CSS removed. Screenshots in
+  `.design-review/rollout/` (+ `scroll-375/` scroll-through frames).
+  **Awaiting Martin's review before merge to main.**
+- Open EDITs: real 3D poster (`public/posters/3dtreeprint.webp`, then swap in
+  `ScanEmbed.astro` and `Reel.astro`); point-cloud band render; confirm 500+ vs 600+.
 - Rollout notes: `src/content/` still contains "→" in `externalLabel` (projects) —
   strip it in the template, not the content. Unscope `.v2` once every page is on it.
