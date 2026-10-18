@@ -1,0 +1,29 @@
+---
+// Click-to-load Potree viewer. The poster doubles as the no-WebGL fallback.
+// EDIT: swap the placeholder poster for /posters/3dtreeprint.webp once it exists.
+import Icon from './Icon.astro';
+const { src = '/potree/embed.html', poster = '/posters/3dtreeprint-placeholder.svg', title = 'Interactive 3D point cloud — 3DTreePrint scan' } = Astro.props;
+---
+<figure class="media scan" data-src={src} data-title={title}>
+  <div class="media__stage">
+    <img src={poster} alt="Still of the 3DTreePrint point cloud" loading="lazy" />
+    <div class="media__overlay">
+      <button type="button" class="media__play"><Icon name="box" /> Explore in 3D</button>
+      <span class="media__note">3D viewer needs WebGL. Showing a still.</span>
+    </div>
+  </div>
+  <figcaption class="media__cap"><span><b>Interactive 3D scan</b></span><span>drag to orbit · scroll to zoom · coloured by elevation</span></figcaption>
+</figure>
+
+<script>
+  const gl = (() => { try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch { return false; } })();
+  document.querySelectorAll<HTMLElement>('figure.scan').forEach((fig) => {
+    if (!gl) { fig.classList.add('no-webgl'); return; }
+    fig.querySelector('.media__play')?.addEventListener('click', () => {
+      const stage = fig.querySelector('.media__stage')!;
+      const f = document.createElement('iframe');
+      f.src = fig.dataset.src!; f.title = fig.dataset.title!; f.allowFullscreen = true;
+      stage.replaceChildren(f); f.focus();
+    });
+  });
+</script>

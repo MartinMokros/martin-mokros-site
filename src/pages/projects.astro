@@ -1,65 +1,88 @@
 ---
 import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import ScanEmbed from '../components/ScanEmbed.astro';
+import Icon from '../components/Icon.astro';
 import { getCollection } from 'astro:content';
 
 const entries = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
 const rendered = await Promise.all(entries.map(async (e) => ({ data: e.data, Content: (await e.render()).Content })));
 const featured = rendered.filter((e) => e.data.featured);
 const rest = rendered.filter((e) => !e.data.featured);
+// The trailing "→" in content labels becomes a Lucide arrow; the words stay as written.
+const label = (s) => (s || 'Visit →').replace(/\s*→\s*$/, '');
+const external = (u) => /^https?:/.test(u);
 ---
-<Base title="Projects — Martin Mokroš">
-  <div class="wrap page-head">
-    <div class="eyebrow">Projects</div>
-    <h1>What I'm building.</h1>
-    <p>Named, funded efforts with partners and a clock. Each links to the research it advances.</p>
-  </div>
-  <section><div class="wrap">
+<Base title="Projects — Martin Mokroš" v2={true}>
+  <PageHead label="Projects" title="What I'm building.">Named, funded efforts with partners and a clock. Each links to the research it advances.</PageHead>
+
+  <section class="projects"><div class="wrap">
     {featured.map((e) => {
       const Content = e.Content;
       return (
-        <div class="lead">
-          {e.data.eyebrow && <div class="eyebrow">{e.data.eyebrow}</div>}
-          <h3>{e.data.title}</h3>
-          {e.data.subtitle && <div class="subtitle">{e.data.subtitle}</div>}
-          <Content />
-          <div class="meta" set:html={e.data.meta.join('<br>')}></div>
-          {e.data.scan && (
-            <figure class="scan-embed">
-              <div class="scan-embed__label"><b>◰ INTERACTIVE 3D SCAN</b><span>drag to orbit · scroll to zoom · coloured by elevation</span></div>
-              <iframe
-                src="/potree/embed.html"
-                title="Interactive 3D point cloud — 3DTreePrint scan"
-                loading="lazy"
-                allowfullscreen
-              ></iframe>
-            </figure>
-          )}
-        </div>
+        <article class="card card--feature fproj reveal">
+          <div class="g12 fproj__grid">
+            <div class="fproj__text">
+              {e.data.eyebrow && <div class="t-label">{e.data.eyebrow}</div>}
+              <h2 class="t-h2">{e.data.title}</h2>
+              {e.data.subtitle && <p class="t-lead fproj__subtitle">{e.data.subtitle}</p>}
+            </div>
+            <div class="fproj__body">
+              <div class="prose"><Content /></div>
+              <p class="t-meta fproj__meta" set:html={e.data.meta.join('<br>')}></p>
+            </div>
+          </div>
+          {e.data.scan && <div class="fproj__scan"><ScanEmbed /></div>}
+        </article>
       );
     })}
-
-    <div style="height:8px"></div>
 
     {rest.map((e) => {
       const Content = e.Content;
       return (
-        <div class="strand">
-          <div class="tag">{e.data.tag}</div>
-          <div>
-            <h3>{e.data.title}</h3>
-            <Content />
+        <article class="prow g12 reveal">
+          <div class="t-label prow__tag">{e.data.tag}</div>
+          <h2 class="t-h3 prow__title">{e.data.title}</h2>
+          <div class="prow__body">
+            <div class="prose"><Content /></div>
             {e.data.images.length > 0 && (
-              <div class="proj-photos">
+              <div class="prow__photos">
                 {e.data.images.map((src) => <img src={src} alt={`${e.data.title} in the field`} loading="lazy" />)}
               </div>
             )}
-            <div class="meta">
-              <span set:html={e.data.meta.join('<br>')}></span>
-              {e.data.externalUrl && (<><br /><a class="xlink" href={e.data.externalUrl} target="_blank" rel="noopener">{e.data.externalLabel || 'Visit →'}</a></>)}
-            </div>
+            <p class="t-meta prow__meta" set:html={e.data.meta.join('<br>')}></p>
+            {e.data.externalUrl && (
+              <a class="arrow-link" href={e.data.externalUrl} target="_blank" rel="noopener">{label(e.data.externalLabel)} <Icon name={external(e.data.externalUrl) ? 'arrow-up-right' : 'arrow-right'} /></a>
+            )}
           </div>
-        </div>
+        </article>
       );
     })}
   </div></section>
+
+<style>
+  .projects{padding-top:0}
+  /* featured project: light feature card (only the Collaborate "Hire me" block stays dark) */
+  .fproj{padding:clamp(24px,4vw,56px)}
+  .fproj__grid{row-gap:var(--s-5)}
+  .fproj__text{display:grid;gap:var(--s-4);align-content:start}
+  .fproj__subtitle{color:var(--text-muted)}
+  .fproj__meta{margin-top:var(--s-5);font-size:12.5px;line-height:1.8;color:var(--text)}
+  .fproj__scan{margin-top:var(--s-6)}
+  @media(min-width:960px){.fproj__text{grid-column:1/6}.fproj__body{grid-column:7/13}}
+
+  .prow{border-top:1px solid var(--line-strong);padding:var(--s-7) 0;row-gap:var(--s-3)}
+  .fproj + .prow{margin-top:var(--s-8)}
+  .prow__body{display:grid;gap:var(--s-4)}
+  .prow__photos{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-2)}
+  .prow__photos img{width:100%;aspect-ratio:4/3;object-fit:cover;object-position:center 25%;border-radius:var(--r-2);border:1px solid var(--line)}
+  @media(max-width:560px){.prow__photos{grid-template-columns:1fr 1fr}.prow__photos img:nth-child(3){display:none}}
+  .prow__meta{font-size:12.5px;line-height:1.8;color:var(--text)}
+  @media(min-width:960px){
+    .prow{row-gap:0}
+    .prow__tag{grid-column:1/3;padding-top:.5em}
+    .prow__title{grid-column:3/7}
+    .prow__body{grid-column:7/13}
+  }
+</style>
 </Base>
