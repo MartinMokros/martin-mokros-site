@@ -51,7 +51,7 @@
 .on-dark .arrow-link{color:var(--inv-accent)}
 
 /* ---- badge (status / date) ---- */
-.badge{display:inline-flex;align-items:center;gap:6px;font:500 var(--fs-label)/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--text-accent);background:var(--tag-bg);padding:5px 8px;border-radius:var(--r-1)}
+.badge{display:inline-flex;align-items:center;gap:6px;font:500 var(--fs-label)/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--text-accent);background:var(--tag-bg);box-shadow:inset 0 0 0 1px rgba(187,112,41,.35);padding:5px 8px;border-radius:var(--r-1)}
 
 /* ---- cards: exactly two variants ----
    .card          static: an unboxed entry under a hairline — no fill, no hover, no pointer

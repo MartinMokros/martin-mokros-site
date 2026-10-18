@@ -1,5 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import Icon from '../components/Icon.astro';
 
 const pubs = [
   { tag: 'Software', latest: true, t: 'MapsHD: a benchmark suite for LiDAR odometry frameworks', s: 'SoftwareX · 2026', u: 'https://doi.org/10.1016/j.softx.2026.102822' },
@@ -10,24 +12,39 @@ const pubs = [
   { tag: 'Inventory', t: 'Terrestrial and mobile laser scanning for national forest inventories: from theory to implementation', s: 'Remote Sensing of Environment · 2025', u: 'https://www.sciencedirect.com/science/article/pii/S0034425725003517' },
 ];
 ---
-<Base title="Publications — Martin Mokroš">
-  <div class="wrap page-head">
-    <div class="eyebrow">Publications</div>
-    <h1>Peer-reviewed, and applied.</h1>
-    <p>The always-current list lives on Google Scholar. A selection of recent work — newest first, spanning software, prototypes, barriers, processing, urban and inventory — is below.</p>
-  </div>
-  <section><div class="wrap">
-    <div class="pub-stats">
-      <div class="s"><b>3,000+</b><span>Citations · Google Scholar</span></div>
-      <div class="s"><b>40+</b><span>Publications</span></div>
-      <div class="s"><b>2025</b><span>Open Science Award</span></div>
-    </div>
-    {pubs.map((p) => (
-      <div class="pub">
-        <div><div class="plabels">{p.latest && <span class="platest">Latest</span>}<span class="ptag">{p.tag}</span></div><h4><a href={p.u} target="_blank" rel="noopener">{p.t}</a></h4></div>
-        <span class="src">{p.s}</span>
-      </div>
-    ))}
-    <p style="margin-top:26px"><a class="xlink" href="https://scholar.google.com/citations?user=zXX2vTUAAAAJ&hl=en">Full list on Google Scholar →</a></p>
+<Base title="Publications — Martin Mokroš" v2={true}>
+  <PageHead label="Publications" title="Peer-reviewed, and applied.">The always-current list lives on Google Scholar. A selection of recent work — newest first, spanning software, prototypes, barriers, processing, urban and inventory — is below.</PageHead>
+  <section class="pubs"><div class="wrap g12">
+    <dl class="pub-stats reveal">
+      <div><dt class="t-label">Citations · Google Scholar</dt><dd>3,000+</dd></div>
+      <div><dt class="t-label">Publications</dt><dd>40+</dd></div>
+      <div><dt class="t-label">Open Science Award</dt><dd>2025</dd></div>
+    </dl>
+    <ul class="rows pub-list reveal">
+      {pubs.map((p) => (
+        <li><a class="linkrow" href={p.u} target="_blank" rel="noopener">
+          <span class="linkrow__meta">{p.latest && <span class="badge">Latest</span>}<span class="t-label">{p.tag}</span></span>
+          <span class="linkrow__text"><span class="card__title">{p.t}</span><span class="t-meta">{p.s}</span></span>
+          <Icon name="arrow-up-right" />
+        </a></li>
+      ))}
+    </ul>
+    <p class="pub-more"><a class="arrow-link" href="https://scholar.google.com/citations?user=zXX2vTUAAAAJ&hl=en">Full list on Google Scholar <Icon name="arrow-up-right" /></a></p>
   </div></section>
+
+<style>
+  .pubs{padding-top:0}
+  .pub-stats{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-5);margin:0 0 var(--s-7)}
+  .pub-stats>div{display:flex;flex-direction:column-reverse;justify-content:flex-end;gap:var(--s-2);border-top:1px solid var(--line-strong);padding-top:var(--s-4)}
+  .pub-stats>div:last-child{grid-column:1/-1}
+  .pub-stats dt{color:var(--text-muted)}
+  .pub-stats dd{margin:0;font:600 clamp(40px,4.4vw + 16px,80px)/.95 var(--font-sans);letter-spacing:-.035em;font-variant-numeric:tabular-nums;color:var(--data)}
+  .pub-list .card__title{font-size:18px;line-height:1.35}
+  .pub-more{margin-top:var(--s-6)}
+  @media(min-width:760px){.pub-stats{grid-template-columns:repeat(3,1fr)}.pub-stats>div:last-child{grid-column:auto}}
+  @media(min-width:960px){
+    .pub-stats{grid-column:1/13}
+    .pub-list,.pub-more{grid-column:3/13}
+  }
+</style>
 </Base>
