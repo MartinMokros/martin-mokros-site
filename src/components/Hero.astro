@@ -1,5 +1,6 @@
 ---
-// The hero video lives in /public/media/hero.mp4 — swap that file to change it.
+// The hero video: /public/media/hero-av1.mp4 (AV1, ~1.5 MB) where the browser supports it,
+// else /public/media/hero.mp4 (H.264, ~2.5 MB). Replace both to change it.
 // Its poster is the video's first frame (/public/posters/hero.webp); re-export it if the video changes.
 import Icon from './Icon.astro';
 
@@ -14,7 +15,7 @@ const creds = [
 ];
 ---
 <header class="hero on-dark">
-  <video class="hero__video" muted loop playsinline preload="none" poster="/posters/hero.webp" data-src="/media/hero.mp4" aria-hidden="true"></video>
+  <video class="hero__video" muted loop playsinline preload="none" poster="/posters/hero.webp" data-src="/media/hero.mp4" data-src-av1="/media/hero-av1.mp4" aria-hidden="true"></video>
   <div class="hero__scrim"></div>
 
   <div class="hero__hud" aria-hidden="true">
@@ -121,7 +122,8 @@ const creds = [
     toggle!.setAttribute('aria-label', video!.paused ? 'Play background video' : 'Pause background video');
   };
   if (video && toggle && !reduce && !saveData) {
-    video.src = video.dataset.src!;
+    const av1 = video.canPlayType('video/mp4; codecs="av01.0.05M.08"') !== '';
+    video.src = (av1 && video.dataset.srcAv1) || video.dataset.src!;
     video.play().then(() => { toggle.hidden = false; sync(); }).catch(() => {});
     toggle.addEventListener('click', () => { (video.paused ? video.play() : Promise.resolve(video.pause())).then(sync); });
   }
