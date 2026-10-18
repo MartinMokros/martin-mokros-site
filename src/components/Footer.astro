@@ -7,11 +7,14 @@ const links = [
   { href: 'https://bsky.app/profile/mokros.bsky.social', label: 'Bluesky' },
   { href: '/news', label: 'News' },
 ];
+const { v2 = false } = Astro.props;
 ---
 <footer>
   <div class="wrap">
     <div class="row">
-      <div class="eyebrow" style="color:var(--ochre-soft)">Martin Mokroš · Earth Observation</div>
+      {v2
+        ? <div class="t-label">Martin Mokroš · Earth Observation</div>
+        : <div class="eyebrow" style="color:var(--ochre-soft)">Martin Mokroš · Earth Observation</div>}
       <div class="links">
         {links.map((l) => <a class="flink" href={l.href}>{l.label}</a>)}
       </div>

@@ -1,0 +1,54 @@
+/* ============================================================
+   Redesigned base — scoped to <body class="v2"> while the redesign
+   rolls out page by page. Unscope once every page is on v2.
+   ============================================================ */
+.v2{font-family:var(--font-sans);font-size:var(--fs-base);line-height:var(--lh-body);color:var(--text);background:var(--bg)}
+.v2 :where(h1,h2,h3,h4){font-family:var(--font-title);font-weight:var(--title-weight);letter-spacing:var(--title-tracking)}
+.v2 .wrap{max-width:var(--container);padding-inline:var(--gutter)}
+.v2 section{padding:var(--section) 0}
+.v2 :where(em){font-style:normal;font-weight:500;color:var(--text)}
+.v2 ::selection{background:var(--tag-bg);color:var(--text)}
+
+/* section heading block */
+.v2 .head{display:grid;gap:var(--s-3);max-width:var(--measure);margin-bottom:var(--s-7)}
+.v2 .head--row{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:var(--s-3) var(--s-5);max-width:none}
+.v2 .head--row>div{display:grid;gap:var(--s-3)}
+
+/* ---- nav ---- */
+.v2 .nav{height:var(--nav-h)}
+.v2 .brand{font-family:var(--font-sans);font-weight:600;font-size:17px;letter-spacing:-.01em;min-height:44px}
+.v2 .brand .dot{width:9px;height:9px}
+.v2 .nav a.link{font:500 14px/1 var(--font-sans);letter-spacing:0;text-transform:none;padding:0 11px;min-height:44px;display:inline-flex;align-items:center;border-radius:var(--r-2);opacity:1;position:relative}
+.v2 .nav a.link[aria-current="page"]::after{content:"";position:absolute;left:11px;right:11px;bottom:8px;height:2px;border-radius:2px;background:currentColor}
+.v2 .nav.over{background:linear-gradient(180deg,rgba(15,26,18,.72),rgba(15,26,18,.45));backdrop-filter:blur(10px);border-bottom-color:rgba(239,234,217,.12)}
+.v2 .nav.over a.link{color:var(--inv-muted)}
+.v2 .nav.over a.link:hover{color:var(--inv-text)}
+.v2 .nav.over a.link[aria-current="page"]{color:var(--inv-accent)}
+.v2 .nav.solid{background:rgba(233,225,210,.92)}
+.v2 .nav.solid a.link{color:var(--text-muted)}
+.v2 .nav.solid a.link:hover{color:var(--text)}
+.v2 .nav.solid a.link[aria-current="page"]{color:var(--text-accent)}
+.v2 .nav :is(a,button):focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.v2 .nav.over :is(a,button):focus-visible{outline-color:var(--inv-accent)}
+.v2 .burger{width:44px;height:44px;display:none;align-items:center;justify-content:center}
+.v2 .burger span{left:10px;right:10px}
+.v2 .burger span:nth-child(1){top:14px}.v2 .burger span:nth-child(2){top:21px}.v2 .burger span:nth-child(3){top:28px}
+@media(max-width:960px){
+  .v2 .burger{display:flex}
+  .v2 .burger.x span:nth-child(1),.v2 .burger.x span:nth-child(3){top:21px}
+  .v2 .nav .menu{position:fixed;top:var(--nav-h);left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:rgba(22,36,27,.98);backdrop-filter:blur(8px);padding:var(--s-2) var(--gutter) var(--s-4);transform:translateY(-130%);transition:transform .28s}
+  .v2 .nav .menu.open{transform:translateY(0)}
+  .v2 .nav .menu a.link{color:var(--inv-text)!important;font-size:16px;padding:0 var(--s-2);min-height:52px;border-bottom:1px solid var(--inv-line);border-radius:0}
+  .v2 .nav .menu a.link[aria-current="page"]{color:var(--inv-accent)!important}
+  .v2 .nav .menu a.link[aria-current="page"]::after{left:auto;right:var(--s-2);top:50%;bottom:auto;width:6px;height:6px;border-radius:50%;transform:translateY(-50%)}
+}
+@media(prefers-reduced-motion:reduce){.v2 .nav .menu{transition:none}}
+
+/* ---- footer: light, no boxed links ---- */
+.v2 footer{background:var(--bg-alt);color:var(--text);border-top:1px solid var(--line);padding:var(--s-8) 0 var(--s-7);margin-top:0}
+.v2 footer .row{align-items:baseline;gap:var(--s-4) var(--s-6)}
+.v2 footer .links{gap:var(--s-1) var(--s-5)}
+.v2 footer a.flink{font:500 15px/1 var(--font-sans);color:var(--text);border:0;padding:12px 0;border-radius:0;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.3em;text-decoration-color:var(--line-strong)}
+.v2 footer a.flink:hover{color:var(--text-accent);text-decoration-color:currentColor;border:0}
+.v2 footer a.flink:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+.v2 footer .fine{font:400 12px/1.5 var(--font-mono);color:var(--text-muted);margin-top:var(--s-6);padding-top:var(--s-4);border-top:1px solid var(--line)}
