@@ -3,47 +3,86 @@
 // Add a fly-through clip of a real scan:  { type:'video', src:'/media/your-scan.mp4', tag:'SCAN', title:'...', sub:'...' }
 // Add a field photo:                      { type:'image', src:'/media/your-photo.jpg', tag:'FIELD', title:'...', sub:'...' }
 // Add a YouTube video:                    { type:'youtube', id:'VIDEO_ID', tag:'VIDEO', title:'...', sub:'...' }
+// Potree scans load only on click. `still` is the poster (and the no-WebGL fallback).
+// EDIT: swap the placeholder still for /posters/3dtreeprint.webp once it exists.
 const items = [
   { type: 'video', src: '/media/hero.mp4', poster: '/media/field-1.jpg', tag: 'Below Canopy', title: '3D Urban Intelligence', sub: 'Captured by Ben Sanderson' },
   { type: 'youtube', id: 'ltNN7quSp_g', tag: '3DForEcoTech', title: 'Interdisciplinary Summer School', sub: 'YouTube' },
   { type: 'image', src: '/media/ScanningTogether.jpg', tag: 'Concept', title: 'Scanning Together', sub: 'project concept' },
-  { type: 'potree', src: '/potree/embed.html', poster: '/media/scan-thumb.svg', tag: 'Interactive 3D', title: '3DTreePrint scan', sub: 'drag to orbit · scroll to zoom' },
+  { type: 'potree', src: '/potree/embed.html', poster: '/media/scan-thumb.svg', still: '/posters/3dtreeprint-placeholder.svg', tag: 'Interactive 3D', title: '3DTreePrint scan', sub: 'drag to orbit · scroll to zoom' },
 ];
 ---
-<div class="reel-stage" id="reel-stage"></div>
+<figure class="media reel" id="reel">
+  <div class="media__stage" id="reel-stage"></div>
+  <figcaption class="media__cap" id="reel-cap"></figcaption>
+</figure>
 <div class="reel-thumbs" id="reel-thumbs">
   {items.map((it, i) => (
-    <button data-i={i} class={i === 0 ? 'on' : ''}>
-      {(it.type === 'video' || it.type === 'youtube') && <span class="vidtag">VIDEO</span>}
-      {it.type === 'potree' && <span class="vidtag scan3d">3D</span>}
-      <img src={it.poster || (it.type === 'youtube' ? `https://img.youtube.com/vi/${it.id}/hqdefault.jpg` : it.src)} alt="" />
+    <button type="button" data-i={i} aria-pressed={i === 0 ? 'true' : 'false'} aria-label={`${it.tag}: ${it.title}`}>
+      {(it.type === 'video' || it.type === 'youtube') && <span class="reel-kind">VIDEO</span>}
+      {it.type === 'potree' && <span class="reel-kind reel-kind--3d">3D</span>}
+      <img src={it.poster || (it.type === 'youtube' ? `https://img.youtube.com/vi/${it.id}/hqdefault.jpg` : it.src)} alt="" loading="lazy" />
     </button>
   ))}
 </div>
 
 <script type="application/json" id="reel-data" set:html={JSON.stringify(items)}></script>
+
+<style>
+  .reel-thumbs{display:flex;gap:var(--s-2);margin-top:var(--s-3);overflow-x:auto;padding:4px 2px 6px;scrollbar-width:thin}
+  .reel-thumbs button{flex:0 0 auto;position:relative;width:128px;aspect-ratio:16/9;padding:0;border:1px solid var(--line);border-radius:var(--r-2);overflow:hidden;background:var(--bg-alt);cursor:pointer;transition:border-color var(--dur-1)}
+  .reel-thumbs button:hover{border-color:var(--line-strong)}
+  .reel-thumbs button[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+  .reel-thumbs button:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+  .reel-thumbs img{width:100%;height:100%;object-fit:cover}
+  .reel-kind{position:absolute;top:5px;left:5px;z-index:1;font:500 10px/1 var(--font-mono);letter-spacing:.06em;color:var(--on-accent);background:var(--accent-hover);padding:3px 5px;border-radius:3px}
+  .reel-kind--3d{background:var(--moss);color:var(--shadow)}
+</style>
+
 <script>
-  const stage = document.getElementById('reel-stage');
-  const thumbs = document.getElementById('reel-thumbs');
-  const items = JSON.parse(document.getElementById('reel-data').textContent);
+  const stage = document.getElementById('reel-stage')!;
+  const cap = document.getElementById('reel-cap')!;
+  const thumbs = document.getElementById('reel-thumbs')!;
+  const items = JSON.parse(document.getElementById('reel-data')!.textContent!);
+  // Motion only when the visitor hasn't asked for less (reduced motion / Save-Data).
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches || (navigator as any).connection?.saveData === true;
+  const webgl = (() => { try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch { return false; } })();
+  const reel = document.getElementById('reel')!;
   let cur = -1;
+
   function media(it) {
     if (it.type === 'youtube')
-      return `<iframe src="https://www.youtube.com/embed/${it.id}?autoplay=1&mute=1&loop=1&playlist=${it.id}&controls=1&modestbranding=1&playsinline=1&rel=0" frameborder="0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>`;
+      return `<iframe src="https://www.youtube.com/embed/${it.id}?autoplay=${calm ? 0 : 1}&mute=1&loop=1&playlist=${it.id}&controls=1&modestbranding=1&playsinline=1&rel=0" title="${it.title}" frameborder="0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>`;
     if (it.type === 'video')
-      return `<video src="${it.src}" poster="${it.poster || ''}" autoplay muted loop playsinline></video>`;
+      return calm
+        ? `<video src="${it.src}" poster="${it.poster || ''}" muted playsinline controls preload="none"></video>`
+        : `<video src="${it.src}" poster="${it.poster || ''}" autoplay muted loop playsinline></video>`;
     if (it.type === 'potree')
-      return `<iframe src="${it.src}" title="Interactive 3D point cloud — 3DTreePrint scan" loading="lazy" allowfullscreen></iframe>`;
+      return `<img src="${it.still}" alt="Still of the 3DTreePrint point cloud">
+        <div class="media__overlay">
+          <button type="button" class="media__play js-load"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg> Explore in 3D</button>
+          <span class="media__note">3D viewer needs WebGL. Showing a still.</span>
+        </div>`;
     return `<img src="${it.src}" alt="">`;
   }
+
   function set(i) {
     if (i === cur) return; cur = i; const it = items[i];
-    stage.innerHTML = media(it) +
-      `<div class="reel-cap"><span class="rtag">${it.tag}</span><h4>${it.title}</h4><span>${it.sub}</span></div>`;
-    [...thumbs.children].forEach((b, j) => b.classList.toggle('on', j === i));
+    stage.innerHTML = media(it);
+    cap.innerHTML = `<span><b>${it.tag}</b> · ${it.title}</span><span>${it.sub}</span>`;
+    reel.classList.toggle('no-webgl', it.type === 'potree' && !webgl);
+    [...thumbs.children].forEach((b, j) => b.setAttribute('aria-pressed', String(j === i)));
+    stage.querySelector('.js-load')?.addEventListener('click', () => {
+      stage.innerHTML = `<iframe src="${it.src}" title="Interactive 3D point cloud — 3DTreePrint scan" allowfullscreen></iframe>`;
+      stage.querySelector('iframe')?.focus();
+    });
   }
+
   thumbs.addEventListener('click', (e) => {
-    const b = e.target.closest('button'); if (b) set(+b.dataset.i);
+    const b = (e.target as HTMLElement).closest('button'); if (b) set(+b.dataset.i!);
   });
-  set(0);
+  // Fill the stage only when the reel nears the viewport, so the clip doesn't load with the page.
+  new IntersectionObserver((entries, io) => {
+    if (entries.some((e) => e.isIntersecting)) { io.disconnect(); if (cur < 0) set(0); }
+  }, { rootMargin: '300px' }).observe(reel);
 </script>
