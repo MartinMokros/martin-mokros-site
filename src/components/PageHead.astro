@@ -1,0 +1,14 @@
+---
+// Inner-page header: label + Fraunces H1 on the left, lede on the right (desktop).
+const { label, title } = Astro.props;
+const hasLede = Astro.slots.has('default');
+---
+<header class="page-hero">
+  <div class="wrap g12">
+    <div class="page-hero__head reveal">
+      <div class="t-label">{label}</div>
+      <h1 class="t-h1">{title}</h1>
+    </div>
+    {hasLede && <p class="t-lead page-hero__lede reveal"><slot /></p>}
+  </div>
+</header>

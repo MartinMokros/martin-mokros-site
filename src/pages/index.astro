@@ -145,11 +145,11 @@ const hasCloud = existsSync(path.join(process.cwd(), 'public/posters/pointcloud-
         <h2 class="t-h2">Latest.</h2>
         <a class="arrow-link" href="/news">All news <Icon name="arrow-right" /></a>
       </div>
-      <ul class="news reveal">
+      <ul class="rows news reveal">
         {latest.map((n) => (
-          <li><a class="news__row" href={`/news/${n.slug}`}>
-            <span class="news__when"><span class="t-meta">{fmt(n.data.date)}</span><span class="t-label">{n.data.tag}</span></span>
-            <span class="news__text"><span class="card__title">{n.data.title}</span><span class="card__body">{n.data.summary}</span></span>
+          <li><a class="linkrow" href={`/news/${n.slug}`}>
+            <span class="linkrow__meta"><span class="t-meta">{fmt(n.data.date)}</span><span class="t-label">{n.data.tag}</span></span>
+            <span class="linkrow__text"><span class="card__title">{n.data.title}</span><span class="card__body">{n.data.summary}</span></span>
             <Icon name="arrow-right" />
           </a></li>
         ))}
@@ -234,15 +234,7 @@ const hasCloud = existsSync(path.join(process.cwd(), 'public/posters/pointcloud-
 
   /* ---------- latest: list offset to the right, teasers full width ---------- */
   .latest__head{display:grid;gap:var(--s-3);justify-items:start;align-content:start}
-  .news{list-style:none;margin:var(--s-6) 0 0;padding:0;border-top:1px solid var(--line-strong)}
-  .news__row{display:grid;grid-template-columns:1fr auto;gap:var(--s-2) var(--s-5);align-items:start;padding:var(--s-5) 0;border-bottom:1px solid var(--line);text-decoration:none;color:inherit}
-  .news__when{grid-column:1/-1;display:flex;gap:var(--s-3);align-items:baseline}
-  .news__text{display:grid;gap:var(--s-2)}
-  .news__row>:global(.icon){color:var(--text-accent);width:20px;height:20px;margin-top:2px;transition:transform var(--dur-2) var(--ease)}
-  .news__row:hover .card__title{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.18em}
-  .news__row:hover>:global(.icon){transform:translateX(3px)}
-  .news__row:focus-visible{outline:2px solid var(--focus);outline-offset:4px}
-  @media(min-width:760px){.news__row{grid-template-columns:150px 1fr auto}.news__when{grid-column:auto;flex-direction:column;gap:var(--s-1)}}
+  .news{margin-top:var(--s-6)}
   .teasers{display:grid;gap:var(--s-4);margin-top:var(--s-8)}
   @media(min-width:760px){.teasers{grid-template-columns:repeat(3,1fr)}}
   @media(min-width:960px){
