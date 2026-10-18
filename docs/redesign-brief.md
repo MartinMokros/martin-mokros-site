@@ -62,11 +62,17 @@ mobile, small separate commits.
 
 - Step 1 audit — done.
 - Decision 0 (baselines copied), decision 1 (overflow + ochre text token) — done.
-- Step 2 styleguide — built. `npm run dev` → `/styleguide`. The page lives in
-  `src/styleguide/Styleguide.astro` and is injected only under `astro dev`
-  (`astro.config.mjs`), so production never builds it. New tokens are in
-  `src/styles/tokens.css` and proposed components in `src/styles/components.css`;
-  the live site imports neither yet. Recommended against Tailwind v4.
-  **Awaiting Martin's approval**, including: heading face (Fraunces / Geist / hybrid),
-  the new `--paper-0` card tint, swapping "→" in labels for a Lucide arrow, and the
-  WebGL-fallback micro-copy.
+- Step 2 styleguide — approved 2026-10-18 with decisions: Hybrid headings (Fraunces
+  opsz 144 / WONK 0 for display + H1–H2 only, Geist below); link-card surface
+  `--paper-0` #F4F5EE; Lucide arrows (aria-hidden) wherever "→" was; WebGL fallback
+  copy approved; posters live in `public/posters/` (placeholder until Martin supplies
+  `3dtreeprint.webp`, ~1600px); typos fixed in visible copy only. Recommended against
+  Tailwind v4.
+- Step 3 Home — built. Home opts in with `<Base v2>` (body class `v2`, scoped rules
+  in `src/styles/v2.css`), so other pages are untouched until rollout. Hero coordinates
+  are a marked `EDIT` placeholder in `src/components/Hero.astro`. Before/after
+  screenshots: `.design-review/before-clean/` (rebuilt from c9d800a, toolbar hidden),
+  `.design-review/after/`, side by side in `.design-review/compare/`.
+  **Awaiting Martin's approval** on the Cloudflare preview.
+- Rollout notes: `src/content/` still contains "→" in `externalLabel` (projects) —
+  strip it in the template, not the content. Unscope `.v2` once every page is on it.

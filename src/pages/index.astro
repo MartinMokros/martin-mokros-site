@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
 import Reel from '../components/Reel.astro';
+import Icon from '../components/Icon.astro';
 import { getCollection } from 'astro:content';
 
 const notes = (await getCollection('news'))
@@ -9,137 +10,192 @@ const notes = (await getCollection('news'))
 const latest = notes.slice(0, 3);
 const fmt = (d) => d.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
 ---
-<Base home={true}>
+<Base home={true} v2={true}>
   <Hero />
 
   <!-- WHAT I DO -->
-  <section class="intro-sec">
-    <div class="wrap intro">
-      <div class="eyebrow">What I do</div>
-      <p class="intro-lead">Turning 3D sensing into trusted forest measurements.</p>
-      <p class="intro-body">I'm an Earth observation scientist at UCL working to make three-dimensional forest measurement practical beyond the research lab. Over the past decade, I've worked with many laser scanning systems, from terrestrial and mobile LiDAR to UAV and smartphone sensors, and learned that no single technology is the answer. Reliable measurements come from the entire pipeline: designing sensors, collecting data, benchmarking hardware and software, developing processing workflows, and working with foresters, ecologists and city managers to ensure the results answer real-world questions. My goal is to turn emerging technologies into <em>trusted, affordable and open</em> solutions that anyone can use to understand forests better.</p>
-      <div class="proofbar">
-        <div class="proof"><b>End-to-end expertise</b><span>Working across the complete measurement pipeline: prototype development, field acquisition, benchmarking, processing, ecological interpretation and operational deployment.</span></div>
-        <div class="proof"><b>International benchmarks</b><span>Leading independent evaluations of forest scanning technologies and processing pipelines, helping researchers and practitioners choose methods based on evidence rather than marketing.</span></div>
-        <div class="proof"><b>Building global expertise</b><span>Designed and delivered more than 10 international summer schools and workshops, training hundreds of researchers, practitioners and students from around the world in modern forest measurement and Earth observation.</span></div>
-        <div class="proof"><b>Open science &amp; standards</b><span>Chairing 3DForEcoTech (500+ scientists across 60+ countries) and pushing open data, shared protocols and reproducible workflows so results are comparable, not siloed. <a href="https://www.ucl.ac.uk/social-historical-sciences/news/2025/oct/ucl-geography-lecturer-wins-open-science-award-global-collaboration-forest-research" target="_blank" rel="noopener">UCL Open Science Award, 2025</a>.</span></div>
+  <section class="intro">
+    <div class="wrap">
+      <div class="intro__grid">
+        <div class="intro__head">
+          <div class="t-label">What I do</div>
+          <p class="t-h2">Turning 3D sensing into trusted forest measurements.</p>
+        </div>
+        <p class="t-body intro__body">I'm an Earth observation scientist at UCL working to make three-dimensional forest measurement practical beyond the research lab. Over the past decade, I've worked with many laser scanning systems, from terrestrial and mobile LiDAR to UAV and smartphone sensors, and learned that no single technology is the answer. Reliable measurements come from the entire pipeline: designing sensors, collecting data, benchmarking hardware and software, developing processing workflows, and working with foresters, ecologists and city managers to ensure the results answer real-world questions. My goal is to turn emerging technologies into <em>trusted, affordable and open</em> solutions that anyone can use to understand forests better.</p>
+      </div>
+      <div class="proofs">
+        <div class="card proof"><h3 class="card__title">End-to-end expertise</h3><p class="card__body">Working across the complete measurement pipeline: prototype development, field acquisition, benchmarking, processing, ecological interpretation and operational deployment.</p></div>
+        <div class="card proof"><h3 class="card__title">International benchmarks</h3><p class="card__body">Leading independent evaluations of forest scanning technologies and processing pipelines, helping researchers and practitioners choose methods based on evidence rather than marketing.</p></div>
+        <div class="card proof"><h3 class="card__title">Building global expertise</h3><p class="card__body">Designed and delivered more than 10 international summer schools and workshops, training hundreds of researchers, practitioners and students from around the world in modern forest measurement and Earth observation.</p></div>
+        <div class="card proof"><h3 class="card__title">Open science &amp; standards</h3><p class="card__body">Chairing 3DForEcoTech (500+ scientists across 60+ countries) and pushing open data, shared protocols and reproducible workflows so results are comparable, not siloed. <a class="text-link" href="https://www.ucl.ac.uk/social-historical-sciences/news/2025/oct/ucl-geography-lecturer-wins-open-science-award-global-collaboration-forest-research" target="_blank" rel="noopener">UCL Open Science Award, 2025</a>.</p></div>
       </div>
     </div>
   </section>
 
   <!-- RIGHT NOW -->
-  <section class="now-sec">
+  <section class="now">
     <div class="wrap">
-      <div class="sec-head">
-        <div class="eyebrow">Right now · Summer 2026</div>
-        <h2>In the field this season.</h2>
-        <p>One method — low-cost 3D scanning — carried from UK inventory plots to city streets and tropical community forests.</p>
+      <div class="head">
+        <div class="t-label">Right now · Summer 2026</div>
+        <h2 class="t-h2">In the field this season.</h2>
+        <p class="t-lead">One method — low-cost 3D scanning — carried from UK inventory plots to city streets and tropical community forests.</p>
       </div>
-      <article class="now-feature">
-        <div class="nf-top"><span class="now-when">June 2026 · processing now</span><span class="now-partner">COST Action INTUF · Bratislava</span></div>
-        <div class="nf-grid">
-          <div class="nf-text">
-            <h3>3D Urban Tree Intelligence</h3>
-            <p>In June we ran a city-scale scanning testbed in Bratislava — <b>28 scanners</b> capturing <b>1,000+ trees</b>. We're now aligning, clipping and cleaning the data and preparing the evidence and evaluation, all due this summer.</p>
-            <div class="nf-cta">
-              <a class="btn" href="https://martinmokros.github.io/3D-Urban-Tree-Intelligence/" target="_blank" rel="noopener">Visit the project site →</a>
-              <span class="nf-note">Want the results? Sign up for the newsletter there, or <a href="mailto:m.mokros@ucl.ac.uk">email me</a>.</span>
+
+      <article class="card card--feature now__call" data-closes="2026-10-24T00:00:00+01:00">
+        <div class="card__meta"><span class="badge js-status">Open call · deadline 23 Oct 2026</span><span class="t-meta">3DTreePrint · ARIA · UCL Geography</span></div>
+        <div class="now__call-grid">
+          <div class="now__call-text">
+            <h3 class="card__title">We're hiring: an 18-month postdoc on 3DTreePrint</h3>
+            <p class="card__body">Help put mobile laser scanning in the hands of total non-experts. Our low-cost prototypes, built on the Livox Mid-360 with Janusz Będkowski (IPPT PAN), are already in use at Forestry England, Forestry and Land Scotland, Forest Research, Kew and with partners in Madagascar. You'll work on the processing side, turning their scans into reliable tree and forest measurements.</p>
+            <div class="actions">
+              <a class="button button--primary js-apply" href="https://www.ucl.ac.uk/work-at-ucl/search-ucl-jobs/details?jobId=48546&amp;jobTitle=Research+Fellow%3A++3DTreePrint+Project" target="_blank" rel="noopener">Read the advert &amp; apply <Icon name="arrow-up-right" /></a>
+              <a class="arrow-link" href="mailto:m.mokros@ucl.ac.uk?subject=3DTreePrint%20postdoc">Questions? Email me <Icon name="arrow-right" /></a>
             </div>
           </div>
-          <div class="nf-stats">
-            <div class="nf-stat"><b>28</b><span>scanners</span></div>
-            <div class="nf-stat"><b>1,000+</b><span>trees scanned</span></div>
-          </div>
+          <dl class="facts">
+            <div><dt>Role</dt><dd>Research Fellow (postdoc)</dd></div>
+            <div><dt>Start</dt><dd>1 Dec 2026 · 18 months, to 31 May 2028</dd></div>
+            <div><dt>Skills</dt><dd>Forest point clouds (TLS/MLS) · SLAM · Python or C++</dd></div>
+            <div><dt>Deadline</dt><dd>23 October 2026</dd></div>
+          </dl>
         </div>
       </article>
-      <div class="now-grid">
-        <article class="now-card hiring open" data-closes="2026-10-24T00:00:00+01:00">
-          <div class="now-top"><span class="now-when js-status">Open call · deadline 23 Oct 2026</span><span class="now-partner">3DTreePrint · ARIA · UCL Geography</span></div>
-          <h3>We're hiring: an 18-month postdoc on 3DTreePrint</h3>
-          <p>Help put mobile laser scanning in the hands of total non-experts. Our low-cost prototypes, built on the Livox Mid-360 with Janusz Będkowski (IPPT PAN), are already in use at Forestry England, Forestry and Land Scotland, Forest Research, Kew and with partners in Madagascar. You'll work on the processing side, turning their scans into reliable tree and forest measurements.</p>
-          <ul class="hire-facts">
-            <li><span>Role</span>Research Fellow (postdoc)</li>
-            <li><span>Start</span>1 Dec 2026 · 18 months, to 31 May 2028</li>
-            <li><span>Skills</span>Forest point clouds (TLS/MLS) · SLAM · Python or C++</li>
-            <li><span>Deadline</span>23 October 2026</li>
-          </ul>
-          <div class="hire-cta">
-            <a class="btn js-apply" href="https://www.ucl.ac.uk/work-at-ucl/search-ucl-jobs/details?jobId=48546&amp;jobTitle=Research+Fellow%3A++3DTreePrint+Project" target="_blank" rel="noopener">Read the advert &amp; apply →</a>
-            <a class="xlink" href="mailto:m.mokros@ucl.ac.uk?subject=3DTreePrint%20postdoc">Questions? Email me →</a>
-          </div>
-        </article>
-        <div class="now-card">
-          <div class="now-top"><span class="now-when">July</span><span class="now-partner">with Forest Research</span></div>
-          <h3>UK National Forest Inventory — Thetford</h3>
-          <p>Scanning inventory and managed woodland to test whether low-cost handheld LiDAR can match the national standard.</p>
+
+      <div class="now__grid">
+        <div class="now__log">
+          <article class="card">
+            <div class="card__meta"><span class="badge">June 2026 · processing now</span><span class="t-meta">COST Action INTUF · Bratislava</span></div>
+            <h3 class="card__title">3D Urban Tree Intelligence</h3>
+            <p class="card__body">In June we ran a city-scale scanning testbed in Bratislava — <b>28 scanners</b> capturing <b>1,000+ trees</b>. We're now aligning, clipping and cleaning the data and preparing the evidence and evaluation, all due this summer.</p>
+            <div class="now__stats">
+              <div><span class="t-data">28</span><span class="t-label">scanners</span></div>
+              <div><span class="t-data">1,000+</span><span class="t-label">trees scanned</span></div>
+            </div>
+            <a class="arrow-link" href="https://martinmokros.github.io/3D-Urban-Tree-Intelligence/" target="_blank" rel="noopener">Visit the project site <Icon name="arrow-up-right" /></a>
+            <p class="t-sm">Want the results? Sign up for the newsletter there, or <a class="text-link" href="mailto:m.mokros@ucl.ac.uk">email me</a>.</p>
+          </article>
+          <article class="card">
+            <div class="card__meta"><span class="badge">July</span><span class="t-meta">with Forest Research</span></div>
+            <h3 class="card__title">UK National Forest Inventory — Thetford</h3>
+            <p class="card__body">Scanning inventory and managed woodland to test whether low-cost handheld LiDAR can match the national standard.</p>
+          </article>
+          <article class="card">
+            <div class="card__meta"><span class="badge">Summer</span><span class="t-meta">with Forest Research</span></div>
+            <h3 class="card__title">Flux-tower footprint — Alice Holt</h3>
+            <p class="card__body">Mapping the ~2.5&nbsp;ha footprint beneath a carbon flux tower in 3D, linking what the tower measures to the structure behind it.</p>
+          </article>
+          <article class="card">
+            <div class="card__meta"><span class="badge">Summer</span><span class="t-meta">with Earthwatch Europe</span></div>
+            <h3 class="card__title">Miyawaki micro-forests — Oxford</h3>
+            <p class="card__body">Scanning the UK's oldest tiny forests to see how dense, engineered woodland actually grows.</p>
+          </article>
         </div>
-        <div class="now-card">
-          <div class="now-top"><span class="now-when">Summer</span><span class="now-partner">with Forest Research</span></div>
-          <h3>Flux-tower footprint — Alice Holt</h3>
-          <p>Mapping the ~2.5&nbsp;ha footprint beneath a carbon flux tower in 3D, linking what the tower measures to the structure behind it.</p>
+        <div class="now__links">
+          <a class="card card--link" href="/news/madagascar-handover">
+            <div class="card__meta"><span class="badge">Aug 2026 · done</span><span class="t-meta">Scanning Together</span></div>
+            <h3 class="card__title">Community scanning — Madagascar</h3>
+            <p class="card__body">10 scanners under €2,000 handed over and 15+ people trained with local partners. Tanzania next, 8–20 November.</p>
+            <span class="card__foot">Read the story <Icon name="arrow-right" /></span>
+          </a>
+          <a class="card card--link" href="/collaborate">
+            <div class="card__meta"><span class="badge">Open invite</span></div>
+            <h3 class="card__title">Want to try it?</h3>
+            <p class="card__body">Curious about low-cost 3D scanning for your site, city or project? Get in touch and we'll cook something up together.</p>
+            <span class="card__foot">Work with me <Icon name="arrow-right" /></span>
+          </a>
         </div>
-        <div class="now-card">
-          <div class="now-top"><span class="now-when">Summer</span><span class="now-partner">with Earthwatch Europe</span></div>
-          <h3>Miyawaki micro-forests — Oxford</h3>
-          <p>Scanning the UK's oldest tiny forests to see how dense, engineered woodland actually grows.</p>
-        </div>
-        <a class="now-card" href="/news/madagascar-handover" style="text-decoration:none">
-          <div class="now-top"><span class="now-when">Aug 2026 · done</span><span class="now-partner">Scanning Together</span></div>
-          <h3>Community scanning — Madagascar</h3>
-          <p>10 scanners under €2,000 handed over and 15+ people trained with local partners. Tanzania next, 8–20 November.</p>
-          <span class="xlink">Read the story →</span>
-        </a>
-        <a class="now-card invite" href="/collaborate">
-          <div class="now-top"><span class="now-when alt">Open invite</span></div>
-          <h3>Want to try it?</h3>
-          <p>Curious about low-cost 3D scanning for your site, city or project? Get in touch and we'll cook something up together.</p>
-          <span class="xlink">Work with me →</span>
-        </a>
       </div>
-      <p class="now-partners">Funded by <b>ARIA</b> (3DTreePrint) and <b>NCEO</b> (Scanning Together). In collaboration with Forest Research, Earthwatch Europe, the Polish Academy of Sciences and the University of Zurich.</p>
+      <p class="t-meta now__partners">Funded by <b>ARIA</b> (3DTreePrint) and <b>NCEO</b> (Scanning Together). In collaboration with Forest Research, Earthwatch Europe, the Polish Academy of Sciences and the University of Zurich.</p>
     </div>
   </section>
 
   <!-- SCAN & FIELD REEL -->
   <section>
     <div class="wrap">
-      <div class="sec-head">
-        <div class="eyebrow">What we're doing</div>
-        <h2>Some videos and images to explore.</h2>
-        <p>Recent campaigns, scans, documentaries or concepts. New clips drop in as we collect them.</p>
+      <div class="head">
+        <div class="t-label">What we're doing</div>
+        <h2 class="t-h2">Some videos and images to explore.</h2>
+        <p class="t-lead">Recent campaigns, scans, documentaries or concepts. New clips drop in as we collect them.</p>
       </div>
       <Reel />
     </div>
   </section>
 
   <!-- NEWS & NOTES -->
-  <section style="padding-top:0">
+  <section class="tight">
     <div class="wrap">
-      <div class="sec-flex sec-head">
-        <div><div class="eyebrow">NEWS</div><h2>Latest.</h2></div>
-        <a class="more" href="/news">All news →</a>
+      <div class="head head--row">
+        <div><div class="t-label">NEWS</div><h2 class="t-h2">Latest.</h2></div>
+        <a class="arrow-link" href="/news">All news <Icon name="arrow-right" /></a>
       </div>
-      <div class="notes">
+      <ul class="news">
         {latest.map((n) => (
-          <a class="note" href={`/news/${n.slug}`}>
-            <div><span class="date">{fmt(n.data.date)}</span><span class="tagN">{n.data.tag}</span></div>
-            <div><h4>{n.data.title}</h4><p>{n.data.summary}</p></div>
-          </a>
+          <li><a class="news__row" href={`/news/${n.slug}`}>
+            <span class="news__when"><span class="t-meta">{fmt(n.data.date)}</span><span class="t-label">{n.data.tag}</span></span>
+            <span class="news__text"><span class="card__title">{n.data.title}</span><span class="card__body">{n.data.summary}</span></span>
+            <Icon name="arrow-right" />
+          </a></li>
         ))}
-      </div>
+      </ul>
     </div>
   </section>
 
   <!-- TEASERS -->
-  <section style="padding-top:0">
+  <section class="tight">
     <div class="wrap">
       <div class="teasers">
-        <a class="tcard" href="/projects"><div class="k">FLAGSHIP</div><h3>3DTreePrint</h3><p>My ARIA project: low-cost 3D "structural fingerprints" for ecosystem resilience.</p><span class="go">Projects →</span></a>
-        <a class="tcard" href="/research"><div class="k">RESEARCH</div><h3>The why</h3><p>The threads beneath the projects and why measuring forests in 3D matters.</p><span class="go">Research →</span></a>
-        <a class="tcard" href="/join"><div class="k">JOIN US</div><h3>PhD &amp; postdoc</h3><p>Funded, self-funded, or bringing your own. We're open — here's how.</p><span class="go">Join us →</span></a>
+        <a class="card card--link" href="/projects"><div class="t-label">FLAGSHIP</div><h3 class="card__title">3DTreePrint</h3><p class="card__body">My ARIA project: low-cost 3D "structural fingerprints" for ecosystem resilience.</p><span class="card__foot">Projects <Icon name="arrow-right" /></span></a>
+        <a class="card card--link" href="/research"><div class="t-label">RESEARCH</div><h3 class="card__title">The why</h3><p class="card__body">The threads beneath the projects and why measuring forests in 3D matters.</p><span class="card__foot">Research <Icon name="arrow-right" /></span></a>
+        <a class="card card--link" href="/join"><div class="t-label">JOIN US</div><h3 class="card__title">PhD &amp; postdoc</h3><p class="card__body">Funded, self-funded, or bringing your own. We're open — here's how.</p><span class="card__foot">Join us <Icon name="arrow-right" /></span></a>
       </div>
     </div>
   </section>
+
+<style>
+  /* what I do */
+  .intro__grid{display:grid;gap:var(--s-5)}
+  .intro__head{display:grid;gap:var(--s-3);align-content:start}
+  @media(min-width:960px){.intro__grid{grid-template-columns:5fr 6fr;gap:var(--s-8)}.intro__head .t-h2{max-width:14ch}}
+  .proofs{display:grid;gap:var(--s-6) var(--s-5);margin-top:var(--s-8);counter-reset:proof}
+  @media(min-width:640px){.proofs{grid-template-columns:1fr 1fr}}
+  @media(min-width:1040px){.proofs{grid-template-columns:repeat(4,1fr)}}
+  .proof{counter-increment:proof}
+  .proof::before{content:"0" counter(proof);font:400 var(--fs-label)/1 var(--font-mono);letter-spacing:var(--tracking-label);color:var(--text-accent)}
+
+  /* right now */
+  .now{background:var(--bg-alt)}
+  .now__call-grid{display:grid;gap:var(--s-6)}
+  .now__call-text{display:grid;gap:var(--s-4);align-content:start}
+  .now__call-text .actions{margin-top:var(--s-2)}
+  @media(min-width:960px){.now__call-grid{grid-template-columns:3fr 2fr;gap:var(--s-7)}.now__call .facts{align-self:start}}
+  .now__grid{display:grid;gap:var(--s-7) var(--s-6);margin-top:var(--s-7)}
+  .now__log{display:grid;gap:var(--s-6) var(--s-5)}
+  @media(min-width:640px){.now__log{grid-template-columns:1fr 1fr}}
+  .now__links{display:grid;gap:var(--s-4);align-content:start}
+  @media(min-width:640px) and (max-width:1039px){.now__links{grid-template-columns:1fr 1fr}}
+  @media(min-width:1040px){.now__grid{grid-template-columns:2fr 1fr}}
+  .now__stats{display:flex;gap:var(--s-6)}
+  .now__stats>div{display:grid;gap:var(--s-1)}
+  .now__stats .t-data{font-size:28px}
+  .now__stats .t-label{color:var(--text-muted)}
+  .now .card__body b{color:var(--text);font-weight:600}
+  .now__partners{margin-top:var(--s-7);max-width:72ch;font-size:12.5px;line-height:1.7}
+  .now__partners b{color:var(--text);font-weight:500}
+
+  /* news + teasers sit closer to the reel */
+  .tight{padding-top:0}
+  .news{list-style:none;margin:0;padding:0;border-top:1px solid var(--line-strong)}
+  .news__row{display:grid;grid-template-columns:1fr auto;gap:var(--s-2) var(--s-5);align-items:start;padding:var(--s-5) 0;border-bottom:1px solid var(--line);text-decoration:none;color:inherit}
+  .news__when{grid-column:1/-1;display:flex;gap:var(--s-3);align-items:baseline}
+  .news__text{display:grid;gap:var(--s-2)}
+  .news__row>:global(.icon){color:var(--text-accent);width:20px;height:20px;margin-top:2px;transition:transform var(--dur-2) var(--ease)}
+  .news__row:hover .card__title{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.18em}
+  .news__row:hover>:global(.icon){transform:translateX(3px)}
+  .news__row:focus-visible{outline:2px solid var(--focus);outline-offset:4px}
+  @media(min-width:760px){.news__row{grid-template-columns:150px 1fr auto}.news__when{grid-column:auto;flex-direction:column;gap:var(--s-1)}}
+  .teasers{display:grid;gap:var(--s-4)}
+  @media(min-width:760px){.teasers{grid-template-columns:repeat(3,1fr)}}
+</style>
 <script is:inline>
   // Flip open calls to "closed" after their deadline, without a redeploy.
   document.querySelectorAll('[data-closes]').forEach((el) => {

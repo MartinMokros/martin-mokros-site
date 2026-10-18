@@ -10,7 +10,7 @@
   --font-mono:"IBM Plex Mono",ui-monospace,monospace;
   /* Hybrid (decided): Fraunces only for display — hero name, page/section H1–H2 —
      cut at high optical size with the quirky "wonky" glyphs off. Geist for the rest. */
-  --font-heading:var(--font-serif); --heading-weight:500; --heading-tracking:-.01em;
+  --font-heading:var(--font-serif); --heading-weight:500; --heading-tracking:-.004em;
   --heading-variation:"opsz" 144, "WONK" 0, "SOFT" 0;
   --font-title:var(--font-sans); --title-weight:600; --title-tracking:-.015em;
 
