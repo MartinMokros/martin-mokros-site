@@ -16,6 +16,11 @@ const fmt = (d) => d.toLocaleDateString('en-GB', { month: 'short', year: 'numeri
 // The point-cloud band only renders once the real render exists.
 // EDIT: add public/posters/pointcloud-band.webp (elevation-coloured point-cloud render, ~2400×800).
 const hasCloud = existsSync(path.join(process.cwd(), 'public/posters/pointcloud-band.webp'));
+
+// The postdoc call fills the featured slot until its deadline, then the open invite takes over. Decided at build time
+// and again in the browser (script at the end), because the site is not rebuilt when the deadline passes.
+const CALL_CLOSES = '2026-10-24T00:00:00+01:00'; // end of 23 Oct 2026, UK time
+const callClosed = Date.now() > Date.parse(CALL_CLOSES);
 ---
 <Base home={true} v2={true}>
   <Hero />
@@ -63,7 +68,7 @@ const hasCloud = existsSync(path.join(process.cwd(), 'public/posters/pointcloud-
       </div>
       <p class="t-lead now__lede reveal">One method — low-cost 3D scanning — carried from UK inventory plots to city streets and tropical community forests.</p>
 
-      <article class="card card--feature now__call reveal" data-closes="2026-10-24T00:00:00+01:00">
+      <article class="card card--feature now__call reveal" data-closes={CALL_CLOSES} hidden={callClosed}>
         <div class="card__meta"><span class="badge js-status">Open call · deadline 23 Oct 2026</span><span class="t-meta">3DTreePrint · ARIA · UCL Geography</span></div>
         <div class="now__call-grid">
           <div class="now__call-text">
@@ -80,6 +85,14 @@ const hasCloud = existsSync(path.join(process.cwd(), 'public/posters/pointcloud-
             <div><dt>Skills</dt><dd>Forest point clouds (TLS/MLS) · SLAM · Python or C++</dd></div>
             <div><dt>Deadline</dt><dd>23 October 2026</dd></div>
           </dl>
+        </div>
+      </article>
+      <article class="card card--feature now__call now__invite reveal" hidden={!callClosed}>
+        <div class="card__meta"><span class="badge">Open invite</span></div>
+        <div class="now__call-text">
+          <h3 class="card__title">Want to try it?</h3>
+          <p class="card__body">Curious about low-cost 3D scanning for your site, city or project? Get in touch and we'll cook something up together.</p>
+          <div class="actions"><a class="button button--primary" href="/collaborate">Work with me <Icon name="arrow-right" /></a></div>
         </div>
       </article>
 
@@ -118,7 +131,7 @@ const hasCloud = existsSync(path.join(process.cwd(), 'public/posters/pointcloud-
           <p class="card__body">10 scanners under €2,000 handed over and 15+ people trained with local partners. Tanzania next, 8–20 November.</p>
           <span class="card__foot">Read the story <Icon name="arrow-right" /></span>
         </a>
-        <a class="card card--link" href="/collaborate">
+        <a class="card card--link js-invite-small" href="/collaborate" hidden={callClosed}>
           <div class="card__meta"><span class="badge">Open invite</span></div>
           <h3 class="card__title">Want to try it?</h3>
           <p class="card__body">Curious about low-cost 3D scanning for your site, city or project? Get in touch and we'll cook something up together.</p>
@@ -257,5 +270,13 @@ const hasCloud = existsSync(path.join(process.cwd(), 'public/posters/pointcloud-
       el.querySelectorAll('.js-status').forEach((s) => (s.textContent = 'Applications closed'));
     }
   });
+  // Home: once the postdoc call has closed, the featured slot shows the open invite instead (and the small invite
+  // card goes, so it isn't shown twice).
+  const call = document.querySelector('.now__call[data-closes]');
+  if (call && Date.now() > Date.parse(call.dataset.closes)) {
+    call.hidden = true;
+    document.querySelector('.now__invite')?.removeAttribute('hidden');
+    document.querySelector('.js-invite-small')?.setAttribute('hidden', '');
+  }
 </script>
 </Base>

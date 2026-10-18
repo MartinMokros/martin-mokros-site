@@ -57,6 +57,7 @@
    .card          static: an unboxed entry under a hairline — no fill, no hover, no pointer
    .card--link    whole card is one <a>: raised surface, arrow row, hover + focus
    .card--feature is a static card given a box and an ochre rule (the open call only) */
+.card[hidden]{display:none} /* .card's display would otherwise override the hidden attribute */
 .card{display:flex;flex-direction:column;gap:var(--s-3);border-top:1px solid var(--line-strong);padding-top:var(--s-4);color:inherit;min-width:0}
 .card__meta{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s-2) var(--s-3)}
 .card__title{font-family:var(--font-title);font-weight:var(--title-weight);letter-spacing:var(--title-tracking);font-size:var(--fs-h4);line-height:1.25;color:var(--text)}
