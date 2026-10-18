@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
 import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -11,12 +12,24 @@ const { note } = Astro.props;
 const { Content } = await note.render();
 const fmt = (d) => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 ---
-<Base title={`${note.data.title} — Martin Mokroš`} description={note.data.summary}>
-  <div class="wrap article">
-    <a class="back" href="/news">← News</a>
-    <div class="date">{fmt(note.data.date)} · {note.data.tag}</div>
-    <h1>{note.data.title}</h1>
-    <Content />
-  </div>
-  <div style="height:60px"></div>
+<Base title={`${note.data.title} — Martin Mokroš`} description={note.data.summary} v2={true}>
+  <article class="post">
+    <div class="wrap g12">
+      <a class="arrow-link post__back" href="/news"><Icon name="arrow-left" /> News</a>
+      <div class="t-label post__meta">{fmt(note.data.date)} · {note.data.tag}</div>
+      <h1 class="t-h1 post__title">{note.data.title}</h1>
+      <div class="prose post__body"><Content /></div>
+    </div>
+  </article>
+
+<style>
+  .post{padding:calc(var(--nav-h) + var(--s-8)) 0 var(--section)}
+  .post__back{justify-self:start;margin-bottom:var(--s-6)}
+  .post__title{margin:var(--s-4) 0 var(--s-7);text-wrap:balance}
+  @media(min-width:960px){
+    .post{padding-top:calc(var(--nav-h) + var(--s-9))}
+    .post__title{grid-column:1/11}
+    .post__body{grid-column:4/11}
+  }
+</style>
 </Base>
