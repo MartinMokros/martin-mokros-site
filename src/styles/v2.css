@@ -14,9 +14,10 @@
 .v2 .g12{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--s-5)}
 .v2 .g12>*{grid-column:1/-1;min-width:0}
 
-/* reveal-on-scroll: opt-in per element, only when motion is allowed (class set by script) */
-.reveal-on .reveal{opacity:0;transform:translateY(16px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
-.reveal-on .reveal.is-in{opacity:1;transform:none}
+/* reveal-on-scroll: visible by default; Reveal.astro adds the pending state below the fold only */
+.reveal{transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal--pending{opacity:0;transform:translateY(16px)}
+@media(prefers-reduced-motion:reduce){.reveal--pending{opacity:1;transform:none}}
 
 /* section heading block */
 .v2 .head{display:grid;gap:var(--s-3);max-width:var(--measure);margin-bottom:var(--s-7)}

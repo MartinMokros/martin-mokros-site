@@ -1,0 +1,21 @@
+---
+// Reveal-on-scroll as progressive enhancement. Content is visible by default; the hidden
+// state is only applied once JS runs and IntersectionObserver exists, never to anything in
+// the first viewport, never under reduced motion, and a timeout reveals everything anyway.
+---
+<script is:inline>
+  (() => {
+    if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const later = [...document.querySelectorAll('.reveal')].filter((el) => el.getBoundingClientRect().top > innerHeight);
+    if (!later.length) return;
+    later.forEach((el) => el.classList.add('reveal--pending'));
+    const show = (el) => el.classList.remove('reveal--pending');
+    const io = new IntersectionObserver((entries) => entries.forEach((e) => {
+      if (e.isIntersecting) { show(e.target); io.unobserve(e.target); }
+    }), { rootMargin: '0px 0px -6% 0px' });
+    later.forEach((el) => io.observe(el));
+    const all = () => { io.disconnect(); later.forEach(show); };
+    setTimeout(all, 3000);
+    addEventListener('beforeprint', all);
+  })();
+</script>
