@@ -89,8 +89,7 @@ mobile, small separate commits.
   Rolled out to every page (one commit each); legacy CSS removed. Screenshots in
   `.design-review/rollout/` (+ `scroll-375/` scroll-through frames).
   **Awaiting Martin's review before merge to main.**
-- Open EDITs: real 3D poster (`public/posters/3dtreeprint.webp`, then swap in
-  `ScanEmbed.astro` and `Reel.astro`); point-cloud band render; confirm 500+ vs 600+.
+- Open EDITs: point-cloud band render; confirm 500+ vs 600+. (3D poster: done.)
 - Oct 2026 copy round: Fraunces dropped (headings Geist 650); hero headline in a mono
   chosen via the TEMPORARY preview toggle (`FontToggle.astro` + init script in
   `Base.astro`; remove both and prune the font request once Martin picks). Numbers band
@@ -100,5 +99,18 @@ mobile, small separate commits.
   Geist Mono only). Cost figure removed from the band. 3DForEcoTech past tense / 600+
   everywhere; `status: completed` in the projects schema drives a "Completed" group.
   **Not merged — pre-merge checklist pending with Martin.**
+- Pre-merge round (Oct 2026): real 3D poster `public/posters/3dtreeprint.webp` rendered
+  from `public/potree/viewer.html` (headless Chrome, SwiftShader; GUI hidden,
+  YELLOW_GREEN elevation, round points, `--shadow` background, oblique view from the
+  west at 10°), swapped in `ScanEmbed.astro`, `Reel.astro` and the styleguide;
+  placeholder removed. "Right now · Autumn 2026"; finished Right-now entries in the
+  past tense, each with an EDIT marker. After the postdoc deadline the featured slot
+  shows the "Want to try it?" invite (build time + browser); Join us shows
+  "Applications closed". Approved as written: 404 wording, "Completed", "Explore in
+  3D", the WebGL line. Stats confirmed; EDIT markers kept.
+  **Awaiting Martin's phone test of the `redesign-bold` preview before merge.**
+- After merge (separate commits, push to main only once Martin confirms): og:image
+  1200×630 (hero still + name + headline in Geist Mono), `@astrojs/sitemap` +
+  robots.txt, hero video re-encoded to ~1.5 MB.
 - Rollout notes: `src/content/` still contains "→" in `externalLabel` (projects) —
   strip it in the template, not the content. Unscope `.v2` once every page is on it.
