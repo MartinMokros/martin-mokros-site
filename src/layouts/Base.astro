@@ -6,6 +6,7 @@ import '../styles/components.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Reveal from '../components/Reveal.astro';
+import FontToggle from '../components/FontToggle.astro';
 
 const {
   title = 'Martin Mokroš — Earth Observation',
@@ -27,9 +28,11 @@ const {
   <meta property="og:type" content="website" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  {v2
-    ? <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,500..600,0,0&family=Geist:wght@400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
-    : <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,400;9..144,0,500;9..144,0,600;9..144,1,400&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />}
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&family=IBM+Plex+Mono:wght@400;500&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet" />
+  <!-- TEMPORARY: apply the preview mono choice before first paint (see FontToggle.astro) -->
+  <script is:inline>
+    try { const m = new URLSearchParams(location.search).get('mono') || localStorage.getItem('mono'); if (m === 'plex' || m === 'jetbrains' || m === 'geist') document.documentElement.dataset.mono = m; } catch (e) {}
+  </script>
 </head>
 <body class={v2 ? 'v2' : undefined}>
   <Nav home={home} />
@@ -38,5 +41,6 @@ const {
   </main>
   <Footer v2={v2} />
   {v2 && <Reveal />}
+  <FontToggle />
 </body>
 </html>

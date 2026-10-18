@@ -6,12 +6,16 @@
 :root{
   /* ---- fonts ---- */
   --font-sans:"Geist",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --font-serif:"Fraunces",Georgia,serif;
-  --font-mono:"IBM Plex Mono",ui-monospace,monospace;
-  /* Hybrid (decided): Fraunces only for display — hero name, page/section H1–H2 —
-     cut at high optical size with the quirky "wonky" glyphs off. Geist for the rest. */
-  --font-heading:var(--font-serif); --heading-weight:500; --heading-tracking:-.004em;
-  --heading-variation:"opsz" 144, "WONK" 0, "SOFT" 0;
+  --font-mono-geist:"Geist Mono",ui-monospace,monospace;
+  --font-mono-plex:"IBM Plex Mono",ui-monospace,monospace;
+  --font-mono-jb:"JetBrains Mono",ui-monospace,monospace;
+  /* Fraunces is gone. Headings are Geist; the hero headline is set in a mono.
+     TEMPORARY: the preview toggle (FontToggle.astro) compares three monos via html[data-mono].
+     Geist Mono (default) also takes over the labels; the other two keep Plex labels. */
+  --font-display:var(--font-mono-geist);
+  --font-mono:var(--font-mono-geist);
+  --font-heading:var(--font-sans); --heading-weight:650; --heading-tracking:-.035em;
+  --heading-variation:normal;
   --font-title:var(--font-sans); --title-weight:600; --title-tracking:-.015em;
 
   /* ---- colour roles (all text pairs ≥ 4.5:1, UI boundaries ≥ 3:1) ---- */
@@ -55,7 +59,7 @@
   /* ---- motion ---- */
   --dur-1:120ms; --dur-2:220ms; --ease:cubic-bezier(.2,.7,.2,1);
 }
-/* styleguide comparison only */
-[data-heading="serif"]{--font-title:var(--font-serif); --title-weight:500; --title-tracking:-.01em}
-[data-heading="sans"]{--font-heading:var(--font-sans); --heading-weight:600; --heading-tracking:-.028em; --heading-variation:normal}
+/* TEMPORARY mono comparison (preview toggle) */
+[data-mono="plex"]{--font-display:var(--font-mono-plex); --font-mono:var(--font-mono-plex)}
+[data-mono="jetbrains"]{--font-display:var(--font-mono-jb); --font-mono:var(--font-mono-plex)}
 @media (prefers-reduced-motion:reduce){:root{--dur-1:0ms; --dur-2:0ms}}

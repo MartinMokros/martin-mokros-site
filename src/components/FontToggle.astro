@@ -1,0 +1,50 @@
+---
+// TEMPORARY: compares the hero-headline mono on preview deploys only (hidden on martinmokros.com).
+// Geist Mono also switches the labels from IBM Plex Mono. Remove once the font is chosen.
+---
+<div class="font-toggle" id="font-toggle" hidden>
+  <div class="font-toggle__panel" id="font-toggle-panel" role="group" aria-label="Preview: headline mono font" hidden>
+    <button type="button" data-mono="geist">Geist Mono <small>+ labels</small></button>
+    <button type="button" data-mono="plex">IBM Plex Mono</button>
+    <button type="button" data-mono="jetbrains">JetBrains Mono</button>
+  </div>
+  <button type="button" class="font-toggle__pill" aria-expanded="false" aria-controls="font-toggle-panel">Mono: <span class="font-toggle__cur">Geist</span></button>
+</div>
+
+<style>
+  .font-toggle{position:fixed;z-index:90;right:10px;bottom:8px;display:grid;justify-items:end;gap:6px;font:500 12px/1 var(--font-sans);color:var(--text)}
+  /* phones: bottom-right (clear of the hero text); desktop: bottom-centre (clear of the text column and the HUD coordinates) */
+  @media(min-width:900px){.font-toggle{right:auto;left:50%;transform:translateX(-50%);justify-items:center}}
+  .font-toggle[hidden],.font-toggle__panel[hidden]{display:none}
+  .font-toggle__pill,.font-toggle__panel{border:1px solid var(--line-strong);border-radius:var(--r-2);background:var(--surface);box-shadow:0 6px 24px rgba(15,26,18,.25)}
+  .font-toggle__pill{min-height:32px;padding:0 10px;color:var(--text);font:inherit;cursor:pointer}
+  .font-toggle__panel{display:grid;gap:2px;padding:6px}
+  .font-toggle__panel button{min-height:36px;padding:0 12px;border:0;border-radius:var(--r-1);background:transparent;color:var(--text);font:inherit;text-align:left;cursor:pointer}
+  .font-toggle__panel button small{font-size:10px;color:var(--text-muted)}
+  .font-toggle__panel button[aria-pressed="true"]{background:var(--text);color:var(--paper)}
+  .font-toggle__panel button[aria-pressed="true"] small{color:var(--inv-muted)}
+  .font-toggle button:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+</style>
+
+<script is:inline>
+  (() => {
+    if (/(^|\.)martinmokros\.com$/.test(location.hostname)) return;
+    const el = document.getElementById('font-toggle');
+    if (!el) return;
+    const panel = document.getElementById('font-toggle-panel');
+    const pill = el.querySelector('.font-toggle__pill');
+    const cur = el.querySelector('.font-toggle__cur');
+    const names = { geist: 'Geist', plex: 'Plex', jetbrains: 'JetBrains' };
+    const root = document.documentElement;
+    const set = (m) => {
+      if (m === 'geist') delete root.dataset.mono; else root.dataset.mono = m;
+      try { localStorage.setItem('mono', m); } catch (e) {}
+      panel.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mono === m)));
+      cur.textContent = names[m];
+    };
+    pill.addEventListener('click', () => { panel.hidden = !panel.hidden; pill.setAttribute('aria-expanded', String(!panel.hidden)); });
+    panel.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => set(b.dataset.mono)));
+    set(root.dataset.mono || 'geist');
+    el.hidden = false;
+  })();
+</script>

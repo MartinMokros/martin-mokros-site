@@ -78,7 +78,7 @@ const icons = [
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,500..600,0,0&family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400..600&family=IBM+Plex+Mono:wght@400;500&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet" />
 </head>
 <body>
 <header class="sg-top">
@@ -87,15 +87,10 @@ const icons = [
       <div class="t-label">Redesign · tokens · local only</div>
       <h1 class="t-h2 sg-title">Design tokens</h1>
     </div>
-    <div class="sg-toggle" role="group" aria-label="Heading face for this page">
-      <span class="t-meta">Headings</span>
-      <button type="button" data-face="hybrid" aria-pressed="true">Hybrid (chosen)</button>
-      <button type="button" data-face="serif" aria-pressed="false">All Fraunces</button>
-      <button type="button" data-face="sans" aria-pressed="false">All Geist</button>
-    </div>
+
   </div>
   <nav class="sg-wrap sg-toc" aria-label="Sections">
-    <a href="#faces">Fraunces vs Geist</a><a href="#type">Type scale</a><a href="#colour">Colour</a><a href="#buttons">Buttons</a><a href="#cards">Cards</a><a href="#media">Media</a><a href="#system">Space · radii · icons</a><a href="#tailwind">Tailwind v4?</a>
+    <a href="#faces">Typefaces</a><a href="#type">Type scale</a><a href="#colour">Colour</a><a href="#buttons">Buttons</a><a href="#cards">Cards</a><a href="#media">Media</a><a href="#system">Space · radii · icons</a><a href="#tailwind">Tailwind v4?</a>
   </nav>
 </header>
 
@@ -104,65 +99,8 @@ const icons = [
 
   <!-- 1 · FACES -->
   <section class="sg-sec" id="faces">
-    <div class="sg-head"><span class="t-label">01 · Decided: Hybrid</span><h2 class="t-h2">Fraunces vs Geist for headings</h2>
-      <p class="t-body">The same real headings, set both ways. Body text is Geist in both columns. The toggle at the top switches every heading on this page.</p></div>
-
-    <div class="cmp">
-      {[['hybrid', 'Hybrid (chosen) · Fraunces 500, opsz 144, WONK 0 for display/H1/H2 · Geist 600 below'], ['sans', 'Alternative · Geist 600 throughout']].map(([face, spec]) => (
-        <div class="cmp__col" data-heading={face}>
-          <div class="cmp__spec t-meta">{spec}</div>
-
-          <div class="cmp__hero on-dark">
-            <div class="t-label" style="color:var(--inv-accent)">Earth Observation · 3D Forest Science</div>
-            <div class="t-display cmp__display">Martin Mokroš</div>
-            <p class="cmp__lede">I turn forests into point clouds and point clouds into things people can act on.</p>
-          </div>
-
-          <div class="cmp__block">
-            <div class="t-label">What I do</div>
-            <p class="t-h2">Turning 3D sensing into trusted forest measurements.</p>
-          </div>
-
-          <div class="cmp__block">
-            <div class="t-label">Right now · Summer 2026</div>
-            <h3 class="t-h2">In the field this season.</h3>
-            <p class="t-lead">One method — low-cost 3D scanning — carried from UK inventory plots to city streets and tropical community forests.</p>
-          </div>
-
-          <div class="cmp__block">
-            <h4 class="t-h3">We’re hiring: an 18-month postdoc on 3DTreePrint</h4>
-            <p class="t-sm">Help put mobile laser scanning in the hands of total non-experts.</p>
-          </div>
-
-          <div class="cmp__block">
-            <div class="t-label">Projects</div>
-            <h3 class="t-h1">What I’m building.</h3>
-            <p class="t-lead">Named, funded efforts with partners and a clock. Each links to the research it advances.</p>
-          </div>
-
-          {featured && (
-            <div class="cmp__block">
-              <div class="t-label">{featured.data.eyebrow}</div>
-              <h4 class="t-h2">{featured.data.title}</h4>
-              <p class="t-lead">{featured.data.subtitle}</p>
-            </div>
-          )}
-
-          <div class="cmp__block cmp__strands">
-            {strands.map((p) => (<div><span class="t-label">{p.data.tag}</span><span class="t-h4">{p.data.title}</span></div>))}
-          </div>
-
-          <div class="cmp__block cmp__stats">
-            <div><span class="t-data">3,000+</span><span class="t-label" style="color:var(--text-muted)">Citations · Google Scholar</span></div>
-            <div><span class="t-data">40+</span><span class="t-label" style="color:var(--text-muted)">Publications</span></div>
-          </div>
-        </div>
-      ))}
-    </div>
-
-    <div class="sg-note">
-      <b>Decided: Hybrid.</b> Fraunces only for display (the hero name and page/section H1–H2), at optical size 144 with the “wonky” glyphs off. Geist for H3 and below: card titles, list items, nav. Fraunces is what keeps this from reading as a SaaS template, and its optical sizing holds up at display sizes. Set in Geist the display headings look like every Vercel-template landing page, which is the look the brief rules out. Geist is the better face for short, dense UI headings (card titles, the strands list), where Fraunces at 20px looks bookish. Two tokens: <code>--font-heading</code> for display/H1/H2 and <code>--font-title</code> for H3 and below.
-    </div>
+    <div class="sg-head"><span class="t-label">01 · Updated Oct 2026</span><h2 class="t-h2">Typefaces</h2>
+      <p class="t-body">Fraunces has been dropped. Headings are Geist 650 with tight tracking; the hero headline is set in a mono (Geist Mono, IBM Plex Mono or JetBrains Mono, chosen with the temporary toggle on preview deploys). If Geist Mono wins, it also replaces IBM Plex Mono for labels.</p></div>
   </section>
 
   <!-- 2 · TYPE -->
