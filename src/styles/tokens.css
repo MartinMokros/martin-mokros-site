@@ -6,14 +6,9 @@
 :root{
   /* ---- fonts ---- */
   --font-sans:"Geist",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --font-mono-geist:"Geist Mono",ui-monospace,monospace;
-  --font-mono-plex:"IBM Plex Mono",ui-monospace,monospace;
-  --font-mono-jb:"JetBrains Mono",ui-monospace,monospace;
-  /* Fraunces is gone. Headings are Geist; the hero headline is set in a mono.
-     TEMPORARY: the preview toggle (FontToggle.astro) compares three monos via html[data-mono].
-     Geist Mono (default) also takes over the labels; the other two keep Plex labels. */
-  --font-display:var(--font-mono-geist);
-  --font-mono:var(--font-mono-geist);
+  --font-mono:"Geist Mono",ui-monospace,monospace;   /* labels, data, HUD */
+  /* Headings are Geist; the hero headline is set in Geist Mono (decided Oct 2026). */
+  --font-display:var(--font-mono);
   --font-heading:var(--font-sans); --heading-weight:650; --heading-tracking:-.035em;
   --heading-variation:normal;
   --font-title:var(--font-sans); --title-weight:600; --title-tracking:-.015em;
@@ -59,7 +54,4 @@
   /* ---- motion ---- */
   --dur-1:120ms; --dur-2:220ms; --ease:cubic-bezier(.2,.7,.2,1);
 }
-/* TEMPORARY mono comparison (preview toggle) */
-[data-mono="plex"]{--font-display:var(--font-mono-plex); --font-mono:var(--font-mono-plex)}
-[data-mono="jetbrains"]{--font-display:var(--font-mono-jb); --font-mono:var(--font-mono-plex)}
 @media (prefers-reduced-motion:reduce){:root{--dur-1:0ms; --dur-2:0ms}}
