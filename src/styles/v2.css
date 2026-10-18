@@ -9,6 +9,15 @@
 .v2 :where(em){font-style:normal;font-weight:500;color:var(--text)}
 .v2 ::selection{background:var(--tag-bg);color:var(--text)}
 
+/* asymmetric 12-column grid: children span full width on small screens;
+   pages place them with grid-column at ≥960px */
+.v2 .g12{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--s-5)}
+.v2 .g12>*{grid-column:1/-1;min-width:0}
+
+/* reveal-on-scroll: opt-in per element, only when motion is allowed (class set by script) */
+.reveal-on .reveal{opacity:0;transform:translateY(16px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal-on .reveal.is-in{opacity:1;transform:none}
+
 /* section heading block */
 .v2 .head{display:grid;gap:var(--s-3);max-width:var(--measure);margin-bottom:var(--s-7)}
 .v2 .head--row{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:var(--s-3) var(--s-5);max-width:none}
