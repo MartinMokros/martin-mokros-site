@@ -4,20 +4,25 @@ import Hero from '../components/Hero.astro';
 import Reel from '../components/Reel.astro';
 import Icon from '../components/Icon.astro';
 import { getCollection } from 'astro:content';
+import { existsSync } from 'node:fs';
+import path from 'node:path';
 
 const notes = (await getCollection('news'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const latest = notes.slice(0, 3);
 const fmt = (d) => d.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
 
-// Figures already stated elsewhere on the site — no new claims here.
+// Figures already stated elsewhere on the site — no new claims here. Each label carries its scope.
 const figures = [
-  { n: '28', l: 'scanners' },
-  { n: '1,000+', l: 'trees scanned' },
-  { n: '500+', l: 'scientists' },
-  { n: '60+', l: 'countries' },
+  { n: '28', l: 'Scanners · one city campaign' },
+  { n: '1,000+', l: 'Trees scanned · Bratislava' },
+  { n: '500+', l: 'Scientists · 3DForEcoTech' }, // EDIT: confirm 500+ vs 600+
+  { n: '60+', l: 'Countries · 3DForEcoTech' },
   { n: '3,000+', l: 'Citations · Google Scholar' },
 ];
+// The point-cloud band only renders once the real render exists.
+// EDIT: add public/posters/pointcloud-band.webp (elevation-coloured point-cloud render, ~2400×800).
+const hasCloud = existsSync(path.join(process.cwd(), 'public/posters/pointcloud-band.webp'));
 ---
 <Base home={true} v2={true}>
   <Hero />
@@ -40,9 +45,8 @@ const figures = [
   </section>
 
   <!-- NUMBERS BAND — point-cloud render above, figures on solid --shadow below -->
-  <section class="figures on-dark" aria-label="In numbers">
-    <!-- EDIT: replace public/posters/pointcloud-band.webp with a real elevation-coloured point-cloud render (2400×800). -->
-    <img class="figures__cloud" src="/posters/pointcloud-band.webp" alt="" width="2400" height="800" loading="lazy" />
+  <section class={`figures on-dark${hasCloud ? ' figures--cloud' : ''}`} aria-label="In numbers">
+    {hasCloud && <img class="figures__cloud" src="/posters/pointcloud-band.webp" alt="" width="2400" height="800" loading="lazy" />}
     <div class="wrap g12">
       <dl class="figures__list reveal">
         {figures.map((f) => (<div><dt class="t-label">{f.l}</dt><dd>{f.n}</dd></div>))}
@@ -161,32 +165,33 @@ const figures = [
 <style>
   /* ---------- what I do: statement left, body offset right ---------- */
   .intro__head{display:grid;gap:var(--s-4);align-content:start}
-  .intro__statement{font-family:var(--font-heading);font-variation-settings:var(--heading-variation);font-weight:500;font-size:var(--fs-h1);line-height:1.02;letter-spacing:-.01em;color:var(--text);text-wrap:balance}
+  .intro__statement{font-family:var(--font-heading);font-variation-settings:var(--heading-variation);font-weight:500;font-size:var(--fs-h2);line-height:1.02;letter-spacing:-.01em;color:var(--text);text-wrap:balance}
   .intro__body{margin-top:var(--s-6)}
   .proofs{display:grid;gap:var(--s-6) var(--s-5);margin-top:var(--s-8);counter-reset:proof}
   @media(min-width:640px){.proofs{grid-template-columns:1fr 1fr}}
   .proof{counter-increment:proof}
   .proof::before{content:"0" counter(proof);font:400 var(--fs-label)/1 var(--font-mono);letter-spacing:var(--tracking-label);color:var(--text-accent)}
   @media(min-width:960px){
-    .intro__head{grid-column:1/9}
-    .intro__body{grid-column:6/13;margin-top:var(--s-7)}
+    .intro__head{grid-column:1/7}
+    .intro__body{grid-column:8/13;margin-top:0;padding-top:calc(var(--fs-label) * 1.4 + var(--s-4))}
     .proofs{grid-column:1/13;grid-template-columns:repeat(4,1fr)}
   }
 
   /* ---------- numbers band ---------- */
-  .figures{background:var(--inv-bg);color:var(--inv-text);padding:0 0 var(--section)}
+  .figures{background:var(--inv-bg);color:var(--inv-text);padding:var(--section) 0}
+  .figures--cloud{padding-top:0}
   .figures__cloud{display:block;width:100%;height:clamp(160px,24vw,380px);object-fit:cover;
     -webkit-mask-image:linear-gradient(180deg,#000 55%,transparent);mask-image:linear-gradient(180deg,#000 55%,transparent)}
   .figures__list{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-6) var(--s-5);margin:var(--s-4) 0 0}
   .figures__list>div{display:flex;flex-direction:column-reverse;justify-content:flex-end;gap:var(--s-2);border-top:1px solid var(--inv-line);padding-top:var(--s-4);min-width:0}
   .figures__list>div:last-child{grid-column:1/-1}
-  .figures__list dt{color:var(--inv-muted)}
+  .figures__list dt{color:var(--inv-muted);letter-spacing:.06em;line-height:1.45;max-width:24ch}
+  @media(max-width:359px){.figures__list dt{font-size:11px;letter-spacing:.03em}}
   .figures__list dd{margin:0;font:600 clamp(34px,10.5vw,56px)/.95 var(--font-sans);white-space:nowrap;letter-spacing:-.035em;font-variant-numeric:tabular-nums;color:var(--inv-text)}
   @media(min-width:960px){
-    .figures__list{grid-column:2/13;grid-template-columns:repeat(5,auto);justify-content:space-between;column-gap:var(--s-6)}
+    .figures__list{grid-column:2/13;grid-template-columns:repeat(3,minmax(0,1fr));row-gap:var(--s-7)}
     .figures__list>div:last-child{grid-column:auto}
-    .figures__list dd{font-size:clamp(44px,4.6vw,84px)}
-    .figures__list dt{max-width:16ch}
+    .figures__list dd{font-size:clamp(56px,5.6vw,96px)}
   }
 
   /* ---------- right now: big H2 left, lede right ---------- */
@@ -197,8 +202,9 @@ const figures = [
   .now__call-grid{display:grid;gap:var(--s-6)}
   .now__call-text{display:grid;gap:var(--s-4);align-content:start}
   .now__call-text .actions{margin-top:var(--s-2)}
-  .now__log{display:grid;gap:var(--s-6) var(--s-5);margin-top:var(--s-7)}
-  @media(min-width:640px){.now__log{grid-template-columns:1fr 1fr}}
+  .now__log{display:grid;gap:var(--s-6);margin-top:var(--s-7)}
+  /* static entries flow in two columns instead of equal-height rows */
+  @media(min-width:640px){.now__log{display:block;columns:2;column-gap:var(--s-5)}.now__log>.card{break-inside:avoid;margin-bottom:var(--s-6)}}
   .now__links{display:grid;gap:var(--s-4);align-content:start;margin-top:var(--s-7)}
   @media(min-width:640px) and (max-width:959px){.now__links{grid-template-columns:1fr 1fr}}
   .now .card__body b{color:var(--text);font-weight:600}
