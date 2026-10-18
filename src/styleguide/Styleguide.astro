@@ -26,7 +26,7 @@ const scale = [
 const swatches = [
   ['--shadow', 'text, inverse bg'], ['--forest', 'data numerals'], ['--moss', 'subtitle on dark'],
   ['--ochre', 'fills: buttons, rules'], ['--ochre-soft', 'accent on dark, hover'], ['--ochre-ink', 'accent text on paper'],
-  ['--paper', 'page'], ['--paper-2', 'alt section'], ['--paper-0', 'card surface (new tint)'],
+  ['--paper', 'page'], ['--paper-2', 'alt section'], ['--paper-0', 'link-card surface'],
   ['--ink-soft', 'muted text'], ['--line-strong', 'control outlines'], ['--tag-bg', 'tag fill'],
 ];
 
@@ -61,7 +61,7 @@ const space = ['--s-1', '--s-2', '--s-3', '--s-4', '--s-5', '--s-6', '--s-7', '-
 const icons = [
   ['arrow-right', 'Internal link affordance (buttons, link cards).'],
   ['arrow-up-right', 'Opens another site: project sites, journals, UCL jobs.'],
-  ['mail', 'Email links (“Email me”).'],
+  ['mail', 'Reserved; emails use arrow-right for consistency.'],
   ['box', 'Interactive 3D viewer.'],
   ['map-pin', 'Optional: place in field-card meta.'],
   ['calendar', 'Optional: deadline in the open-call facts.'],
@@ -78,20 +78,20 @@ const icons = [
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,500..600,0,0&family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
 </head>
 <body>
 <header class="sg-top">
   <div class="sg-wrap sg-top__row">
     <div>
-      <div class="t-label">Redesign · step 2 · local only</div>
+      <div class="t-label">Redesign · tokens · local only</div>
       <h1 class="t-h2 sg-title">Design tokens</h1>
     </div>
     <div class="sg-toggle" role="group" aria-label="Heading face for this page">
       <span class="t-meta">Headings</span>
-      <button type="button" data-face="serif" aria-pressed="true">Fraunces</button>
-      <button type="button" data-face="sans" aria-pressed="false">Geist</button>
-      <button type="button" data-face="hybrid" aria-pressed="false">Hybrid</button>
+      <button type="button" data-face="hybrid" aria-pressed="true">Hybrid (chosen)</button>
+      <button type="button" data-face="serif" aria-pressed="false">All Fraunces</button>
+      <button type="button" data-face="sans" aria-pressed="false">All Geist</button>
     </div>
   </div>
   <nav class="sg-wrap sg-toc" aria-label="Sections">
@@ -104,11 +104,11 @@ const icons = [
 
   <!-- 1 · FACES -->
   <section class="sg-sec" id="faces">
-    <div class="sg-head"><span class="t-label">01 · Decision needed</span><h2 class="t-h2">Fraunces vs Geist for headings</h2>
-      <p class="t-body">The same real headings, set both ways. Body text is Geist in both columns. The toggle at the top switches every heading on this page; “Hybrid” is my recommendation below.</p></div>
+    <div class="sg-head"><span class="t-label">01 · Decided: Hybrid</span><h2 class="t-h2">Fraunces vs Geist for headings</h2>
+      <p class="t-body">The same real headings, set both ways. Body text is Geist in both columns. The toggle at the top switches every heading on this page.</p></div>
 
     <div class="cmp">
-      {[['serif', 'Fraunces 500 · optical sizing · −0.012em'], ['sans', 'Geist 600 · −0.028em']].map(([face, spec]) => (
+      {[['hybrid', 'Hybrid (chosen) · Fraunces 500, opsz 144, WONK 0 for display/H1/H2 · Geist 600 below'], ['sans', 'Alternative · Geist 600 throughout']].map(([face, spec]) => (
         <div class="cmp__col" data-heading={face}>
           <div class="cmp__spec t-meta">{spec}</div>
 
@@ -161,7 +161,7 @@ const icons = [
     </div>
 
     <div class="sg-note">
-      <b>My recommendation: Fraunces for h1–h3 and the hero name, Geist for everything at h4 and below</b> (card titles, list items, nav). Fraunces is what keeps this from reading as a SaaS template, and its optical sizing holds up at display sizes. Set in Geist the display headings look like every Vercel-template landing page, which is the look the brief rules out. Geist is the better face for short, dense UI headings (card titles, the strands list), where Fraunces at 20px looks bookish. If you’d rather have one face throughout, choose Fraunces. It’s two tokens either way: <code>--font-heading</code> for h1–h3 and <code>--font-title</code> for h4 and card titles. Pick “Hybrid” in the toggle to see it across the page.
+      <b>Decided: Hybrid.</b> Fraunces only for display (the hero name and page/section H1–H2), at optical size 144 with the “wonky” glyphs off. Geist for H3 and below: card titles, list items, nav. Fraunces is what keeps this from reading as a SaaS template, and its optical sizing holds up at display sizes. Set in Geist the display headings look like every Vercel-template landing page, which is the look the brief rules out. Geist is the better face for short, dense UI headings (card titles, the strands list), where Fraunces at 20px looks bookish. Two tokens: <code>--font-heading</code> for display/H1/H2 and <code>--font-title</code> for H3 and below.
     </div>
   </section>
 
@@ -180,14 +180,14 @@ const icons = [
     <div class="sg-grid3">
       <div><span class="t-label">Body</span><p class="t-sm">Geist 400/500/600 · 17px/1.6 · measure 64ch</p></div>
       <div><span class="t-label">Labels &amp; data</span><p class="t-sm">IBM Plex Mono 400/500 · 12px caps, +0.12em tracking · tabular numerals</p></div>
-      <div><span class="t-label">Headings</span><p class="t-sm">Line-height 1.06 (display 1.0) · weight and tracking set by the face token</p></div>
+      <div><span class="t-label">Headings</span><p class="t-sm">Fraunces display/H1/H2: opsz 144, WONK 0, SOFT 0, 500 (display 550). Geist H3/H4 600. Line-height 1.06 (display 1.0)</p></div>
     </div>
   </section>
 
   <!-- 3 · COLOUR -->
   <section class="sg-sec" id="colour">
     <div class="sg-head"><span class="t-label">03</span><h2 class="t-h2">Colour roles</h2>
-      <p class="t-body">The palette is unchanged except for two refinements: <code>--ochre-ink</code> (ochre for text) and <code>--ink-soft</code>, nudged from #54624F to #505E4C. <code>--paper-0</code> is a lighter paper tint for card surfaces; it’s new, so it needs your OK. One accent: ochre fills things, ochre-ink writes things.</p></div>
+      <p class="t-body">The palette is unchanged except for two refinements: <code>--ochre-ink</code> (ochre for text) and <code>--ink-soft</code>, nudged from #54624F to #505E4C. <code>--paper-0</code> #F4F5EE is the link-card surface. One accent: ochre fills things, ochre-ink writes things.</p></div>
     <div class="swatches">
       {swatches.map(([v, use]) => (
         <div class="swatch"><span class="swatch__chip" style={`background:var(${v})`}></span><code>{v}</code><span class="t-meta js-hex" data-var={v}>–</span><span class="t-sm">{use}</span></div>
@@ -213,7 +213,7 @@ const icons = [
   <!-- 4 · BUTTONS -->
   <section class="sg-sec" id="buttons">
     <div class="sg-head"><span class="t-label">04</span><h2 class="t-h2">Buttons</h2>
-      <p class="t-body">Two buttons and one arrow link. 44px minimum height, 8px radius (was 3px). Hover changes colour and nudges the arrow; nothing lifts or bounces. Proposal: the “→” at the end of labels becomes a Lucide arrow. The words stay the same.</p></div>
+      <p class="t-body">Two buttons and one arrow link. 44px minimum height, 8px radius (was 3px). Hover changes colour and nudges the arrow; nothing lifts or bounces. Every “→” at the end of a label is now a Lucide arrow (aria-hidden): <code>arrow-right</code> for this site and email, <code>arrow-up-right</code> when the link opens another site.</p></div>
     {[['', 'On paper'], ['on-dark', 'On dark (hero, Hire me)']].map(([cls, title]) => (
       <div class={`btn-demo ${cls}`}>
         <span class="t-label" style={cls ? 'color:var(--inv-accent)' : ''}>{title}</span>
@@ -232,10 +232,10 @@ const icons = [
   <!-- 5 · CARDS -->
   <section class="sg-sec" id="cards">
     <div class="sg-head"><span class="t-label">05</span><h2 class="t-h2">Cards: two variants</h2>
-      <p class="t-body"><b>Static</b>: no fill, hairline only, no hover, no pointer, no arrow. <b>Link</b>: a raised surface and the whole card is one link, with an always-visible arrow row, a stronger border on hover, an underlined title and a focus ring. “Featured” isn’t a third style: it’s the static card at a larger size with an ochre top rule, used only for the open call.</p></div>
+      <p class="t-body"><b>Static</b>: an unboxed entry under a hairline. No fill, no hover, no pointer, no arrow, and no empty box when neighbours are taller. <b>Link</b>: a raised surface and the whole card is one link, with an always-visible arrow row, a stronger border on hover, an underlined title and a focus ring. “Featured” isn’t a third style: it’s the static card given a box and an ochre top rule, used only for the open call.</p></div>
 
     <article class="card card--feature">
-      <div class="card__meta"><span class="tag">Open call · deadline 23 Oct 2026</span><span class="t-meta">3DTreePrint · ARIA · UCL Geography</span></div>
+      <div class="card__meta"><span class="badge">Open call · deadline 23 Oct 2026</span><span class="t-meta">3DTreePrint · ARIA · UCL Geography</span></div>
       <h3 class="card__title">We’re hiring: an 18-month postdoc on 3DTreePrint</h3>
       <p class="card__body">Help put mobile laser scanning in the hands of total non-experts. Our low-cost prototypes, built on the Livox Mid-360 with Janusz Będkowski (IPPT PAN), are already in use at Forestry England, Forestry and Land Scotland, Forest Research, Kew and with partners in Madagascar. You’ll work on the processing side, turning their scans into reliable tree and forest measurements.</p>
       <dl class="facts">
@@ -246,29 +246,29 @@ const icons = [
       </dl>
       <div class="actions">
         <a class="button button--primary" href="https://www.ucl.ac.uk/work-at-ucl/search-ucl-jobs/details?jobId=48546&amp;jobTitle=Research+Fellow%3A++3DTreePrint+Project" target="_blank" rel="noopener">Read the advert &amp; apply <Icon name="arrow-up-right" /></a>
-        <a class="arrow-link" href="mailto:m.mokros@ucl.ac.uk?subject=3DTreePrint%20postdoc"><Icon name="mail" /> Questions? Email me</a>
+        <a class="arrow-link" href="mailto:m.mokros@ucl.ac.uk?subject=3DTreePrint%20postdoc">Questions? Email me <Icon name="arrow-right" /></a>
       </div>
     </article>
 
     <div class="card-grid">
       <article class="card">
-        <div class="card__meta"><span class="tag">July</span><span class="t-meta">with Forest Research</span></div>
+        <div class="card__meta"><span class="badge">July</span><span class="t-meta">with Forest Research</span></div>
         <h3 class="card__title">UK National Forest Inventory — Thetford</h3>
         <p class="card__body">Scanning inventory and managed woodland to test whether low-cost handheld LiDAR can match the national standard.</p>
       </article>
       <article class="card">
-        <div class="card__meta"><span class="tag">Summer</span><span class="t-meta">with Forest Research</span></div>
+        <div class="card__meta"><span class="badge">Summer</span><span class="t-meta">with Forest Research</span></div>
         <h3 class="card__title">Flux-tower footprint — Alice Holt</h3>
         <p class="card__body">Mapping the ~2.5&nbsp;ha footprint beneath a carbon flux tower in 3D, linking what the tower measures to the structure behind it.</p>
       </article>
       <a class="card card--link" href="/news/madagascar-handover">
-        <div class="card__meta"><span class="tag">Aug 2026 · done</span><span class="t-meta">Scanning Together</span></div>
+        <div class="card__meta"><span class="badge">Aug 2026 · done</span><span class="t-meta">Scanning Together</span></div>
         <h3 class="card__title">Community scanning — Madagascar</h3>
         <p class="card__body">10 scanners under €2,000 handed over and 15+ people trained with local partners. Tanzania next, 8–20 November.</p>
         <span class="card__foot">Read the story <Icon name="arrow-right" /></span>
       </a>
       <a class="card card--link is-hover" href="/collaborate">
-        <div class="card__meta"><span class="tag">Open invite</span><span class="t-meta">hover state</span></div>
+        <div class="card__meta"><span class="badge">Open invite</span><span class="t-meta">hover state</span></div>
         <h3 class="card__title">Want to try it?</h3>
         <p class="card__body">Curious about low-cost 3D scanning for your site, city or project? Get in touch and we’ll cook something up together.</p>
         <span class="card__foot">Work with me <Icon name="arrow-right" /></span>
@@ -288,7 +288,7 @@ const icons = [
 
       <figure class="media js-scan">
         <div class="media__stage">
-          <img src="/media/scan-thumb.svg" alt="Still of the 3DTreePrint point cloud" />
+          <img src="/posters/3dtreeprint-placeholder.svg" alt="Still of the 3DTreePrint point cloud" />
           <div class="media__overlay">
             <button type="button" class="media__play js-load"><Icon name="box" /> Explore in 3D</button>
             <span class="media__note">3D viewer needs WebGL. Showing a still.</span>
@@ -299,7 +299,7 @@ const icons = [
 
       <figure class="media no-webgl">
         <div class="media__stage">
-          <img src="/media/scan-thumb.svg" alt="Still of the 3DTreePrint point cloud" />
+          <img src="/posters/3dtreeprint-placeholder.svg" alt="Still of the 3DTreePrint point cloud" />
           <div class="media__overlay">
             <button type="button" class="media__play" tabindex="-1"><Icon name="box" /> Explore in 3D</button>
             <span class="media__note">3D viewer needs WebGL. Showing a still.</span>
@@ -308,7 +308,7 @@ const icons = [
         <figcaption class="media__cap"><span><b>Interactive 3D scan</b> · fallback state (forced)</span><span>no WebGL</span></figcaption>
       </figure>
     </div>
-    <p class="t-sm sg-fine">The poster here is the existing <code>scan-thumb.svg</code> placeholder. For step 4 I’d capture a real still of the scan into <code>public/posters/</code>, since <code>public/media/</code> is off-limits. The WebGL note is new micro-copy and needs your OK.</p>
+    <p class="t-sm sg-fine">Poster: <code>/posters/3dtreeprint-placeholder.svg</code>, clearly marked, until Martin supplies <code>/posters/3dtreeprint.webp</code> (~1600px).</p>
   </section>
 
   <!-- 7 · SYSTEM -->
@@ -400,6 +400,7 @@ const icons = [
   .sg-copy .t-label{display:block;margin-bottom:var(--s-2)}
 
   /* comparison */
+  [data-heading="hybrid"]{--font-heading:var(--font-serif);--heading-weight:500;--heading-tracking:-.01em;--heading-variation:"opsz" 144,"WONK" 0,"SOFT" 0;--font-title:var(--font-sans);--title-weight:600;--title-tracking:-.015em}
   .cmp{display:grid;gap:var(--s-5)}
   @media(min-width:900px){.cmp{grid-template-columns:1fr 1fr}}
   .cmp__col{container-type:inline-size;min-width:0;display:grid;gap:var(--s-6);align-content:start;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-2);padding:var(--s-5)}
@@ -477,7 +478,7 @@ const icons = [
   const root = document.documentElement;
   const btns = document.querySelectorAll('.sg-toggle button');
   function setFace(f) {
-    root.dataset.heading = f;
+    if (f === 'hybrid') delete root.dataset.heading; else root.dataset.heading = f;
     btns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.face === f)));
     try { localStorage.setItem('sg-face', f); } catch (e) {}
     measureType();
@@ -538,9 +539,9 @@ const icons = [
     });
   });
 
-  let saved = 'serif';
-  try { saved = localStorage.getItem('sg-face') || 'serif'; } catch (e) {}
-  if (!['serif', 'sans', 'hybrid'].includes(saved)) saved = 'serif';
+  let saved = 'hybrid';
+  try { saved = localStorage.getItem('sg-face') || 'hybrid'; } catch (e) {}
+  if (!['serif', 'sans', 'hybrid'].includes(saved)) saved = 'hybrid';
   setFace(saved);
 </script>
 </body>
