@@ -1,5 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import Icon from '../components/Icon.astro';
 
 const facts = [
   { role: 'Lecturer in Earth Observation', org: 'UCL Geography', href: 'https://profiles.ucl.ac.uk/94679-martin-mokros' },
@@ -9,33 +11,49 @@ const facts = [
   { role: 'Award', org: 'UCL Open Science & Scholarship, 2025', href: 'https://www.ucl.ac.uk/social-historical-sciences/news/2025/oct/ucl-geography-lecturer-wins-open-science-award-global-collaboration-forest-research' },
 ];
 ---
-<Base title="About — Martin Mokroš">
-  <div class="wrap page-head">
-    <div class="eyebrow">About</div>
-    <h1>Martin Mokroš</h1>
-  </div>
-  <section><div class="wrap"><div class="about-grid">
-    <div>
-      <div class="portrait">
-        <img src="/media/portrait.jpg" alt="Martin Mokroš surveying with a backpack-mounted mobile LiDAR scanner" style="object-fit:cover;transform:scale(1.4);transform-origin:44% 26%;filter:saturate(.7) contrast(.96) brightness(1.04) sepia(.07)" />
+<Base title="About — Martin Mokroš" v2={true}>
+  <PageHead label="About" title="Martin Mokroš" />
+  <section class="about"><div class="wrap g12">
+    <div class="about__side reveal">
+      <div class="about__portrait">
+        <img src="/media/portrait.jpg" alt="Martin Mokroš surveying with a backpack-mounted mobile LiDAR scanner" />
       </div>
-      <ul class="factlist">
+      <ul class="about__facts">
         {facts.map((f) => (
           <li>
             <b>{f.role}</b>
-            <a href={f.href} target="_blank" rel="noopener">{f.org}</a>
+            <a class="text-link" href={f.href} target="_blank" rel="noopener">{f.org}</a>
           </li>
         ))}
       </ul>
     </div>
-    <div>
-      <p class="big">I build the tools that let us see forests in three dimensions and I care most about the moment someone who isn't a remote-sensing specialist can actually use them.</p>
-      <p>I'm a Lecturer in Earth Observation at UCL and a fellow of the National Centre for Earth Observation, and my work spans the whole 3D measurement pipeline: I design and build low-cost laser scanners, benchmark the sensors and software the field relies on, turn raw point clouds into forest structure, carbon and biodiversity, and use machine learning for problems like tree-species classification.</p>
-      <p>Right now I lead two projects and field works under <b>3DTreePrint</b> (ARIA) across UK woodlands and <b>Scanning Together</b> (NCEO) in the tropics. Translating and scaling methods from national inventory plots to city streets to community forests in Madagascar. Around the research I supervise postdocs and PhD students, convene three UCL modules and train scientists at international summer schools, with 40+ papers, 3,000+ citations, and a stubborn commitment to open data, shared standards and reproducible tools.</p>
-      <div class="about-cta">
-        <a class="btn" href="mailto:m.mokros@ucl.ac.uk">Email me →</a>
-        <a class="btn ghost" href="https://uk.linkedin.com/in/martinmokros" target="_blank" rel="noopener">Follow me on LinkedIn →</a>
+    <div class="about__text reveal">
+      <p class="about__big">I build the tools that let us see forests in three dimensions and I care most about the moment someone who isn't a remote-sensing specialist can actually use them.</p>
+      <p class="t-body">I'm a Lecturer in Earth Observation at UCL and a fellow of the National Centre for Earth Observation, and my work spans the whole 3D measurement pipeline: I design and build low-cost laser scanners, benchmark the sensors and software the field relies on, turn raw point clouds into forest structure, carbon and biodiversity, and use machine learning for problems like tree-species classification.</p>
+      <p class="t-body">Right now I lead two projects and field works under <b>3DTreePrint</b> (ARIA) across UK woodlands and <b>Scanning Together</b> (NCEO) in the tropics. Translating and scaling methods from national inventory plots to city streets to community forests in Madagascar. Around the research I supervise postdocs and PhD students, convene three UCL modules and train scientists at international summer schools, with 40+ papers, 3,000+ citations, and a stubborn commitment to open data, shared standards and reproducible tools.</p>
+      <div class="actions about__cta">
+        <a class="button button--primary" href="mailto:m.mokros@ucl.ac.uk">Email me <Icon name="arrow-right" /></a>
+        <a class="button button--secondary" href="https://uk.linkedin.com/in/martinmokros" target="_blank" rel="noopener">Follow me on LinkedIn <Icon name="arrow-up-right" /></a>
       </div>
     </div>
-  </div></div></section>
+  </div></section>
+
+<style>
+  .about{padding-top:0}
+  .about__side{display:grid;gap:var(--s-5);align-content:start}
+  .about__portrait{aspect-ratio:3/4;border-radius:var(--r-2);overflow:hidden;border:1px solid var(--line);background:var(--bg-alt);max-width:420px}
+  /* crop + tone moved here from an inline style; values unchanged */
+  .about__portrait img{width:100%;height:100%;object-fit:cover;transform:scale(1.4);transform-origin:44% 26%;filter:saturate(.7) contrast(.96) brightness(1.04) sepia(.07)}
+  .about__facts{list-style:none;margin:0;padding:0;border-top:1px solid var(--line-strong)}
+  .about__facts li{display:grid;gap:2px;padding:var(--s-3) 0;border-bottom:1px solid var(--line);font:400 13px/1.45 var(--font-mono)}
+  .about__facts b{font:600 15px/1.35 var(--font-sans);color:var(--text)}
+  .about__text{display:grid;gap:var(--s-5);align-content:start;margin-top:var(--s-7)}
+  .about__big{font:500 clamp(22px,1.1vw + 17px,30px)/1.35 var(--font-sans);letter-spacing:-.012em;color:var(--text);max-width:34ch;text-wrap:pretty}
+  .about__text .t-body b{color:var(--text);font-weight:600}
+  .about__cta{margin-top:var(--s-3)}
+  @media(min-width:960px){
+    .about__side{grid-column:1/5}
+    .about__text{grid-column:6/13;margin-top:0}
+  }
+</style>
 </Base>
