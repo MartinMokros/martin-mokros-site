@@ -1,5 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import Icon from '../components/Icon.astro';
 
 const asks = [
   { k: 'RESEARCH PARTNERS', h: 'Co-design a project', p: 'Academics and institutions wanting a partner across the full pipeline — proposal to fieldwork to open tools. I bring international networks and reproducible methods.' },
@@ -14,25 +16,48 @@ const consult = [
   'Training teams to capture and process 3D forest / urban-tree data',
 ];
 ---
-<Base title="Collaborate — Martin Mokroš">
-  <div class="wrap page-head">
-    <div class="eyebrow">Collaborate</div>
-    <h1>Partner, or hire me.</h1>
-    <p>For colleagues, institutions, agencies and companies. Specific asks below — and yes, I take on consultancy.</p>
-  </div>
-  <section><div class="wrap">
-    <div class="grid2">
+<Base title="Collaborate — Martin Mokroš" v2={true}>
+  <PageHead label="Collaborate" title="Partner, or hire me.">For colleagues, institutions, agencies and companies. Specific asks below — and yes, I take on consultancy.</PageHead>
+  <section class="asks-sec"><div class="wrap">
+    <div class="asks reveal">
       {asks.map((a) => (
-        <div class="ask"><div class="k">{a.k}</div><h3>{a.h}</h3><p>{a.p}</p></div>
+        <div class="card"><div class="t-label">{a.k}</div><h2 class="card__title">{a.h}</h2><p class="card__body">{a.p}</p></div>
       ))}
     </div>
-
-    <div class="hire">
-      <div class="eyebrow">Consultancy</div>
-      <h3>Hire me</h3>
-      <p>I consult for companies, agencies and organisations on 3D vegetation sensing and turning point clouds into operational decisions. Typical engagements:</p>
-      <ul>{consult.map((c) => <li>{c}</li>)}</ul>
-      <p style="margin-top:18px"><a class="btn" href="mailto:m.mokros@ucl.ac.uk?subject=Consultancy%20enquiry">Discuss a consultancy →</a></p>
-    </div>
   </div></section>
+
+  <!-- the one dark slab on the site -->
+  <section class="hire-band on-dark">
+    <div class="wrap g12">
+      <div class="hire-band__head reveal">
+        <div class="t-label">Consultancy</div>
+        <h2 class="t-h2">Hire me</h2>
+        <p class="t-lead">I consult for companies, agencies and organisations on 3D vegetation sensing and turning point clouds into operational decisions. Typical engagements:</p>
+      </div>
+      <div class="hire-band__body reveal">
+        <ul class="engagements">{consult.map((c) => <li><Icon name="arrow-right" /><span>{c}</span></li>)}</ul>
+        <a class="button button--primary" href="mailto:m.mokros@ucl.ac.uk?subject=Consultancy%20enquiry">Discuss a consultancy <Icon name="arrow-right" /></a>
+      </div>
+    </div>
+  </section>
+
+<style>
+  .asks-sec{padding-top:0}
+  .asks{display:grid;gap:var(--s-6) var(--s-5)}
+  @media(min-width:640px){.asks{grid-template-columns:1fr 1fr}}
+  .asks .card__title{font-size:var(--fs-h3);line-height:1.15}
+  .hire-band{background:var(--inv-bg);color:var(--inv-text)}
+  .hire-band .t-label{color:var(--inv-accent)}
+  .hire-band .t-h2{color:var(--inv-text)}
+  .hire-band .t-lead{color:var(--inv-muted)}
+  .hire-band__head{display:grid;gap:var(--s-4);align-content:start}
+  .hire-band__body{display:grid;gap:var(--s-6);align-content:start;justify-items:start;margin-top:var(--s-6)}
+  .engagements{list-style:none;margin:0;padding:0;border-top:1px solid var(--inv-line);width:100%}
+  .engagements li{display:grid;grid-template-columns:20px 1fr;gap:var(--s-3);padding:var(--s-4) 0;border-bottom:1px solid var(--inv-line);font-size:var(--fs-base);line-height:1.5;color:var(--inv-text)}
+  .engagements :global(.icon){color:var(--inv-accent);margin-top:.2em}
+  @media(min-width:960px){
+    .hire-band__head{grid-column:1/6}
+    .hire-band__body{grid-column:7/13;margin-top:calc(var(--fs-label) * 1.4 + var(--s-4))}
+  }
+</style>
 </Base>
