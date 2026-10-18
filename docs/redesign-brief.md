@@ -96,5 +96,9 @@ mobile, small separate commits.
   `Base.astro`; remove both and prune the font request once Martin picks). Numbers band
   reads `src/data/stats.ts`. 3DForEcoTech marked finished in the hero chip and Home
   proof; other present-tense references listed for Martin, not yet changed.
+- Decided: Geist Mono for hero headline + labels (toggle removed; font request is Geist +
+  Geist Mono only). Cost figure removed from the band. 3DForEcoTech past tense / 600+
+  everywhere; `status: completed` in the projects schema drives a "Completed" group.
+  **Not merged — pre-merge checklist pending with Martin.**
 - Rollout notes: `src/content/` still contains "→" in `externalLabel` (projects) —
   strip it in the template, not the content. Unscope `.v2` once every page is on it.
