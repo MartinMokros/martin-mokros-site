@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+---
+<Base title="Page not found — Martin Mokroš" v2={true}>
+  <section class="nf">
+    <div class="wrap g12">
+      <div class="nf__body">
+        <div class="t-label">Error 404 · <span class="nf__path">no data at this location</span></div>
+        <h1 class="nf__title">Page not found.</h1>
+        <p class="t-lead">The page you asked for has moved or never existed. These are good places to pick up the trail:</p>
+        <div class="actions nf__actions">
+          <a class="button button--primary" href="/">Home <Icon name="arrow-right" /></a>
+          <a class="arrow-link" href="/projects">Projects <Icon name="arrow-right" /></a>
+          <a class="arrow-link" href="/research">Research <Icon name="arrow-right" /></a>
+          <a class="arrow-link" href="/news">News <Icon name="arrow-right" /></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<style>
+  .nf{min-height:calc(100svh - var(--nav-h));display:flex;align-items:center;padding-top:calc(var(--nav-h) + var(--s-8))}
+  .nf__body{display:grid;gap:var(--s-5);justify-items:start}
+  .nf__title{font-family:var(--font-heading);font-variation-settings:var(--heading-variation);font-weight:500;font-size:var(--fs-display);line-height:1;letter-spacing:-.012em;color:var(--text)}
+  .nf__path{text-transform:none;letter-spacing:.02em;overflow-wrap:anywhere}
+  .nf__actions{margin-top:var(--s-3)}
+  @media(min-width:960px){.nf__body{grid-column:2/11}}
+</style>
+<script is:inline>
+  // Show the requested path, instrument-style.
+  const p = document.querySelector('.nf__path');
+  if (p && location.pathname !== '/404' && location.pathname !== '/404.html') p.textContent = location.pathname;
+</script>
+</Base>
