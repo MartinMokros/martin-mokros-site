@@ -62,5 +62,11 @@ mobile, small separate commits.
 
 - Step 1 audit — done.
 - Decision 0 (baselines copied), decision 1 (overflow + ochre text token) — done.
-- Step 2 styleguide — built at `/styleguide` (dev only; see `src/pages/styleguide.astro`).
-  Awaiting approval.
+- Step 2 styleguide — built. `npm run dev` → `/styleguide`. The page lives in
+  `src/styleguide/Styleguide.astro` and is injected only under `astro dev`
+  (`astro.config.mjs`), so production never builds it. New tokens are in
+  `src/styles/tokens.css` and proposed components in `src/styles/components.css`;
+  the live site imports neither yet. Recommended against Tailwind v4.
+  **Awaiting Martin's approval**, including: heading face (Fraunces / Geist / hybrid),
+  the new `--paper-0` card tint, swapping "→" in labels for a Lucide arrow, and the
+  WebGL-fallback micro-copy.
