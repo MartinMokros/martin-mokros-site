@@ -1,8 +1,7 @@
 ---
 // Click-to-load Potree viewer. The poster doubles as the no-WebGL fallback.
-// EDIT: swap the placeholder poster for /posters/3dtreeprint.webp once it exists.
 import Icon from './Icon.astro';
-const { src = '/potree/embed.html', poster = '/posters/3dtreeprint-placeholder.svg', title = 'Interactive 3D point cloud — 3DTreePrint scan' } = Astro.props;
+const { src = '/potree/embed.html', poster = '/posters/3dtreeprint.webp', title = 'Interactive 3D point cloud — 3DTreePrint scan' } = Astro.props;
 ---
 <figure class="media scan" data-src={src} data-title={title}>
   <div class="media__stage">

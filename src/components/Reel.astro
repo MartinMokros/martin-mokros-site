@@ -4,12 +4,11 @@
 // Add a field photo:                      { type:'image', src:'/media/your-photo.jpg', tag:'FIELD', title:'...', sub:'...' }
 // Add a YouTube video:                    { type:'youtube', id:'VIDEO_ID', tag:'VIDEO', title:'...', sub:'...' }
 // Potree scans load only on click. `still` is the poster (and the no-WebGL fallback).
-// EDIT: swap the placeholder still for /posters/3dtreeprint.webp once it exists.
 const items = [
   { type: 'video', src: '/media/hero.mp4', poster: '/media/field-1.jpg', tag: 'Below Canopy', title: '3D Urban Intelligence', sub: 'Captured by Ben Sanderson' },
   { type: 'youtube', id: 'ltNN7quSp_g', tag: '3DForEcoTech', title: 'Interdisciplinary Summer School', sub: 'YouTube' },
   { type: 'image', src: '/media/ScanningTogether.jpg', tag: 'Concept', title: 'Scanning Together', sub: 'project concept' },
-  { type: 'potree', src: '/potree/embed.html', poster: '/media/scan-thumb.svg', still: '/posters/3dtreeprint-placeholder.svg', tag: 'Interactive 3D', title: '3DTreePrint scan', sub: 'drag to orbit · scroll to zoom' },
+  { type: 'potree', src: '/potree/embed.html', poster: '/media/scan-thumb.svg', still: '/posters/3dtreeprint.webp', tag: 'Interactive 3D', title: '3DTreePrint scan', sub: 'drag to orbit · scroll to zoom' },
 ];
 ---
 <figure class="media reel" id="reel">
