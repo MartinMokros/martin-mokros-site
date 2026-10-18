@@ -91,5 +91,10 @@ mobile, small separate commits.
   **Awaiting Martin's review before merge to main.**
 - Open EDITs: real 3D poster (`public/posters/3dtreeprint.webp`, then swap in
   `ScanEmbed.astro` and `Reel.astro`); point-cloud band render; confirm 500+ vs 600+.
+- Oct 2026 copy round: Fraunces dropped (headings Geist 650); hero headline in a mono
+  chosen via the TEMPORARY preview toggle (`FontToggle.astro` + init script in
+  `Base.astro`; remove both and prune the font request once Martin picks). Numbers band
+  reads `src/data/stats.ts`. 3DForEcoTech marked finished in the hero chip and Home
+  proof; other present-tense references listed for Martin, not yet changed.
 - Rollout notes: `src/content/` still contains "→" in `externalLabel` (projects) —
   strip it in the template, not the content. Unscope `.v2` once every page is on it.
