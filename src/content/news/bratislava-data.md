@@ -8,4 +8,4 @@ The 3D Urban Tree Intelligence hackathon in Bratislava (1–5 June 2026) is comp
 
 Processing is now underway: aligning point clouds, clipping, cleaning, benchmark tables, open protocols and tree-level outputs to follow.
 
-More here: [3D Urban Tree Inteligence](https://martinmokros.github.io/3D-Urban-Tree-Intelligence/)
+More here: [3D Urban Tree Intelligence](https://martinmokros.github.io/3D-Urban-Tree-Intelligence/)
