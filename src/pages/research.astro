@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
 
 const threads = [
   {
@@ -24,22 +25,31 @@ const threads = [
   },
 ];
 ---
-<Base title="Research — Martin Mokroš">
-  <div class="wrap page-head">
-    <div class="eyebrow">Research</div>
-    <h1>What I study, and why.</h1>
-    <p>Four threads, one aim: measuring the 3D structure of vegetation accurately, affordably, and often enough to change decisions. Each thread feeds — and is fed by — the projects.</p>
-  </div>
-  <section><div class="wrap">
+<Base title="Research — Martin Mokroš" v2={true}>
+  <PageHead label="Research" title="What I study, and why.">Four threads, one aim: measuring the 3D structure of vegetation accurately, affordably, and often enough to change decisions. Each thread feeds — and is fed by — the projects.</PageHead>
+  <section class="threads"><div class="wrap">
     {threads.map((t) => (
-      <div class="strand">
-        <div class="tag">{t.n}</div>
-        <div>
-          <h3>{t.title}</h3>
-          <p>{t.body}</p>
-          <div class="meta">FEEDS: <a class="xlink" href="/projects">{t.feeds}</a></div>
+      <article class="thread g12 reveal">
+        <div class="t-label thread__n">{t.n}</div>
+        <h2 class="t-h3 thread__title">{t.title}</h2>
+        <div class="thread__body">
+          <p class="t-body">{t.body}</p>
+          <p class="t-meta thread__feeds">FEEDS: <a class="text-link" href="/projects">{t.feeds}</a></p>
         </div>
-      </div>
+      </article>
     ))}
   </div></section>
+
+<style>
+  .threads{padding-top:0}
+  .thread{border-top:1px solid var(--line-strong);padding:var(--s-6) 0 var(--s-7);row-gap:var(--s-3)}
+  .thread:last-child{border-bottom:1px solid var(--line)}
+  .thread__feeds{margin-top:var(--s-4);font-size:12.5px}
+  @media(min-width:960px){
+    .thread{row-gap:0}
+    .thread__n{grid-column:1/3;padding-top:.5em}
+    .thread__title{grid-column:3/7}
+    .thread__body{grid-column:7/13}
+  }
+</style>
 </Base>
