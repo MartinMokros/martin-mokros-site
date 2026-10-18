@@ -1,0 +1,21 @@
+// Numbers band on Home. Every figure is scoped; update values here only.
+// EDIT: bump the stamp whenever any figure changes.
+export const statsAsOf = 'Oct 2026';
+
+export type Stat = {
+  value: string;
+  qualifier?: string; // small text after the figure, e.g. "goal"
+  label: string;
+  scope: string;
+};
+
+export const stats: Stat[] = [
+  // EDIT: funded projects currently led (3DTreePrint / ARIA, Scanning Together / NCEO)
+  { value: '2', label: 'Funded ongoing projects I lead', scope: 'ARIA · NCEO' },
+  // EDIT: target unit cost of a field-ready scanner; update when the prototype bill of materials changes
+  { value: '< €1,000', qualifier: 'goal', label: 'Per field-ready scanner', scope: 'low-cost MLS prototypes' },
+  // EDIT: organisations actively scanning with the kit
+  { value: '8+', label: 'Organisations scanning with our kit', scope: 'UK forestry agencies, Kew, Madagascar partners' },
+  // EDIT: National Forest Inventory plots scanned and segmented
+  { value: '50', label: 'National Forest Inventory plots scanned and segmented', scope: 'Slovakia 2025–26' },
+];
