@@ -15,6 +15,7 @@ const projects = defineCollection({
     externalUrl: z.string().optional(),
     externalLabel: z.string().optional(),
     images: z.array(z.string()).default([]), // optional photo strip under the text
+    status: z.enum(['active', 'completed']).default('active'), // completed → "Completed" group on Projects
   }),
 });
 
