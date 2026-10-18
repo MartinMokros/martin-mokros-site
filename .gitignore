@@ -8,3 +8,5 @@ dist/
 *.log
 .env
 public/cv.pdf
+# design review screenshots (local only)
+.design-review/
