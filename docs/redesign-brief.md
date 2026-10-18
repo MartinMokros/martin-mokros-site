@@ -74,5 +74,13 @@ mobile, small separate commits.
   screenshots: `.design-review/before-clean/` (rebuilt from c9d800a, toolbar hidden),
   `.design-review/after/`, side by side in `.design-review/compare/`.
   **Awaiting Martin's approval** on the Cloudflare preview.
+- Bold pass (branch `redesign-bold`, Home only, for side-by-side comparison with
+  `redesign`): hero headline as Fraunces display (40→96px) with the name above;
+  real static HUD coordinates (48.1490° N, 17.1083° E, 149 m); icon-only pause;
+  gradient scrim (hero text audited AA over a pure-white worst case); numbers band
+  with `public/posters/pointcloud-band.webp` (PLACEHOLDER, marked EDIT); full-bleed
+  dark reel; asymmetric 12-col grid (`.g12`); reveal-on-scroll (off under reduced
+  motion); 404 page. Screenshots in `.design-review/bold/`.
+  **Awaiting Martin's choice between `redesign` and `redesign-bold`.**
 - Rollout notes: `src/content/` still contains "→" in `externalLabel` (projects) —
   strip it in the template, not the content. Unscope `.v2` once every page is on it.
