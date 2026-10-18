@@ -1,5 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import Icon from '../../components/Icon.astro';
 import { getCollection } from 'astro:content';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
@@ -57,18 +59,14 @@ const items = await Promise.all(gallery.map(enrich));
 // Same shape drives both the grid and the lightbox.
 const lb = items;
 ---
-<Base title="News — Martin Mokroš" description="News, photographs from the field and longer notes from Martin Mokroš.">
-  <div class="wrap page-head">
-    <div class="eyebrow">News</div>
-    <h1>News.</h1>
-    <p>Photographs from the field &mdash; meetings, fieldwork and milestones &mdash; with longer written notes below.</p>
-  </div>
+<Base title="News — Martin Mokroš" description="News, photographs from the field and longer notes from Martin Mokroš." v2={true}>
+  <PageHead label="News" title="News.">Photographs from the field &mdash; meetings, fieldwork and milestones &mdash; with longer written notes below.</PageHead>
 
   <!-- GALLERY -->
-  <section style="padding-top:26px;padding-bottom:56px">
+  <section class="field">
     <div class="wrap">
-      <div class="eyebrow" style="margin-bottom:20px">From the field</div>
-      <div class="gallery">
+      <div class="t-label field__label">From the field</div>
+      <div class="gallery reveal">
         {items.map((it, i) => (
           <button class="gtile" data-idx={i} type="button" aria-label={`Open: ${it.title}`}>
             <img src={it.images[0]} alt={it.title} loading="lazy" onerror="this.closest('.gtile').classList.add('noimg')" />
@@ -84,17 +82,18 @@ const lb = items;
   </section>
 
   <!-- POSTS -->
-  <section style="padding-top:0">
-    <div class="wrap">
-      <div class="sec-head"><div class="eyebrow">Notes</div><h2>Longer reads.</h2></div>
-      <div class="notes">
+  <section class="notes-sec">
+    <div class="wrap g12">
+      <div class="notes-sec__head reveal"><div class="t-label">Notes</div><h2 class="t-h2">Longer reads.</h2></div>
+      <ul class="rows notes-sec__list reveal">
         {posts.map((n) => (
-          <a class="note" href={`/news/${n.slug}`}>
-            <div><span class="date">{fmt(n.data.date)}</span><span class="tagN">{n.data.tag}</span></div>
-            <div><h4>{n.data.title}</h4><p>{n.data.summary}</p></div>
-          </a>
+          <li><a class="linkrow" href={`/news/${n.slug}`}>
+            <span class="linkrow__meta"><span class="t-meta">{fmt(n.data.date)}</span><span class="t-label">{n.data.tag}</span></span>
+            <span class="linkrow__text"><span class="card__title">{n.data.title}</span><span class="card__body">{n.data.summary}</span></span>
+            <Icon name="arrow-right" />
+          </a></li>
         ))}
-      </div>
+      </ul>
     </div>
   </section>
 
@@ -132,7 +131,8 @@ const lb = items;
       cur = (idx + data.length) % data.length;
       const g = data[cur];
       const imgs = g.images.map((s) => `<img src="${esc(s)}" alt="${esc(g.title)}" onerror="this.style.display='none'">`).join('');
-      const link = g.link ? `<a class="lb-link" href="${esc(g.link)}" target="_blank" rel="noopener">${esc(g.linkLabel || 'Visit')} &rarr;</a>` : '';
+      const arrow = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>';
+      const link = g.link ? `<a class="lb-link" href="${esc(g.link)}" target="_blank" rel="noopener">${esc(g.linkLabel || 'Visit')} ${arrow}</a>` : '';
       inner.innerHTML = `<div class="lb-imgs">${imgs}</div><div class="lb-cap">${g.meta ? `<span class="lb-hud">${esc(g.meta)}</span>` : ''}<p>${esc(g.caption)}</p>${link}</div>`;
       box.scrollTop = 0;
       // Scroll cue only when this entry has more than one image to reveal.
@@ -181,4 +181,29 @@ const lb = items;
       if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) { dx < 0 ? next() : prev(); }
     }, { passive: true });
   </script>
+
+<style>
+  .field{padding-top:0}
+  .field__label{margin-bottom:var(--s-4)}
+  .notes-sec{padding-top:0}
+  .notes-sec__head{display:grid;gap:var(--s-3);align-content:start;margin-bottom:var(--s-6)}
+  @media(min-width:960px){
+    .notes-sec__head{grid-column:1/4;position:sticky;top:calc(var(--nav-h) + var(--s-5));align-self:start;margin:0}
+    .notes-sec__list{grid-column:4/13}
+  }
+  /* gallery + lightbox in the v2 type system */
+  .gallery :global(.gtile){border-radius:var(--r-2)}
+  .gallery :global(.gtile:focus-visible){outline:2px solid var(--focus);outline-offset:3px}
+  .gallery :global(.gtitle){font:600 17px/1.2 var(--font-sans);letter-spacing:-.01em}
+  .gallery :global(.gcount){font-family:var(--font-mono);background:rgba(15,26,18,.82);color:var(--inv-text);border-radius:var(--r-1)}
+  /* captions sit on a dense scrim so small mono text stays AA over bright photos */
+  .gallery :global(.gtile:not(.noimg) .gmeta){padding-top:28px;background:linear-gradient(to top,rgba(15,26,18,.9) 0,rgba(15,26,18,.86) 72%,rgba(15,26,18,0) 100%)}
+  .gallery :global(.gtile:not(.noimg) .ghud){color:var(--inv-text)}
+  @media(prefers-reduced-motion:reduce){.gallery :global(.gtile:hover img){transform:none}}
+  :global(.v2 .lb-cap p){font-family:var(--font-sans)}
+  :global(.v2 .lb-link){display:inline-flex;align-items:center;gap:6px;border-radius:var(--r-2)}
+  :global(.v2 .lb-link .icon){width:14px;height:14px}
+  :global(.v2 .lb-close),:global(.v2 .lb-nav){font-family:var(--font-sans)}
+  :global(.v2 .lb-close:focus-visible),:global(.v2 .lb-nav:focus-visible){outline:2px solid var(--inv-accent);outline-offset:2px}
+</style>
 </Base>
