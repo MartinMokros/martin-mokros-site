@@ -100,8 +100,10 @@ const callClosed = Date.now() > Date.parse(CALL_CLOSES);
           <div class="card__meta"><span class="badge">June 2026 · still processing</span><span class="t-meta">COST Action INTUF · Bratislava</span></div>
           <h3 class="card__title">3D Urban Tree Intelligence</h3>
           <p class="card__body">In June we ran a city-scale scanning testbed in Bratislava — <b>28 scanners</b> capturing <b>1,000+ trees</b>. Over the summer we aligned, clipped and cleaned the data and prepared the evidence and evaluation.</p>
-          <a class="arrow-link" href="https://martinmokros.github.io/3D-Urban-Tree-Intelligence/" target="_blank" rel="noopener">Visit the project site <Icon name="arrow-up-right" /></a>
-          <p class="t-sm"><b>Results: coming soon.</b> Want them first? Sign up for the newsletter there, or <a class="text-link" href="mailto:m.mokros@ucl.ac.uk">email me</a>.</p>
+          <div class="card__more">
+            <a class="arrow-link" href="https://martinmokros.github.io/3D-Urban-Tree-Intelligence/" target="_blank" rel="noopener">Visit the project site <Icon name="arrow-up-right" /></a>
+            <p class="t-sm"><b>Results: coming soon.</b> Want them first? Sign up for the newsletter there, or <a class="text-link" href="mailto:m.mokros@ucl.ac.uk">email me</a>.</p>
+          </div>
         </article>
         <article class="card">
           <div class="card__meta"><span class="badge">July 2026 · ongoing</span><span class="t-meta">with Forest Research</span></div>
@@ -217,8 +219,14 @@ const callClosed = Date.now() > Date.parse(CALL_CLOSES);
   .now__call-text{display:grid;gap:var(--s-4);align-content:start}
   .now__call-text .actions{margin-top:var(--s-2)}
   .now__log{display:grid;gap:var(--s-6);margin-top:var(--s-7)}
-  /* static entries flow in two columns instead of equal-height rows */
-  @media(min-width:640px){.now__log{display:block;columns:2;column-gap:var(--s-5)}.now__log>.card{break-inside:avoid;margin-bottom:var(--s-6)}}
+  /* two columns in rows: each card spans four subgrid rows (meta, title, body, extras),
+     so rules, titles and bodies line up across a row even when one meta line wraps */
+  .now__log .card__more{display:grid;gap:var(--s-3);margin-top:var(--s-2)}
+  .now__log .card__meta{flex-direction:column;align-items:flex-start;align-self:start}
+  @media(min-width:640px){
+    .now__log{grid-template-columns:1fr 1fr;column-gap:var(--s-5);row-gap:0}
+    .now__log>.card{grid-row:span 4;display:grid;grid-template-rows:subgrid;row-gap:var(--s-3);align-content:start;margin-bottom:var(--s-6)}
+  }
   .now__links{display:grid;gap:var(--s-4);align-content:start;margin-top:var(--s-7)}
   @media(min-width:640px) and (max-width:959px){.now__links{grid-template-columns:1fr 1fr}}
   .now .card__body b{color:var(--text);font-weight:600}
